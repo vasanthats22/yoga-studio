@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Yoga Studio - Pricing</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+<style>
+/* ================================================================
+   YOGA STUDIO — PRICING PAGE
+   ================================================================ */
+:root{
+  --sage:#7A8B7E;
+  --sage-d:#5F6E5A;
+  --sage-l:#9BAA9E;
+  --sage-soft:#B8C4B9;
+  --clay:#C17B5A;
+  --clay-d:#A55A3F;
+  --clay-l:#D9A48C;
+  --sand:#E8DFD3;
+  --gold:#D4A574;
+
+  --stone:#F5F3EF;
+  --stone-2:#F2EFE9;
+  --cream:#FBF8F3;
+  --bg:#F5F3EF;
+
+  --text:#3A4A3F;
+  --text-soft:#5A5E56;
+  --text-mute:#8A8E86;
+  --white:#ffffff;
+  --line:#E2DFD8;
+  --line-soft:#EFEAE2;
+
+  --sh1:0 2px 10px rgba(94,89,80,.05);
+  --sh2:0 14px 34px rgba(94,89,80,.09);
+  --sh3:0 28px 62px rgba(94,89,80,.15);
+
+  --r-s:14px;
+  --r-m:22px;
+  --r-l:30px;
+  --r-xl:42px;
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-bounce:cubic-bezier(.34,1.56,.64,1);
+
+  --wrap:1240px;
+}
+
+/* ================================================================
+   BASE
+   ================================================================ */
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  width:100%;max-width:100%;overflow-x:hidden;
+}
+
+body{
+  font-family:'Inter','Segoe UI',Roboto,system-ui,sans-serif;
+  font-size:15px;line-height:1.65;color:var(--text);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+  position:relative;width:100%;max-width:100%;min-width:0;
+}
+
+@supports (overflow-x: clip){ body{overflow-x:clip;} }
+
+h1,h2,h3,h4,h5{
+  font-family:'Outfit','Inter',sans-serif;
+  font-weight:800;line-height:1.08;letter-spacing:-.025em;color:var(--text);
+}
+
+img{display:block;max-width:100%;}
+a{text-decoration:none;color:inherit;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+#header-placeholder,#footer-placeholder{
+  flex-shrink:0;width:100%;max-width:100%;min-width:0;overflow-x:clip;
+}
+
+main{flex:1;width:100%;max-width:100%;min-width:0;overflow-x:clip;}
+
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 22px;}
+
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-track{background:var(--stone-2);}
+::-webkit-scrollbar-thumb{background:var(--sage);border-radius:20px;border:2px solid var(--stone-2);}
+::-webkit-scrollbar-thumb:hover{background:var(--clay);}
+::selection{background:var(--clay);color:#fff;}
+
+/* ================================================================
+   UTILS
+   ================================================================ */
+.sec{padding:80px 0;position:relative;overflow-x:clip;}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--clay-d);background:rgba(193,123,90,.11);
+  border:1px solid rgba(193,123,90,.16);
+  padding:7px 15px;border-radius:100px;margin-bottom:16px;
+}
+.eyebrow.sage{color:var(--sage-d);background:rgba(122,139,126,.09);border-color:rgba(122,139,126,.15);}
+
+.section-label{
+  display:flex;align-items:center;gap:14px;
+  font-size:.72rem;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;
+  color:var(--text-mute);margin-bottom:26px;
+}
+.section-label::before{content:'';width:32px;height:2px;background:var(--clay);border-radius:2px;}
+.section-label.center{justify-content:center;}
+.section-label.center::after{content:'';width:32px;height:2px;background:var(--clay);border-radius:2px;}
+
+.head{max-width:660px;margin-bottom:44px;}
+.head.center{margin-left:auto;margin-right:auto;text-align:center;}
+.head h2{font-size:clamp(1.75rem,3.6vw,2.6rem);margin-bottom:14px;}
+.head h2 em{font-style:normal;color:var(--sage);position:relative;}
+.head h2 em::after{
+  content:'';position:absolute;left:0;right:0;bottom:2px;height:9px;
+  background:rgba(193,123,90,.22);border-radius:6px;z-index:-1;
+}
+.head p{font-size:.96rem;color:var(--text-soft);line-height:1.75;}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:13px 26px;border-radius:100px;
+  font-size:.85rem;font-weight:700;letter-spacing:.1px;line-height:1;
+  border:1.6px solid transparent;cursor:pointer;
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .3s ease,color .3s ease,border-color .3s ease;
+  white-space:nowrap;
+}
+.btn i{font-size:.85em;}
+.btn-clay{background:var(--clay);color:#fff;box-shadow:0 10px 24px rgba(193,123,90,.34);}
+.btn-clay:hover{background:var(--clay-d);transform:translateY(-3px);box-shadow:0 16px 34px rgba(193,123,90,.44);}
+.btn-sage{background:var(--sage);color:#fff;box-shadow:0 10px 24px rgba(122,139,126,.28);}
+.btn-sage:hover{background:var(--sage-d);transform:translateY(-3px);box-shadow:0 16px 34px rgba(122,139,126,.38);}
+.btn-ghost{border-color:var(--line);background:#fff;color:var(--text);box-shadow:var(--sh1);}
+.btn-ghost:hover{border-color:var(--sage);color:var(--sage);transform:translateY(-3px);box-shadow:var(--sh2);}
+.btn-sm{padding:10px 18px;font-size:.76rem;}
+.btn-lg{padding:16px 32px;font-size:.92rem;}
+
+/* ================================================================
+   SCROLL PROGRESS
+   ================================================================ */
+#scrollProgress{
+  position:fixed;top:0;left:0;height:3px;width:0%;
+  background:linear-gradient(90deg,var(--sage),var(--sage-l),var(--clay));
+  z-index:9999;transition:width .1s linear;
+  box-shadow:0 0 12px rgba(193,123,90,.45);
+}
+
+/* ================================================================
+   SECTION 1 — HERO (horizontal split, price-first)
+   ================================================================ */
+.price-hero{
+  position:relative;
+  padding:80px 0 90px;
+  overflow:hidden;
+  background:var(--cream);
+}
+.price-hero::before{
+  content:'';position:absolute;top:-160px;right:-160px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(193,123,90,.14),transparent 70%);
+  filter:blur(80px);pointer-events:none;
+}
+.price-hero::after{
+  content:'';position:absolute;bottom:-200px;left:-160px;
+  width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(122,139,126,.16),transparent 70%);
+  filter:blur(80px);pointer-events:none;
+}
+.price-hero .wrap{position:relative;z-index:2;}
+
+.price-hero-grid{
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
+  gap:70px;
+  align-items:center;
+}
+
+.price-hero .crumb{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.68rem;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--text-mute);
+  margin-bottom:26px;
+}
+.price-hero .crumb a{color:var(--sage-d);transition:color .3s ease;}
+.price-hero .crumb a:hover{color:var(--clay-d);}
+.price-hero .crumb i{font-size:.55rem;}
+
+.price-hero h1{
+  font-size:clamp(2.4rem,5.6vw,4.4rem);
+  font-weight:900;letter-spacing:-.035em;line-height:1;
+  margin-bottom:24px;
+}
+.price-hero h1 em{
+  font-style:normal;color:var(--sage-d);position:relative;display:inline-block;
+}
+.price-hero h1 em::after{
+  content:'';position:absolute;left:-3px;right:-3px;bottom:-4px;height:3px;
+  background:var(--clay);border-radius:2px;
+}
+
+.price-hero p{
+  font-size:1.02rem;color:var(--text-soft);line-height:1.8;
+  max-width:480px;margin-bottom:34px;
+}
+
+.price-hero .hero-cta{
+  display:flex;gap:12px;flex-wrap:wrap;
+  margin-bottom:34px;
+}
+
+.price-hero .hero-perks{
+  display:flex;gap:20px;flex-wrap:wrap;
+  padding-top:26px;border-top:1px solid var(--line-soft);
+}
+.price-hero .hero-perks span{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.72rem;font-weight:700;letter-spacing:.6px;
+  color:var(--text-soft);
+}
+.price-hero .hero-perks i{color:var(--sage);font-size:.85em;}
+
+/* Floating price card in hero */
+.hero-price-card{
+  position:relative;
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-radius:var(--r-l);
+  padding:36px 34px;
+  box-shadow:var(--sh3);
+  overflow:hidden;
+}
+.hero-price-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:6px;
+  background:linear-gradient(90deg,var(--sage),var(--clay));
+}
+.hero-price-card .hp-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(193,123,90,.11);
+  border:1px solid rgba(193,123,90,.22);
+  color:var(--clay-d);
+  font-size:.62rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+  padding:5px 12px;border-radius:100px;
+  margin-bottom:18px;
+}
+.hero-price-card .hp-price{
+  display:flex;align-items:baseline;gap:8px;
+  margin-bottom:8px;
+}
+.hero-price-card .hp-price b{
+  font-family:'Outfit',sans-serif;
+  font-size:3.2rem;font-weight:900;line-height:1;
+  letter-spacing:-.04em;color:var(--text);
+}
+.hero-price-card .hp-price small{
+  font-size:.72rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--text-mute);
+}
+.hero-price-card h3{
+  font-family:'Outfit',sans-serif;
+  font-size:1.15rem;font-weight:800;
+  letter-spacing:-.015em;margin-bottom:22px;
+  padding-bottom:22px;border-bottom:1px dashed var(--line);
+}
+.hero-price-card ul{
+  list-style:none;
+  display:flex;flex-direction:column;gap:12px;
+  margin-bottom:28px;
+}
+.hero-price-card ul li{
+  display:flex;align-items:flex-start;gap:11px;
+  font-size:.86rem;color:var(--text-soft);
+}
+.hero-price-card ul li i{
+  color:var(--sage);font-size:.78rem;margin-top:4px;flex-shrink:0;
+}
+.hero-price-card .btn{width:100%;}
+
+@media (max-width:1024px){
+  .price-hero{padding:60px 0 70px;}
+  .price-hero-grid{grid-template-columns:1fr;gap:50px;}
+  .hero-price-card{max-width:480px;margin:0 auto;}
+}
+@media (max-width:520px){
+  .price-hero .hero-cta{flex-direction:column;align-items:stretch;}
+  .price-hero .hero-cta .btn{justify-content:center;}
+}
+
+/* ================================================================
+   SECTION 2 — PLAN CARDS (3-up, elevated)
+   ================================================================ */
+.plans{
+  background:#fff;
+  border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+}
+
+.plans-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  align-items:stretch;
+}
+
+.plan-card{
+  position:relative;
+  display:flex;flex-direction:column;
+  background:var(--cream);
+  border:1.5px solid var(--line);
+  border-radius:var(--r-l);
+  padding:36px 32px 34px;
+  transition:all .4s var(--ease);
+  overflow:hidden;
+}
+.plan-card:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--sh3);
+  border-color:rgba(122,139,126,.32);
+}
+
+.plan-card .pc-tag{
+  font-family:var(--sans);
+  font-size:.62rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--clay-d);
+  margin-bottom:18px;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.plan-card .pc-tag::before{
+  content:'';width:16px;height:2px;background:var(--clay);border-radius:2px;
+}
+.plan-card h3{
+  font-family:'Outfit',sans-serif;
+  font-size:1.3rem;font-weight:800;letter-spacing:-.02em;
+  margin-bottom:6px;
+}
+.plan-card .pc-desc{
+  font-size:.86rem;color:var(--text-soft);line-height:1.6;
+  margin-bottom:26px;
+}
+.plan-card .pc-price{
+  display:flex;align-items:baseline;gap:6px;
+  padding-bottom:24px;
+  margin-bottom:24px;
+  border-bottom:1px dashed var(--line);
+}
+.plan-card .pc-price b{
+  font-family:'Outfit',sans-serif;
+  font-size:2.8rem;font-weight:900;line-height:1;
+  letter-spacing:-.04em;color:var(--text);
+}
+.plan-card .pc-price small{
+  font-size:.72rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--text-mute);
+}
+.plan-card .pc-price em{
+  font-style:normal;
+  font-size:.66rem;font-weight:700;color:var(--clay-d);
+  margin-left:auto;
+}
+.plan-card ul{
+  list-style:none;
+  display:flex;flex-direction:column;gap:12px;
+  margin-bottom:28px;flex:1;
+}
+.plan-card ul li{
+  display:flex;align-items:flex-start;gap:11px;
+  font-size:.86rem;line-height:1.55;color:var(--text-soft);
+}
+.plan-card ul li i{
+  color:var(--sage);font-size:.75rem;margin-top:5px;flex-shrink:0;
+}
+.plan-card ul li.dim{
+  color:var(--text-mute);opacity:.7;
+}
+.plan-card ul li.dim i{color:var(--text-mute);}
+.plan-card .pc-btn{
+  width:100%;
+  padding:14px 24px;
+  border-radius:100px;
+  font-family:var(--sans);
+  font-size:.72rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .35s var(--ease);
+  cursor:pointer;
+  border:1.6px solid var(--text);
+  background:transparent;
+  color:var(--text);
+}
+.plan-card .pc-btn:hover{
+  background:var(--text);color:#fff;
+}
+
+.plan-card.featured{
+  background:linear-gradient(180deg,#FBF8F3 0%,#F5EDE3 100%);
+  border-color:rgba(193,123,90,.35);
+  box-shadow:0 20px 50px rgba(193,123,90,.12);
+}
+.plan-card.featured::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:6px;
+  background:linear-gradient(90deg,var(--clay),var(--gold));
+}
+.plan-card.featured .pc-price b{color:var(--clay-d);}
+.plan-card.featured .pc-btn{
+  background:var(--clay);
+  border-color:var(--clay);
+  color:#fff;
+}
+.plan-card.featured .pc-btn:hover{
+  background:var(--clay-d);
+  border-color:var(--clay-d);
+}
+
+.plan-card .ribbon{
+  position:absolute;
+  top:16px;right:-38px;
+  transform:rotate(45deg);
+  background:var(--clay);
+  color:#fff;
+  padding:4px 44px;
+  font-size:.58rem;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;
+  box-shadow:0 4px 12px rgba(193,123,90,.35);
+  z-index:2;
+}
+
+@media (max-width:1024px){
+  .plans-grid{grid-template-columns:1fr;gap:20px;}
+}
+
+/* ================================================================
+   SECTION 3 — COMPARISON MATRIX
+   ================================================================ */
+.compare{
+  background:var(--stone-2);
+  border-bottom:1px solid var(--line-soft);
+}
+
+.cmp-wrap{
+  overflow-x:auto;
+  padding-bottom:8px;
+  scrollbar-width:thin;
+}
+.cmp-wrap::-webkit-scrollbar{height:8px;}
+.cmp-wrap::-webkit-scrollbar-thumb{background:var(--sage-l);border-radius:20px;}
+
+.cmp-table{
+  width:100%;
+  min-width:720px;
+  border-collapse:separate;
+  border-spacing:0;
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-radius:var(--r-m);
+  overflow:hidden;
+}
+
+.cmp-table th,
+.cmp-table td{
+  padding:18px 20px;
+  text-align:left;
+  font-size:.86rem;
+  border-bottom:1px solid var(--line-soft);
+  vertical-align:middle;
+}
+
+.cmp-table thead th{
+  background:var(--cream);
+  font-family:'Outfit',sans-serif;
+  font-weight:800;
+  font-size:.9rem;
+  letter-spacing:-.01em;
+  color:var(--text);
+  border-bottom:1px solid var(--line);
+  padding:22px 20px;
+}
+.cmp-table thead th:first-child{
+  color:var(--text-mute);
+  font-size:.66rem;
+  font-weight:800;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+}
+.cmp-table thead th.col-featured{
+  background:linear-gradient(180deg,#FBF8F3,#F5EDE3);
+  color:var(--clay-d);
+  position:relative;
+}
+.cmp-table thead th.col-featured::before{
+  content:'POPULAR';
+  position:absolute;
+  top:6px;right:14px;
+  font-size:.5rem;font-weight:900;letter-spacing:1.4px;
+  background:var(--clay);color:#fff;
+  padding:2px 8px;border-radius:100px;
+}
+
+.cmp-table tbody td:first-child{
+  font-weight:700;
+  color:var(--text);
+  font-size:.82rem;
+  background:#fafaf7;
+}
+.cmp-table tbody td.col-featured{
+  background:rgba(193,123,90,.04);
+}
+
+.cmp-table tbody tr:last-child td{border-bottom:none;}
+
+.cmp-table .check{
+  display:inline-flex;align-items:center;gap:7px;
+  color:var(--sage-d);
+  font-size:.78rem;font-weight:700;
+}
+.cmp-table .check i{font-size:.72em;}
+.cmp-table .cross{
+  display:inline-flex;align-items:center;gap:7px;
+  color:var(--text-mute);
+  font-size:.78rem;font-weight:700;
+  opacity:.7;
+}
+.cmp-table .cross i{font-size:.72em;}
+
+.cmp-foot{
+  display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
+  margin-top:36px;
+}
+
+@media (max-width:640px){
+  .cmp-foot{flex-direction:column;align-items:stretch;}
+  .cmp-foot .btn{justify-content:center;}
+}
+
+/* ================================================================
+   SECTION 4 — WHICH PLAN FITS YOU (quiz-style)
+   ================================================================ */
+.quiz{
+  background:var(--cream);
+  border-bottom:1px solid var(--line-soft);
+}
+
+.quiz-grid{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:70px;
+  align-items:center;
+}
+
+.quiz-img{
+  position:relative;
+  aspect-ratio:4/5;
+  border-radius:var(--r-l);
+  overflow:hidden;
+  box-shadow:var(--sh2);
+}
+.quiz-img img{width:100%;height:100%;object-fit:cover;}
+.quiz-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 55%,rgba(58,74,63,.45) 100%);
+  pointer-events:none;
+}
+.quiz-img .qi-caption{
+  position:absolute;bottom:26px;left:26px;right:26px;
+  color:#fff;z-index:2;
+  font-size:.7rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+}
+.quiz-img .qi-caption::before{
+  content:'';display:block;width:24px;height:1px;
+  background:var(--clay-l);margin-bottom:10px;
+}
+
+.quiz-copy h2{
+  font-size:clamp(1.75rem,3.6vw,2.5rem);
+  letter-spacing:-.025em;line-height:1.05;margin-bottom:16px;
+}
+.quiz-copy h2 em{color:var(--sage);font-style:normal;}
+.quiz-copy > p{
+  font-size:.96rem;color:var(--text-soft);line-height:1.8;
+  margin-bottom:32px;
+}
+
+.quiz-questions{
+  display:flex;flex-direction:column;
+  gap:18px;
+  margin-bottom:32px;
+}
+.quiz-q{
+  padding:20px 22px;
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-radius:var(--r-m);
+  transition:all .35s var(--ease);
+}
+.quiz-q:hover{
+  border-color:rgba(193,123,90,.35);
+  box-shadow:var(--sh1);
+}
+.quiz-q .qq-label{
+  font-family:var(--sans);
+  font-size:.62rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--clay-d);
+  margin-bottom:8px;
+}
+.quiz-q .qq-text{
+  font-size:.92rem;font-weight:700;color:var(--text);
+  line-height:1.5;
+}
+.quiz-q .qq-answers{
+  display:flex;flex-wrap:wrap;gap:8px;
+  margin-top:14px;
+}
+.quiz-q .qq-answers a{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;
+  border-radius:100px;
+  border:1px solid var(--line);
+  background:var(--cream);
+  font-size:.72rem;font-weight:700;color:var(--text-soft);
+  transition:all .3s var(--ease);
+}
+.quiz-q .qq-answers a:hover{
+  background:var(--clay);color:#fff;border-color:var(--clay);
+  transform:translateY(-2px);
+}
+
+.quiz-actions{
+  display:flex;gap:12px;flex-wrap:wrap;
+}
+
+@media (max-width:1024px){
+  .quiz-grid{grid-template-columns:1fr;gap:44px;}
+  .quiz-img{max-width:460px;margin:0 auto;aspect-ratio:4/3;}
+}
+@media (max-width:520px){
+  .quiz-actions{flex-direction:column;align-items:stretch;}
+  .quiz-actions .btn{justify-content:center;}
+  .quiz-q .qq-answers a{width:100%;justify-content:center;}
+}
+
+/* ================================================================
+   SECTION 5 — WHAT'S INCLUDED / PERKS
+   ================================================================ */
+.perks{
+  background:#fff;
+  border-bottom:1px solid var(--line-soft);
+}
+
+.perks-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:24px;
+}
+
+.perk{
+  background:var(--cream);
+  border:1.5px solid var(--line);
+  border-radius:var(--r-m);
+  padding:30px 26px;
+  transition:all .4s var(--ease);
+  display:flex;flex-direction:column;
+}
+.perk:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--sh2);
+  border-color:rgba(193,123,90,.32);
+}
+
+.perk .pi-ico{
+  width:52px;height:52px;border-radius:14px;
+  background:rgba(122,139,126,.1);
+  color:var(--sage-d);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+  margin-bottom:20px;
+  transition:all .4s var(--ease-bounce);
+}
+.perk:hover .pi-ico{
+  background:var(--clay);color:#fff;
+  transform:rotate(-6deg);
+}
+.perk b{
+  display:block;
+  font-family:'Outfit',sans-serif;
+  font-size:1rem;font-weight:800;letter-spacing:-.015em;
+  margin-bottom:8px;
+}
+.perk p{
+  font-size:.84rem;color:var(--text-soft);line-height:1.7;
+  margin-bottom:14px;
+}
+.perk .pi-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.64rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--clay-d);
+  margin-top:auto;
+}
+.perk .pi-link i{font-size:.6em;transition:transform .3s ease;}
+.perk:hover .pi-link i{transform:translateX(4px);}
+
+.perks-actions{
+  display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
+  margin-top:44px;
+}
+
+@media (max-width:1024px){ .perks-grid{grid-template-columns:1fr 1fr;} }
+@media (max-width:600px){
+  .perks-grid{grid-template-columns:1fr;}
+  .perks-actions{flex-direction:column;align-items:stretch;}
+  .perks-actions .btn{justify-content:center;}
+}
+
+/* ================================================================
+   SECTION 6 — FINAL CTA
+   ================================================================ */
+.final-cta{
+  padding:80px 0 100px;
+  background:var(--stone-2);
+}
+.final-cta .wrap{position:relative;z-index:2;}
+
+.cta-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:var(--r-xl);
+  background:linear-gradient(135deg,#5F6E5A 0%,#7A8B7E 55%,#8FA292 100%);
+  padding:80px 60px;
+  text-align:center;
+  box-shadow:var(--sh3);
+}
+.cta-card::before{
+  content:'';position:absolute;top:-100px;left:-100px;
+  width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle,rgba(193,123,90,.32),transparent 70%);
+  pointer-events:none;
+}
+.cta-card::after{
+  content:'';position:absolute;bottom:-120px;right:-100px;
+  width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%);
+  pointer-events:none;
+}
+
+.cta-card .chip{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:#fff;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+  padding:7px 15px;border-radius:100px;
+  margin-bottom:20px;
+  position:relative;z-index:2;
+}
+.cta-card h2{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(1.8rem,4vw,2.9rem);
+  font-weight:900;color:#fff;letter-spacing:-.03em;line-height:1.05;
+  margin-bottom:18px;
+  position:relative;z-index:2;
+}
+.cta-card p{
+  color:rgba(255,255,255,.82);
+  font-size:.98rem;line-height:1.75;
+  max-width:520px;margin:0 auto 34px;
+  position:relative;z-index:2;
+}
+.cta-card .actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  position:relative;z-index:2;
+}
+.cta-card .cta-mini{
+  display:flex;gap:24px;justify-content:center;flex-wrap:wrap;
+  margin-top:34px;padding-top:28px;
+  border-top:1px solid rgba(255,255,255,.16);
+  position:relative;z-index:2;
+  font-size:.68rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:rgba(255,255,255,.7);
+}
+.cta-card .cta-mini span{display:inline-flex;align-items:center;gap:8px;}
+.cta-card .cta-mini i{color:var(--clay-l);font-size:.8em;}
+
+.btn-white{
+  background:#fff;color:var(--text);
+  box-shadow:0 10px 26px rgba(0,0,0,.18);
+}
+.btn-white:hover{background:var(--clay);color:#fff;}
+.btn-outline-white{
+  background:transparent;color:#fff;
+  border:1.5px solid rgba(255,255,255,.5);
+}
+.btn-outline-white:hover{background:#fff;color:var(--text);border-color:#fff;}
+
+@media (max-width:640px){
+  .final-cta{padding:60px 0 70px;}
+  .cta-card{padding:44px 26px;border-radius:var(--r-l);}
+  .cta-card .actions{flex-direction:column;align-items:stretch;}
+  .cta-card .actions .btn{justify-content:center;}
+  .cta-card .cta-mini{flex-direction:column;align-items:center;gap:12px;}
+}
+
+/* ================================================================
+   AOS safety
+   ================================================================ */
+@media (max-width:900px){
+  [data-aos="fade-left"],[data-aos="fade-right"]{
+    transform:translate3d(0,34px,0) !important;
+    opacity:0;
+  }
+  [data-aos="fade-left"].aos-animate,
+  [data-aos="fade-right"].aos-animate{
+    transform:translate3d(0,0,0) !important;
+    opacity:1;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width:640px){
+  .sec{padding:60px 0;}
+  .wrap{padding:0 16px;}
+  .head h2{font-size:1.55rem;}
+  .head p{font-size:.9rem;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="scrollProgress"></div>
+<div id="header-placeholder"></div>
+
+<main>
+
+  <!-- ================= SECTION 1 — HERO ================= -->
+  <section class="price-hero" id="pricing-hero">
+    <div class="wrap">
+      <div class="price-hero-grid">
+
+        <div data-aos="fade-right">
+          <div class="crumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Pricing</span>
+          </div>
+
+          <h1>
+            Simple pricing.<br>
+            No <em>lock-in</em>.
+          </h1>
+
+          <p>
+            One flat price for unlimited classes. Pause any time. Cancel any time.
+            Your first class is always free.
+          </p>
+
+          <div class="hero-cta">
+            <a href="404.html" class="btn btn-lg btn-clay">
+              <i class="fas fa-calendar-check"></i> Book Free Class
+            </a>
+            <a href="404.html" class="btn btn-lg btn-ghost">
+              <i class="fas fa-arrow-down"></i> See All Plans
+            </a>
+          </div>
+
+          <div class="hero-perks">
+            <span><i class="fas fa-check-circle"></i> No contract</span>
+            <span><i class="fas fa-check-circle"></i> Pause anytime</span>
+            <span><i class="fas fa-check-circle"></i> First class free</span>
+          </div>
+        </div>
+
+        <div class="hero-price-card" data-aos="fade-left" data-aos-delay="100">
+          <span class="hp-badge"><i class="fas fa-star"></i> Most popular</span>
+          <div class="hp-price">
+            <b>$99</b>
+            <small>/ month</small>
+          </div>
+          <h3>Unlimited monthly</h3>
+          <ul>
+            <li><i class="fas fa-check"></i> Unlimited in-studio classes</li>
+            <li><i class="fas fa-check"></i> All 6 styles included</li>
+            <li><i class="fas fa-check"></i> Mats, props &amp; tea provided</li>
+            <li><i class="fas fa-check"></i> Priority booking window</li>
+            <li><i class="fas fa-check"></i> One guest pass per month</li>
+            <li><i class="fas fa-check"></i> Pause up to 2 months / year</li>
+          </ul>
+          <a href="404.html" class="btn btn-clay btn-lg">
+            <i class="fas fa-arrow-right"></i> Start Unlimited
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 2 — PLAN CARDS ================= -->
+  <section class="sec plans" id="plans" aria-labelledby="plans-heading">
+    <div class="wrap">
+
+      <h2 class="section-label center" data-aos="fade-down">Membership Plans</h2>
+
+      <div class="head center" data-aos="fade-up">
+        <span class="eyebrow"><i class="fas fa-tags"></i> Three ways to practice</span>
+        <h2 id="plans-heading">Choose a <em>rhythm</em>, not a commitment.</h2>
+        <p>Every plan includes mats, props, and tea. Pick what feels sustainable — not what looks impressive.</p>
+      </div>
+
+      <div class="plans-grid">
+
+        <div class="plan-card" data-aos="fade-up" data-aos-delay="0">
+          <span class="pc-tag">Drop in</span>
+          <h3>Single Class</h3>
+          <p class="pc-desc">Try a class, or drop in when life allows. No commitment.</p>
+          <div class="pc-price">
+            <b>$22</b>
+            <small>/ class</small>
+          </div>
+          <ul>
+            <li><i class="fas fa-check"></i> One in-studio class</li>
+            <li><i class="fas fa-check"></i> Mat, props &amp; tea included</li>
+            <li><i class="fas fa-check"></i> Book up to 14 days ahead</li>
+            <li class="dim"><i class="fas fa-minus"></i> No priority booking</li>
+            <li class="dim"><i class="fas fa-minus"></i> No member perks</li>
+          </ul>
+          <a href="404.html" class="pc-btn">
+            Book one class <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="plan-card featured" data-aos="fade-up" data-aos-delay="100">
+          <span class="ribbon">Popular</span>
+          <span class="pc-tag">Most popular</span>
+          <h3>Unlimited Monthly</h3>
+          <p class="pc-desc">Best for regulars. Unlimited classes, cancel any time.</p>
+          <div class="pc-price">
+            <b>$99</b>
+            <small>/ month</small>
+            <em>Save 20%</em>
+          </div>
+          <ul>
+            <li><i class="fas fa-check"></i> Unlimited in-studio classes</li>
+            <li><i class="fas fa-check"></i> Mat, props &amp; tea included</li>
+            <li><i class="fas fa-check"></i> Priority booking window</li>
+            <li><i class="fas fa-check"></i> One guest pass per month</li>
+            <li><i class="fas fa-check"></i> Pause up to 2 months / year</li>
+          </ul>
+          <a href="404.html" class="pc-btn">
+            Start unlimited <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="plan-card" data-aos="fade-up" data-aos-delay="200">
+          <span class="pc-tag">Committed</span>
+          <h3>Annual Practice</h3>
+          <p class="pc-desc">For the long haul. Two months free, retreat discounts, and perks.</p>
+          <div class="pc-price">
+            <b>$850</b>
+            <small>/ year</small>
+            <em>2 months free</em>
+          </div>
+          <ul>
+            <li><i class="fas fa-check"></i> Everything in monthly</li>
+            <li><i class="fas fa-check"></i> Two months free</li>
+            <li><i class="fas fa-check"></i> Retreat &amp; workshop discounts</li>
+            <li><i class="fas fa-check"></i> Personal practice check-ins</li>
+            <li><i class="fas fa-check"></i> Cancel within 14 days</li>
+          </ul>
+          <a href="404.html" class="pc-btn">
+            Go annual <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;margin-top:44px;" data-aos="fade-up" data-aos-delay="150">
+        <a href="404.html" class="btn btn-sage btn-lg">
+          <i class="fas fa-comments"></i> Not sure? Talk to us
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 3 — COMPARISON MATRIX ================= -->
+  <section class="sec compare" id="compare" aria-labelledby="compare-heading">
+    <div class="wrap">
+
+      <h2 class="section-label center" data-aos="fade-down">Side by Side</h2>
+
+      <div class="head center" data-aos="fade-up">
+        <span class="eyebrow sage"><i class="fas fa-table-columns"></i> Compare plans</span>
+        <h2 id="compare-heading">What's <em>included</em> in each.</h2>
+        <p>Transparent pricing, transparent perks. Nothing hidden.</p>
+      </div>
+
+      <div class="cmp-wrap" data-aos="fade-up" data-aos-delay="100">
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Single</th>
+              <th class="col-featured">Monthly</th>
+              <th>Annual</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>In-studio classes</td>
+              <td><span class="check"><i class="fas fa-check"></i> 1</span></td>
+              <td class="col-featured"><span class="check"><i class="fas fa-check"></i> Unlimited</span></td>
+              <td><span class="check"><i class="fas fa-check"></i> Unlimited</span></td>
+            </tr>
+            <tr>
+              <td>Mat, props &amp; tea</td>
+              <td><span class="check"><i class="fas fa-check"></i> Included</span></td>
+              <td class="col-featured"><span class="check"><i class="fas fa-check"></i> Included</span></td>
+              <td><span class="check"><i class="fas fa-check"></i> Included</span></td>
+            </tr>
+            <tr>
+              <td>Priority booking</td>
+              <td><span class="cross"><i class="fas fa-minus"></i> —</span></td>
+              <td class="col-featured"><span class="check"><i class="fas fa-check"></i> 14 days</span></td>
+              <td><span class="check"><i class="fas fa-check"></i> 21 days</span></td>
+            </tr>
+            <tr>
+              <td>Guest pass</td>
+              <td><span class="cross"><i class="fas fa-minus"></i> —</span></td>
+              <td class="col-featured"><span class="check"><i class="fas fa-check"></i> 1 / month</span></td>
+              <td><span class="check"><i class="fas fa-check"></i> 2 / month</span></td>
+            </tr>
+            <tr>
+              <td>Pause membership</td>
+              <td><span class="cross"><i class="fas fa-minus"></i> —</span></td>
+              <td class="col-featured"><span class="check"><i class="fas fa-check"></i> 2 mo / yr</span></td>
+              <td><span class="check"><i class="fas fa-check"></i> 3 mo / yr</span></td>
+            </tr>
+            <tr>
+              <td>Retreat &amp; workshop discounts</td>
+              <td><span class="cross"><i class="fas fa-minus"></i> —</span></td>
+              <td class="col-featured"><span class="cross"><i class="fas fa-minus"></i> —</span></td>
+              <td><span class="check"><i class="fas fa-check"></i> 20% off</span></td>
+            </tr>
+            <tr>
+              <td>Personal practice check-in</td>
+              <td><span class="cross"><i class="fas fa-minus"></i> —</span></td>
+              <td class="col-featured"><span class="cross"><i class="fas fa-minus"></i> —</span></td>
+              <td><span class="check"><i class="fas fa-check"></i> Quarterly</span></td>
+            </tr>
+            <tr>
+              <td>Best value</td>
+              <td><span class="cross">Pay per class</span></td>
+              <td class="col-featured"><span class="check"><i class="fas fa-star"></i> Save 20%</span></td>
+              <td><span class="check"><i class="fas fa-star"></i> Save 30%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cmp-foot" data-aos="fade-up" data-aos-delay="150">
+        <a href="404.html" class="btn btn-clay">
+          <i class="fas fa-calendar-check"></i> Book Free Class
+        </a>
+        <a href="404.html" class="btn btn-ghost">
+          <i class="fas fa-download"></i> Download Comparison
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 4 — WHICH PLAN FITS YOU ================= -->
+  <section class="sec quiz" id="quiz" aria-labelledby="quiz-heading">
+    <div class="wrap">
+
+      <h2 class="section-label" data-aos="fade-down">Not Sure?</h2>
+
+      <div class="quiz-grid">
+
+        <div class="quiz-img" data-aos="fade-right">
+          <img src="ys11.webp"
+               alt="Choosing a plan"
+               onerror="this.parentElement.style.background='linear-gradient(135deg,#E6ECE3,#E8C9B6)';this.remove();">
+          <span class="qi-caption">Practice · pause · return</span>
+        </div>
+
+        <div class="quiz-copy" data-aos="fade-left">
+          <span class="eyebrow"><i class="fas fa-circle-question"></i> Quick guide</span>
+          <h2 id="quiz-heading">Which plan fits <em>your week</em>?</h2>
+          <p>
+            Answer a couple of honest questions about how often you'll come, and
+            we'll point you to the plan that actually makes sense for you.
+          </p>
+
+          <div class="quiz-questions">
+
+            <div class="quiz-q" data-aos="fade-up" data-aos-delay="100">
+              <div class="qq-label">Question 01</div>
+              <div class="qq-text">How often will you practice?</div>
+              <div class="qq-answers">
+                <a href="404.html">Once a week</a>
+                <a href="404.html">2–3× a week</a>
+                <a href="404.html">Almost daily</a>
+              </div>
+            </div>
+
+            <div class="quiz-q" data-aos="fade-up" data-aos-delay="180">
+              <div class="qq-label">Question 02</div>
+              <div class="qq-text">Do you need flexibility to pause?</div>
+              <div class="qq-answers">
+                <a href="404.html">Yes, often</a>
+                <a href="404.html">Occasionally</a>
+                <a href="404.html">Not really</a>
+              </div>
+            </div>
+
+            <div class="quiz-q" data-aos="fade-up" data-aos-delay="260">
+              <div class="qq-label">Question 03</div>
+              <div class="qq-text">What matters most to you?</div>
+              <div class="qq-answers">
+                <a href="404.html">Lowest cost</a>
+                <a href="404.html">Best value</a>
+                <a href="404.html">Extras &amp; perks</a>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="quiz-actions">
+            <a href="404.html" class="btn btn-clay">
+              <i class="fas fa-wand-magic-sparkles"></i> Recommend a Plan
+            </a>
+            <a href="404.html" class="btn btn-ghost">
+              <i class="fas fa-comments"></i> Ask a Human
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 5 — WHAT'S INCLUDED ================= -->
+  <section class="sec perks" id="included" aria-labelledby="included-heading">
+    <div class="wrap">
+
+      <h2 class="section-label center" data-aos="fade-down">Always Included</h2>
+
+      <div class="head center" data-aos="fade-up">
+        <span class="eyebrow"><i class="fas fa-gift"></i> On every plan</span>
+        <h2 id="included-heading">Small things that <em>make the difference</em>.</h2>
+        <p>Every plan includes the same baseline — because calm shouldn't come with an upsell.</p>
+      </div>
+
+      <div class="perks-grid">
+
+        <div class="perk" data-aos="fade-up" data-aos-delay="0">
+          <div class="pi-ico"><i class="fas fa-leaf"></i></div>
+          <b>Mats &amp; props provided</b>
+          <p>Blocks, straps, blankets, cushions — all set up before you arrive. Arrive empty-handed.</p>
+          <a href="404.html" class="pi-link">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="perk" data-aos="fade-up" data-aos-delay="80">
+          <div class="pi-ico"><i class="fas fa-mug-hot"></i></div>
+          <b>Herbal tea after class</b>
+          <p>A cup of tea and a few quiet minutes after every evening session. No need to rush home.</p>
+          <a href="404.html" class="pi-link">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="perk" data-aos="fade-up" data-aos-delay="160">
+          <div class="pi-ico"><i class="fas fa-users"></i></div>
+          <b>Small groups · max 12</b>
+          <p>Every class is capped at twelve students, so your teacher can actually see you.</p>
+          <a href="404.html" class="pi-link">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="perk" data-aos="fade-up" data-aos-delay="240">
+          <div class="pi-ico"><i class="fas fa-certificate"></i></div>
+          <b>RYT-certified teachers</b>
+          <p>All our teachers hold RYT-200 or higher — and still practice daily themselves.</p>
+          <a href="404.html" class="pi-link">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+      </div>
+
+      <div class="perks-actions" data-aos="fade-up" data-aos-delay="120">
+        <a href="404.html" class="btn btn-sage btn-lg">
+          <i class="fas fa-calendar-check"></i> Book a Class
+        </a>
+        <a href="404.html" class="btn btn-ghost">
+          <i class="fas fa-circle-info"></i> FAQ
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 6 — FINAL CTA ================= -->
+  <section class="final-cta" id="book" aria-labelledby="book-heading">
+    <div class="wrap">
+      <div class="cta-card" data-aos="zoom-in" data-aos-duration="1000">
+
+        <span class="chip" data-aos="fade-down" data-aos-delay="150">
+          <i class="fas fa-spa"></i> Your first class is free
+        </span>
+
+        <h2 id="book-heading" data-aos="fade-up" data-aos-delay="250">
+          Try before you decide.
+        </h2>
+
+        <p data-aos="fade-up" data-aos-delay="350">
+          Come to one class on us — no card, no commitment. Then choose the plan
+          that fits how you actually want to practice.
+        </p>
+
+        <div class="actions">
+          <a href="404.html" class="btn btn-lg btn-white" data-aos="zoom-in" data-aos-delay="450">
+            <i class="fas fa-calendar-check"></i> Book Free Class
+          </a>
+          <a href="404.html" class="btn btn-lg btn-outline-white" data-aos="zoom-in" data-aos-delay="500">
+            <i class="fas fa-comments"></i> Talk to Us
+          </a>
+        </div>
+
+        <div class="cta-mini">
+          <span><i class="fas fa-check-circle"></i> No contract</span>
+          <span><i class="fas fa-check-circle"></i> Pause anytime</span>
+          <span><i class="fas fa-check-circle"></i> Cancel anytime</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+AOS.init({
+  duration: 850,
+  easing: 'ease-out-cubic',
+  once: true,
+  offset: 60,
+  mirror: false,
+  disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+});
+
+(function(){
+  const bar = document.getElementById('scrollProgress');
+  function onScroll(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop || document.body.scrollTop;
+    const height = h.scrollHeight - h.clientHeight;
+    bar.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+
+document.addEventListener('DOMContentLoaded', function(){
+  fetch('header.html')
+    .then(r => r.ok ? r.text() : Promise.reject('Header not found'))
+    .then(html => { document.getElementById('header-placeholder').innerHTML = html; initHeader(); })
+    .catch(err => console.warn('Header not loaded:', err));
+
+  fetch('footer.html')
+    .then(r => r.ok ? r.text() : Promise.reject('Footer not found'))
+    .then(html => { document.getElementById('footer-placeholder').innerHTML = html; initFooter(); })
+    .catch(err => console.warn('Footer not loaded:', err));
+});
+
+function initHeader(){
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (!hamburger || !mobileMenu) return;
+  const toggle = () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+  };
+  const close = () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+  hamburger.addEventListener('click', toggle);
+  document.addEventListener('click', e => {
+    if (mobileMenu.classList.contains('active') &&
+        !hamburger.contains(e.target) &&
+        !mobileMenu.contains(e.target)) close();
+  });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  window.addEventListener('resize', () => { if (window.innerWidth > 768) close(); });
+  document.querySelectorAll('.mobile-nav-link, .mobile-action-link')
+    .forEach(l => l.addEventListener('click', close));
+}
+
+function initFooter(){
+  const isValid = e => /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(e);
+  function bind(btnId, inputId, errId){
+    const btn = document.getElementById(btnId);
+    const input = document.getElementById(inputId);
+    const err = document.getElementById(errId);
+    if (!btn || !input || !err) return;
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const v = input.value.trim();
+      if (!v){ err.textContent = 'Please enter your email address'; err.classList.add('show'); input.classList.add('error'); }
+      else if (!isValid(v)){ err.textContent = 'Please enter a valid email address'; err.classList.add('show'); input.classList.add('error'); }
+      else window.location.href = '404.html';
+    });
+    input.addEventListener('input', () => {
+      if (input.value.trim()){ err.classList.remove('show'); input.classList.remove('error'); }
+    });
+    input.addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); btn.click(); } });
+  }
+  bind('footerSubscribeBtn', 'footerEmail', 'footerEmailError');
+  bind('mobileFooterSubscribeBtn', 'mobileFooterEmail', 'mobileFooterEmailError');
+}
+
+console.log('%c🧘 Yoga Studio — pricing page ready', 'color:#7A8B7E;font-size:15px;font-weight:bold;');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Yoga Studio - Contact</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+<style>
+/* ================================================================
+   YOGA STUDIO — CONTACT PAGE
+   ================================================================ */
+:root{
+  --sage:#7A8B7E;
+  --sage-d:#5F6E5A;
+  --sage-l:#9BAA9E;
+  --sage-soft:#B8C4B9;
+  --clay:#C17B5A;
+  --clay-d:#A55A3F;
+  --clay-l:#D9A48C;
+  --sand:#E8DFD3;
+  --gold:#D4A574;
+
+  --stone:#F5F3EF;
+  --stone-2:#F2EFE9;
+  --cream:#FBF8F3;
+  --bg:#F5F3EF;
+
+  --text:#3A4A3F;
+  --text-soft:#5A5E56;
+  --text-mute:#8A8E86;
+  --white:#ffffff;
+  --line:#E2DFD8;
+  --line-soft:#EFEAE2;
+
+  --sh1:0 2px 10px rgba(94,89,80,.05);
+  --sh2:0 14px 34px rgba(94,89,80,.09);
+  --sh3:0 28px 62px rgba(94,89,80,.15);
+
+  --r-s:14px;
+  --r-m:22px;
+  --r-l:30px;
+  --r-xl:42px;
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-bounce:cubic-bezier(.34,1.56,.64,1);
+
+  --wrap:1240px;
+}
+
+/* ================================================================
+   BASE
+   ================================================================ */
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  width:100%;max-width:100%;overflow-x:hidden;
+}
+
+body{
+  font-family:'Inter','Segoe UI',Roboto,system-ui,sans-serif;
+  font-size:15px;line-height:1.65;color:var(--text);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+  position:relative;width:100%;max-width:100%;min-width:0;
+}
+
+@supports (overflow-x: clip){ body{overflow-x:clip;} }
+
+h1,h2,h3,h4,h5{
+  font-family:'Outfit','Inter',sans-serif;
+  font-weight:800;line-height:1.08;letter-spacing:-.025em;color:var(--text);
+}
+
+img{display:block;max-width:100%;}
+a{text-decoration:none;color:inherit;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+#header-placeholder,#footer-placeholder{
+  flex-shrink:0;width:100%;max-width:100%;min-width:0;overflow-x:clip;
+}
+
+main{flex:1;width:100%;max-width:100%;min-width:0;overflow-x:clip;}
+
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 22px;}
+
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-track{background:var(--stone-2);}
+::-webkit-scrollbar-thumb{background:var(--sage);border-radius:20px;border:2px solid var(--stone-2);}
+::-webkit-scrollbar-thumb:hover{background:var(--clay);}
+::selection{background:var(--clay);color:#fff;}
+
+/* ================================================================
+   UTILS
+   ================================================================ */
+.sec{padding:80px 0;position:relative;overflow-x:clip;}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--clay-d);background:rgba(193,123,90,.11);
+  border:1px solid rgba(193,123,90,.16);
+  padding:7px 15px;border-radius:100px;margin-bottom:16px;
+}
+.eyebrow.sage{color:var(--sage-d);background:rgba(122,139,126,.09);border-color:rgba(122,139,126,.15);}
+
+.section-label{
+  display:flex;align-items:center;gap:14px;
+  font-size:.72rem;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;
+  color:var(--text-mute);margin-bottom:26px;
+}
+.section-label::before{content:'';width:32px;height:2px;background:var(--clay);border-radius:2px;}
+.section-label.center{justify-content:center;}
+.section-label.center::after{content:'';width:32px;height:2px;background:var(--clay);border-radius:2px;}
+
+.head{max-width:660px;margin-bottom:44px;}
+.head.center{margin-left:auto;margin-right:auto;text-align:center;}
+.head h2{font-size:clamp(1.75rem,3.6vw,2.6rem);margin-bottom:14px;}
+.head h2 em{font-style:normal;color:var(--sage);position:relative;}
+.head h2 em::after{
+  content:'';position:absolute;left:0;right:0;bottom:2px;height:9px;
+  background:rgba(193,123,90,.22);border-radius:6px;z-index:-1;
+}
+.head p{font-size:.96rem;color:var(--text-soft);line-height:1.75;}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:13px 26px;border-radius:100px;
+  font-size:.85rem;font-weight:700;letter-spacing:.1px;line-height:1;
+  border:1.6px solid transparent;cursor:pointer;
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .3s ease,color .3s ease,border-color .3s ease;
+  white-space:nowrap;
+}
+.btn i{font-size:.85em;}
+.btn-clay{background:var(--clay);color:#fff;box-shadow:0 10px 24px rgba(193,123,90,.34);}
+.btn-clay:hover{background:var(--clay-d);transform:translateY(-3px);box-shadow:0 16px 34px rgba(193,123,90,.44);}
+.btn-sage{background:var(--sage);color:#fff;box-shadow:0 10px 24px rgba(122,139,126,.28);}
+.btn-sage:hover{background:var(--sage-d);transform:translateY(-3px);box-shadow:0 16px 34px rgba(122,139,126,.38);}
+.btn-ghost{border-color:var(--line);background:#fff;color:var(--text);box-shadow:var(--sh1);}
+.btn-ghost:hover{border-color:var(--sage);color:var(--sage);transform:translateY(-3px);box-shadow:var(--sh2);}
+.btn-sm{padding:10px 18px;font-size:.76rem;}
+.btn-lg{padding:16px 32px;font-size:.92rem;}
+
+/* ================================================================
+   SCROLL PROGRESS
+   ================================================================ */
+#scrollProgress{
+  position:fixed;top:0;left:0;height:3px;width:0%;
+  background:linear-gradient(90deg,var(--sage),var(--sage-l),var(--clay));
+  z-index:9999;transition:width .1s linear;
+  box-shadow:0 0 12px rgba(193,123,90,.45);
+}
+
+/* ================================================================
+   SECTION 1 — HERO
+   ================================================================ */
+.contact-hero{
+  position:relative;
+  padding:80px 0 70px;
+  overflow:hidden;
+  background:var(--cream);
+  text-align:center;
+}
+.contact-hero::before{
+  content:'';position:absolute;top:-180px;left:50%;transform:translateX(-50%);
+  width:900px;height:500px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(193,123,90,.18),transparent 70%);
+  filter:blur(80px);pointer-events:none;
+}
+.contact-hero .wrap{position:relative;z-index:2;}
+
+.crumb-line{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.68rem;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--text-mute);margin-bottom:28px;
+}
+.crumb-line a{color:var(--sage-d);transition:color .3s ease;}
+.crumb-line a:hover{color:var(--clay-d);}
+.crumb-line i{font-size:.55rem;}
+
+.contact-hero h1{
+  font-size:clamp(2.4rem,5.6vw,4.4rem);
+  font-weight:900;letter-spacing:-.035em;line-height:1.02;
+  margin-bottom:22px;
+}
+.contact-hero h1 em{
+  font-style:normal;color:var(--sage-d);position:relative;display:inline-block;
+}
+.contact-hero h1 em::after{
+  content:'';position:absolute;left:-3px;right:-3px;bottom:-4px;height:3px;
+  background:var(--clay);border-radius:2px;
+}
+
+.contact-hero p{
+  font-size:1.04rem;color:var(--text-soft);line-height:1.8;
+  max-width:620px;margin:0 auto 36px;
+}
+
+.contact-hero .hero-quick{
+  display:flex;justify-content:center;gap:14px;flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.quick-chip{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 22px;
+  border-radius:100px;
+  border:1.5px solid var(--line);
+  background:#fff;
+  font-size:.8rem;font-weight:700;color:var(--text);
+  box-shadow:var(--sh1);
+  transition:all .35s var(--ease);
+}
+.quick-chip:hover{
+  border-color:var(--sage);
+  transform:translateY(-3px);
+  box-shadow:var(--sh2);
+}
+.quick-chip i{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(122,139,126,.12);
+  color:var(--sage-d);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;
+}
+
+@media (max-width:640px){
+  .contact-hero{padding:50px 0 60px;}
+  .hero-quick{flex-direction:column;align-items:stretch;}
+  .quick-chip{justify-content:center;}
+}
+
+/* ================================================================
+   SECTION 2 — CONTACT FORM + INFO
+   ================================================================ */
+.contact-main{
+  background:#fff;
+  border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:60px;
+  align-items:start;
+}
+
+/* FORM */
+.form-card{
+  background:var(--cream);
+  border:1.5px solid var(--line);
+  border-radius:var(--r-l);
+  padding:40px 38px;
+  box-shadow:var(--sh2);
+  position:relative;
+  overflow:hidden;
+}
+.form-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:6px;
+  background:linear-gradient(90deg,var(--sage),var(--clay));
+}
+
+.form-card h2{
+  font-size:clamp(1.4rem,2.6vw,1.8rem);
+  margin-bottom:6px;
+}
+.form-card .form-sub{
+  font-size:.9rem;color:var(--text-soft);line-height:1.65;
+  margin-bottom:28px;
+}
+
+.field{
+  display:flex;flex-direction:column;
+  margin-bottom:20px;
+}
+.field label{
+  font-size:.7rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--text-soft);
+  margin-bottom:8px;
+}
+.field label .req{color:var(--clay-d);}
+.field input,
+.field textarea,
+.field select{
+  width:100%;
+  padding:14px 16px;
+  border:1.5px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  font-family:inherit;
+  font-size:.9rem;
+  color:var(--text);
+  transition:border-color .3s ease,box-shadow .3s ease;
+  outline:none;
+}
+.field input::placeholder,
+.field textarea::placeholder{color:var(--text-mute);}
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
+  border-color:var(--sage);
+  box-shadow:0 0 0 4px rgba(122,139,126,.12);
+}
+.field textarea{
+  resize:vertical;
+  min-height:130px;
+  line-height:1.6;
+}
+.field select{
+  cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%235A5E56' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 16px center;
+  background-size:10px 7px;
+  padding-right:40px;
+}
+
+.field.invalid input,
+.field.invalid textarea,
+.field.invalid select{
+  border-color:var(--clay);
+  box-shadow:0 0 0 4px rgba(193,123,90,.12);
+}
+
+.field-error{
+  font-size:.72rem;
+  color:var(--clay-d);
+  font-weight:600;
+  margin-top:6px;
+  display:none;
+  align-items:center;gap:5px;
+}
+.field.invalid .field-error{display:flex;}
+
+.field-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.checkbox-field{
+  margin-bottom:24px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.checkbox-field .cb-row{
+  display:flex;align-items:flex-start;gap:12px;
+}
+.checkbox-field input[type="checkbox"]{
+  width:20px;height:20px;
+  accent-color:var(--sage);
+  cursor:pointer;
+  flex-shrink:0;
+  margin-top:2px;
+}
+.checkbox-field label{
+  font-size:.82rem;color:var(--text-soft);line-height:1.6;
+  cursor:pointer;
+  font-weight:500;
+  letter-spacing:0;
+  text-transform:none;
+}
+.checkbox-field a{color:var(--clay-d);text-decoration:underline;}
+.checkbox-field.invalid label{color:var(--clay-d);}
+.checkbox-field .field-error{
+  display:none;
+  margin-left:32px;
+  font-size:.72rem;
+  color:var(--clay-d);
+  font-weight:600;
+}
+.checkbox-field.invalid .field-error{display:flex;}
+
+.form-btn{
+  width:100%;
+  padding:16px 24px;
+  border-radius:100px;
+  background:var(--clay);
+  color:#fff;
+  border:none;
+  font-family:inherit;
+  font-size:.78rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  cursor:pointer;
+  transition:all .35s var(--ease);
+  box-shadow:0 10px 24px rgba(193,123,90,.34);
+}
+.form-btn:hover{
+  background:var(--clay-d);
+  transform:translateY(-2px);
+  box-shadow:0 16px 34px rgba(193,123,90,.44);
+}
+.form-btn:disabled{
+  opacity:.7;
+  cursor:wait;
+  transform:none;
+}
+
+/* INFO SIDE */
+.info-side{
+  display:flex;flex-direction:column;
+  gap:18px;
+}
+
+.info-card{
+  display:flex;align-items:flex-start;gap:18px;
+  padding:24px 26px;
+  background:var(--cream);
+  border:1.5px solid var(--line);
+  border-radius:var(--r-m);
+  transition:all .4s var(--ease);
+}
+.info-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(193,123,90,.32);
+  box-shadow:var(--sh1);
+}
+.info-card .ic-ico{
+  width:52px;height:52px;border-radius:14px;
+  background:rgba(122,139,126,.12);
+  color:var(--sage-d);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+  flex-shrink:0;
+  transition:all .4s var(--ease-bounce);
+}
+.info-card:hover .ic-ico{
+  background:var(--clay);color:#fff;
+  transform:rotate(-6deg);
+}
+.info-card .ic-body h3{
+  font-family:'Outfit',sans-serif;
+  font-size:.95rem;font-weight:800;
+  letter-spacing:-.01em;
+  margin-bottom:4px;
+}
+.info-card .ic-body p{
+  font-size:.86rem;color:var(--text-soft);line-height:1.6;
+  margin-bottom:10px;
+}
+.info-card .ic-body .ic-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.66rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--clay-d);
+  transition:color .3s ease;
+}
+.info-card .ic-body .ic-link:hover{color:var(--clay);}
+.info-card .ic-body .ic-link i{font-size:.6em;transition:transform .3s ease;}
+.info-card .ic-body .ic-link:hover i{transform:translateX(4px);}
+
+.info-hours{
+  padding:28px 26px;
+  background:var(--cream);
+  border:1.5px solid var(--line);
+  border-radius:var(--r-m);
+}
+.info-hours h3{
+  font-family:'Outfit',sans-serif;
+  font-size:.95rem;font-weight:800;
+  margin-bottom:16px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--line);
+}
+.info-hours ul{
+  list-style:none;
+  display:flex;flex-direction:column;gap:10px;
+}
+.info-hours li{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.84rem;
+  padding:6px 0;
+}
+.info-hours li span:first-child{
+  color:var(--text-soft);font-weight:600;
+}
+.info-hours li span:last-child{
+  color:var(--text);font-weight:800;
+  font-family:'Outfit',sans-serif;
+  font-size:.85rem;
+}
+
+.info-social{
+  display:flex;gap:10px;flex-wrap:wrap;
+  padding:22px 26px;
+  background:var(--cream);
+  border:1.5px solid var(--line);
+  border-radius:var(--r-m);
+}
+.info-social .s-link{
+  width:42px;height:42px;border-radius:50%;
+  background:#fff;border:1.5px solid var(--line);
+  color:var(--text-soft);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;
+  transition:all .35s var(--ease);
+}
+.info-social .s-link:hover{
+  background:var(--clay);color:#fff;border-color:var(--clay);
+  transform:translateY(-3px) scale(1.05);
+}
+
+@media (max-width:1024px){
+  .contact-grid{grid-template-columns:1fr;gap:44px;}
+}
+@media (max-width:520px){
+  .form-card{padding:30px 24px;}
+  .field-row{grid-template-columns:1fr;gap:0;}
+}
+
+/* ================================================================
+   SECTION 3 — MAP
+   ================================================================ */
+.map-section{
+  background:var(--stone-2);
+  border-bottom:1px solid var(--line-soft);
+}
+
+.map-wrap{
+  position:relative;
+  border-radius:var(--r-l);
+  overflow:hidden;
+  border:1.5px solid var(--line);
+  box-shadow:var(--sh2);
+  background:#fff;
+}
+
+.map-embed{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  border:0;
+}
+.map-embed iframe{
+  width:100%;height:100%;border:0;display:block;
+}
+
+.map-overlay{
+  position:absolute;
+  bottom:24px;left:24px;
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-radius:var(--r-m);
+  padding:22px 26px;
+  box-shadow:var(--sh3);
+  max-width:340px;
+}
+.map-overlay h3{
+  font-family:'Outfit',sans-serif;
+  font-size:1.15rem;font-weight:800;
+  letter-spacing:-.015em;
+  margin-bottom:6px;
+}
+.map-overlay p{
+  font-size:.84rem;color:var(--text-soft);line-height:1.6;
+  margin-bottom:14px;
+}
+.map-overlay .map-actions{
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.map-overlay .btn-sm{font-size:.68rem;}
+
+.map-actions-bar{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  margin-top:32px;
+}
+
+@media (max-width:900px){
+  .map-embed{aspect-ratio:4/3;}
+  .map-overlay{position:static;max-width:none;border:none;border-top:1.5px solid var(--line);box-shadow:none;padding:24px 22px;}
+}
+@media (max-width:520px){
+  .map-actions-bar{flex-direction:column;align-items:stretch;}
+  .map-actions-bar .btn{justify-content:center;}
+  .map-overlay .map-actions{flex-direction:column;}
+}
+
+/* ================================================================
+   SECTION 4 — QUICK FAQ
+   ================================================================ */
+.faq-contact{
+  background:var(--cream);
+  border-bottom:1px solid var(--line-soft);
+}
+
+.faq-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.faq-card{
+  padding:26px 26px;
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-radius:var(--r-m);
+  transition:all .4s var(--ease);
+}
+.faq-card:hover{
+  border-color:rgba(193,123,90,.32);
+  transform:translateY(-3px);
+  box-shadow:var(--sh1);
+}
+.faq-card .fc-ico{
+  width:44px;height:44px;border-radius:12px;
+  background:rgba(122,139,126,.1);
+  color:var(--sage-d);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+  margin-bottom:16px;
+  transition:all .4s var(--ease-bounce);
+}
+.faq-card:hover .fc-ico{
+  background:var(--clay);color:#fff;
+  transform:rotate(-6deg);
+}
+.faq-card h3{
+  font-family:'Outfit',sans-serif;
+  font-size:1.05rem;font-weight:800;
+  letter-spacing:-.015em;
+  margin-bottom:8px;
+}
+.faq-card p{
+  font-size:.86rem;color:var(--text-soft);line-height:1.65;
+  margin-bottom:14px;
+}
+.faq-card .fc-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.66rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--clay-d);
+}
+.faq-card .fc-link i{font-size:.6em;transition:transform .3s ease;}
+.faq-card:hover .fc-link i{transform:translateX(4px);}
+
+.faq-actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  margin-top:40px;
+}
+
+@media (max-width:740px){
+  .faq-grid{grid-template-columns:1fr;}
+  .faq-actions{flex-direction:column;align-items:stretch;}
+  .faq-actions .btn{justify-content:center;}
+}
+
+/* ================================================================
+   SECTION 5 — FINAL CTA
+   ================================================================ */
+.final-cta{
+  padding:80px 0 100px;
+  background:var(--stone-2);
+}
+.final-cta .wrap{position:relative;z-index:2;}
+
+.cta-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:var(--r-xl);
+  background:linear-gradient(135deg,#5F6E5A 0%,#7A8B7E 55%,#8FA292 100%);
+  padding:80px 60px;
+  text-align:center;
+  box-shadow:var(--sh3);
+}
+.cta-card::before{
+  content:'';position:absolute;top:-100px;left:-100px;
+  width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle,rgba(193,123,90,.32),transparent 70%);
+  pointer-events:none;
+}
+.cta-card::after{
+  content:'';position:absolute;bottom:-120px;right:-100px;
+  width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%);
+  pointer-events:none;
+}
+
+.cta-card .chip{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:#fff;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+  padding:7px 15px;border-radius:100px;
+  margin-bottom:20px;
+  position:relative;z-index:2;
+}
+.cta-card h2{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(1.8rem,4vw,2.9rem);
+  font-weight:900;color:#fff;letter-spacing:-.03em;line-height:1.05;
+  margin-bottom:18px;
+  position:relative;z-index:2;
+}
+.cta-card p{
+  color:rgba(255,255,255,.82);
+  font-size:.98rem;line-height:1.75;
+  max-width:520px;margin:0 auto 34px;
+  position:relative;z-index:2;
+}
+.cta-card .actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  position:relative;z-index:2;
+}
+
+.btn-white{
+  background:#fff;color:var(--text);
+  box-shadow:0 10px 26px rgba(0,0,0,.18);
+}
+.btn-white:hover{background:var(--clay);color:#fff;}
+.btn-outline-white{
+  background:transparent;color:#fff;
+  border:1.5px solid rgba(255,255,255,.5);
+}
+.btn-outline-white:hover{background:#fff;color:var(--text);border-color:#fff;}
+
+@media (max-width:640px){
+  .final-cta{padding:60px 0 70px;}
+  .cta-card{padding:44px 26px;border-radius:var(--r-l);}
+  .cta-card .actions{flex-direction:column;align-items:stretch;}
+  .cta-card .actions .btn{justify-content:center;}
+}
+
+/* ================================================================
+   AOS safety
+   ================================================================ */
+@media (max-width:900px){
+  [data-aos="fade-left"],[data-aos="fade-right"]{
+    transform:translate3d(0,34px,0) !important;
+    opacity:0;
+  }
+  [data-aos="fade-left"].aos-animate,
+  [data-aos="fade-right"].aos-animate{
+    transform:translate3d(0,0,0) !important;
+    opacity:1;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width:640px){
+  .sec{padding:60px 0;}
+  .wrap{padding:0 16px;}
+  .head h2{font-size:1.55rem;}
+  .head p{font-size:.9rem;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="scrollProgress"></div>
+<div id="header-placeholder"></div>
+
+<main>
+
+  <!-- ================= SECTION 1 — HERO ================= -->
+  <section class="contact-hero" id="contact-hero">
+    <div class="wrap">
+
+      <div class="crumb-line" data-aos="fade-down">
+        <a href="index.html">Home</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Contact</span>
+      </div>
+
+      <h1 data-aos="fade-up" data-aos-delay="100">
+        Come say <em>hello</em>.
+      </h1>
+
+      <p data-aos="fade-up" data-aos-delay="200">
+        Questions about your first class? Not sure which style is right for you?
+        Drop us a line or stop by the studio — we'd love to meet you.
+      </p>
+
+      <div class="hero-quick" data-aos="fade-up" data-aos-delay="300">
+        <a href="404.html" class="quick-chip">
+          <i class="fas fa-phone"></i> +1 (234) 567-8900
+        </a>
+        <a href="404.html" class="quick-chip">
+          <i class="fas fa-envelope"></i> hello@yogastudio.com
+        </a>
+        <a href="404.html" class="quick-chip">
+          <i class="fas fa-map-location-dot"></i> Find the studio
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 2 — CONTACT FORM + INFO ================= -->
+  <section class="sec contact-main" id="contact-form" aria-labelledby="form-heading">
+    <div class="wrap">
+
+      <h2 class="section-label" data-aos="fade-down">Get in Touch</h2>
+
+      <div class="contact-grid">
+
+        <!-- FORM -->
+        <div class="form-card" data-aos="fade-right">
+
+          <form id="contactForm" novalidate>
+
+            <h2 id="form-heading">Send us a message</h2>
+            <p class="form-sub">All fields marked with * are required. We usually reply within one working day.</p>
+
+            <div class="field-row">
+              <div class="field" id="field-name">
+                <label for="name">Your name <span class="req">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Jane Doe" autocomplete="name">
+                <span class="field-error"><i class="fas fa-circle-exclamation"></i> Letters and spaces only (at least 2 characters)</span>
+              </div>
+              <div class="field" id="field-email">
+                <label for="email">Email address <span class="req">*</span></label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email">
+                <span class="field-error"><i class="fas fa-circle-exclamation"></i> Please enter a valid email</span>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field" id="field-phone">
+                <label for="phone">Phone <span class="req">*</span></label>
+                <input type="tel" id="phone" name="phone" placeholder="10-digit number" autocomplete="tel" inputmode="numeric" maxlength="10">
+                <span class="field-error"><i class="fas fa-circle-exclamation"></i> Please enter exactly 10 digits</span>
+              </div>
+              <div class="field" id="field-topic">
+                <label for="topic">What's this about? <span class="req">*</span></label>
+                <select id="topic" name="topic">
+                  <option value="">Choose a topic</option>
+                  <option value="class">Booking a class</option>
+                  <option value="membership">Membership &amp; pricing</option>
+                  <option value="private">Private sessions</option>
+                  <option value="retreat">Retreats &amp; workshops</option>
+                  <option value="other">Something else</option>
+                </select>
+                <span class="field-error"><i class="fas fa-circle-exclamation"></i> Please choose a topic</span>
+              </div>
+            </div>
+
+            <div class="field" id="field-message">
+              <label for="message">Message <span class="req">*</span></label>
+              <textarea id="message" name="message" placeholder="Tell us a little about what you're looking for…"></textarea>
+              <span class="field-error"><i class="fas fa-circle-exclamation"></i> Please write a short message (at least 10 characters)</span>
+            </div>
+
+            <div class="checkbox-field" id="field-consent">
+              <div class="cb-row">
+                <input type="checkbox" id="consent" name="consent">
+                <label for="consent">
+                  I agree to be contacted about my enquiry. Read our
+                  <a href="404.html">privacy policy</a>. <span class="req" style="color:var(--clay-d);">*</span>
+                </label>
+              </div>
+              <span class="field-error"><i class="fas fa-circle-exclamation"></i> Please tick the box to continue</span>
+            </div>
+
+            <button type="button" class="form-btn" id="submitBtn">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+
+          </form>
+
+        </div>
+
+        <!-- INFO SIDE -->
+        <div class="info-side">
+
+          <div class="info-card" data-aos="fade-left" data-aos-delay="100">
+            <div class="ic-ico"><i class="fas fa-location-dot"></i></div>
+            <div class="ic-body">
+              <h3>Visit the studio</h3>
+              <p>45 Serenity Lane, Wellness District,<br>New York, NY 10001</p>
+              <a href="404.html" class="ic-link">Get directions <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="info-card" data-aos="fade-left" data-aos-delay="160">
+            <div class="ic-ico"><i class="fas fa-phone"></i></div>
+            <div class="ic-body">
+              <h3>Call us</h3>
+              <p>+1 (234) 567-8900<br>Mon – Sun · 8 am – 8 pm</p>
+              <a href="404.html" class="ic-link">Call now <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="info-card" data-aos="fade-left" data-aos-delay="220">
+            <div class="ic-ico"><i class="fas fa-envelope"></i></div>
+            <div class="ic-body">
+              <h3>Email us</h3>
+              <p>hello@yogastudio.com<br>We reply within 1 working day</p>
+              <a href="404.html" class="ic-link">Send email <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="info-hours" data-aos="fade-left" data-aos-delay="280">
+            <h3>Studio Hours</h3>
+            <ul>
+              <li><span>Mon – Fri</span><span>6:00 am – 9:00 pm</span></li>
+              <li><span>Saturday</span><span>7:00 am – 8:00 pm</span></li>
+              <li><span>Sunday</span><span>8:00 am – 6:00 pm</span></li>
+            </ul>
+          </div>
+
+          <div class="info-social" data-aos="fade-left" data-aos-delay="340">
+            <a href="404.html" class="s-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="404.html" class="s-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="404.html" class="s-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="404.html" class="s-link" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 3 — MAP ================= -->
+  <section class="sec map-section" id="map" aria-labelledby="map-heading">
+    <div class="wrap">
+
+      <h2 class="section-label center" data-aos="fade-down">Find Us</h2>
+
+      <div class="head center" data-aos="fade-up">
+        <span class="eyebrow sage"><i class="fas fa-map-location-dot"></i> Location</span>
+        <h2 id="map-heading">Tucked away, <em>close to you</em>.</h2>
+        <p>Two blocks from the metro. Street parking available after 6 pm.</p>
+      </div>
+
+      <div class="map-wrap" data-aos="zoom-in">
+
+        <div class="map-embed">
+          <iframe
+            title="Yoga Studio location"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.940540051323!2d-73.9899041234649!3d40.73061097138953!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sUnion%20Square!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="map-overlay">
+          <h3>Yoga Studio · Main</h3>
+          <p>45 Serenity Lane, Wellness District,<br>New York, NY 10001</p>
+          <div class="map-actions">
+            <a href="404.html" class="btn btn-sm btn-clay">
+              <i class="fas fa-diamond-turn-right"></i> Directions
+            </a>
+            <a href="404.html" class="btn btn-sm btn-ghost">
+              <i class="fas fa-copy"></i> Copy Address
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="map-actions-bar" data-aos="fade-up" data-aos-delay="100">
+        <a href="404.html" class="btn btn-sage">
+          <i class="fas fa-calendar-check"></i> Book a Class
+        </a>
+        <a href="404.html" class="btn btn-ghost">
+          <i class="fas fa-bus"></i> Public Transport
+        </a>
+        <a href="404.html" class="btn btn-ghost">
+          <i class="fas fa-square-parking"></i> Parking Info
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 4 — QUICK FAQ ================= -->
+  <section class="sec faq-contact" id="quick-faq" aria-labelledby="qf-heading">
+    <div class="wrap">
+
+      <h2 class="section-label center" data-aos="fade-down">Quick Answers</h2>
+
+      <div class="head center" data-aos="fade-up">
+        <span class="eyebrow"><i class="fas fa-circle-question"></i> Before you write</span>
+        <h2 id="qf-heading">Some things you might be <em>wondering</em>.</h2>
+        <p>If your question isn't here, use the form above — we're happy to help.</p>
+      </div>
+
+      <div class="faq-grid">
+
+        <div class="faq-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="fc-ico"><i class="fas fa-clock"></i></div>
+          <h3>Do I need to book in advance?</h3>
+          <p>Yes, we recommend booking online at least a day ahead — classes are capped at 12 mats and often fill up.</p>
+          <a href="404.html" class="fc-link">Book a class <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="faq-card" data-aos="fade-up" data-aos-delay="60">
+          <div class="fc-ico"><i class="fas fa-person-walking"></i></div>
+          <h3>Is there parking nearby?</h3>
+          <p>Street parking is free after 6 pm, and there's a paid lot one block east of the studio on Serenity Lane.</p>
+          <a href="404.html" class="fc-link">See on map <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="faq-card" data-aos="fade-up" data-aos-delay="120">
+          <div class="fc-ico"><i class="fas fa-shirt"></i></div>
+          <h3>What should I wear?</h3>
+          <p>Anything comfortable that lets you move freely. You'll be barefoot — socks and shoes come off at the door.</p>
+          <a href="404.html" class="fc-link">What to expect <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="faq-card" data-aos="fade-up" data-aos-delay="180">
+          <div class="fc-ico"><i class="fas fa-calendar-xmark"></i></div>
+          <h3>What's your cancellation policy?</h3>
+          <p>Cancel free up to 4 hours before class. Late cancels are charged as a normal visit.</p>
+          <a href="404.html" class="fc-link">Read policy <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="faq-card" data-aos="fade-up" data-aos-delay="240">
+          <div class="fc-ico"><i class="fas fa-gift"></i></div>
+          <h3>Do you offer gift cards?</h3>
+          <p>Yes — gift cards are available for single classes, monthly memberships, or a set amount.</p>
+          <a href="404.html" class="fc-link">Buy gift card <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="faq-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="fc-ico"><i class="fas fa-user-group"></i></div>
+          <h3>Can I book a private session?</h3>
+          <p>Absolutely. One-to-one and small-group private sessions are available — just choose "Private sessions" in the form above.</p>
+          <a href="404.html" class="fc-link">Enquire now <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+      </div>
+
+      <div class="faq-actions" data-aos="fade-up" data-aos-delay="120">
+        <a href="404.html" class="btn btn-clay">
+          <i class="fas fa-paper-plane"></i> Ask Us Directly
+        </a>
+        <a href="404.html" class="btn btn-ghost">
+          <i class="fas fa-phone"></i> Call the Studio
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 5 — FINAL CTA ================= -->
+  <section class="final-cta" id="book" aria-labelledby="book-heading">
+    <div class="wrap">
+      <div class="cta-card" data-aos="zoom-in" data-aos-duration="1000">
+
+        <span class="chip" data-aos="fade-down" data-aos-delay="150">
+          <i class="fas fa-spa"></i> Your first class is free
+        </span>
+
+        <h2 id="book-heading" data-aos="fade-up" data-aos-delay="250">
+          Rather just come in?
+        </h2>
+
+        <p data-aos="fade-up" data-aos-delay="350">
+          No appointment needed — drop by during studio hours, take a tour,
+          and try a class on us. We'll take care of the rest.
+        </p>
+
+        <div class="actions">
+          <a href="404.html" class="btn btn-lg btn-white" data-aos="zoom-in" data-aos-delay="450">
+            <i class="fas fa-calendar-check"></i> Book a Free Class
+          </a>
+          <a href="404.html" class="btn btn-lg btn-outline-white" data-aos="zoom-in" data-aos-delay="500">
+            <i class="fas fa-phone"></i> Call the Studio
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+AOS.init({
+  duration: 850,
+  easing: 'ease-out-cubic',
+  once: true,
+  offset: 60,
+  mirror: false,
+  disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+});
+
+/* Scroll progress */
+(function(){
+  const bar = document.getElementById('scrollProgress');
+  function onScroll(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop || document.body.scrollTop;
+    const height = h.scrollHeight - h.clientHeight;
+    bar.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+
+/* ================================================================
+   CONTACT FORM
+   ================================================================ */
+(function(){
+  'use strict';
+
+  const form      = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+
+  if (!form || !submitBtn){
+    console.error('❌ Form or submit button missing');
+    return;
+  }
+
+  const nameEl    = document.getElementById('name');
+  const emailEl   = document.getElementById('email');
+  const phoneEl   = document.getElementById('phone');
+  const topicEl   = document.getElementById('topic');
+  const messageEl = document.getElementById('message');
+  const consentEl = document.getElementById('consent');
+
+  const nameBox    = document.getElementById('field-name');
+  const emailBox   = document.getElementById('field-email');
+  const phoneBox   = document.getElementById('field-phone');
+  const topicBox   = document.getElementById('field-topic');
+  const messageBox = document.getElementById('field-message');
+  const consentBox = document.getElementById('field-consent');
+
+  function isValidName(v){
+    return /^[A-Za-z\s]+$/.test(v.trim()) && v.trim().length >= 2;
+  }
+  function isValidEmail(v){
+    return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(v.trim());
+  }
+  function isValidPhone(v){
+    return /^\d{10}$/.test(v.trim());
+  }
+
+  function markInvalid(box, isInvalid){
+    if (!box) return;
+    box.classList.toggle('invalid', isInvalid);
+  }
+
+  /* Restrict typing */
+  if (nameEl){
+    nameEl.addEventListener('input', () => {
+      nameEl.value = nameEl.value.replace(/[^A-Za-z\s]/g, '');
+    });
+  }
+  if (phoneEl){
+    phoneEl.addEventListener('input', () => {
+      phoneEl.value = phoneEl.value.replace(/\D/g, '').slice(0, 10);
+    });
+  }
+
+  function validateAll(){
+    const errors = [];
+
+    if (!isValidName(nameEl.value)){
+      markInvalid(nameBox, true); errors.push('name');
+    } else markInvalid(nameBox, false);
+
+    if (!isValidEmail(emailEl.value)){
+      markInvalid(emailBox, true); errors.push('email');
+    } else markInvalid(emailBox, false);
+
+    if (!isValidPhone(phoneEl.value)){
+      markInvalid(phoneBox, true); errors.push('phone');
+    } else markInvalid(phoneBox, false);
+
+    if (topicEl.value.trim() === ''){
+      markInvalid(topicBox, true); errors.push('topic');
+    } else markInvalid(topicBox, false);
+
+    if (messageEl.value.trim().length < 10){
+      markInvalid(messageBox, true); errors.push('message');
+    } else markInvalid(messageBox, false);
+
+    if (!consentEl.checked){
+      markInvalid(consentBox, true); errors.push('consent');
+    } else markInvalid(consentBox, false);
+
+    return errors;
+  }
+
+  function handleSubmit(e){
+    if (e) e.preventDefault();
+    console.log('📩 Send Message clicked');
+
+    const errors = validateAll();
+
+    if (errors.length){
+      console.warn('❌ Validation failed:', errors.join(', '));
+      const map = {
+        name: nameEl, email: emailEl, phone: phoneEl,
+        topic: topicEl, message: messageEl, consent: consentEl
+      };
+      const first = map[errors[0]];
+      if (first && first.focus) first.focus();
+      return;
+    }
+
+    console.log('✅ All valid → redirecting to 404.html');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
+
+    setTimeout(() => {
+      window.location.href = '404.html';
+    }, 500);
+  }
+
+  /* Attach BOTH click + submit so it always fires */
+  submitBtn.addEventListener('click', handleSubmit);
+  form.addEventListener('submit', handleSubmit);
+
+  /* Live clearing */
+  [nameEl, emailEl, phoneEl, topicEl, messageEl].forEach(el => {
+    if (!el) return;
+    el.addEventListener('input', () => {
+      const box = el.closest('.field');
+      if (box) box.classList.remove('invalid');
+    });
+    el.addEventListener('change', () => {
+      const box = el.closest('.field');
+      if (box) box.classList.remove('invalid');
+    });
+  });
+  if (consentEl){
+    consentEl.addEventListener('change', () => {
+      if (consentBox) consentBox.classList.remove('invalid');
+    });
+  }
+
+  console.log('✅ Contact form ready — click "Send Message" to test');
+})();
+
+/* ================================================================
+   LOAD HEADER + FOOTER
+   ================================================================ */
+document.addEventListener('DOMContentLoaded', function(){
+  fetch('header.html')
+    .then(r => r.ok ? r.text() : Promise.reject('Header not found'))
+    .then(html => { document.getElementById('header-placeholder').innerHTML = html; initHeader(); })
+    .catch(err => console.warn('Header not loaded:', err));
+
+  fetch('footer.html')
+    .then(r => r.ok ? r.text() : Promise.reject('Footer not found'))
+    .then(html => { document.getElementById('footer-placeholder').innerHTML = html; initFooter(); })
+    .catch(err => console.warn('Footer not loaded:', err));
+});
+
+function initHeader(){
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (!hamburger || !mobileMenu) return;
+  const toggle = () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+  };
+  const close = () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+  hamburger.addEventListener('click', toggle);
+  document.addEventListener('click', e => {
+    if (mobileMenu.classList.contains('active') &&
+        !hamburger.contains(e.target) &&
+        !mobileMenu.contains(e.target)) close();
+  });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  window.addEventListener('resize', () => { if (window.innerWidth > 768) close(); });
+  document.querySelectorAll('.mobile-nav-link, .mobile-action-link')
+    .forEach(l => l.addEventListener('click', close));
+}
+
+function initFooter(){
+  const isValid = e => /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(e);
+  function bind(btnId, inputId, errId){
+    const btn = document.getElementById(btnId);
+    const input = document.getElementById(inputId);
+    const err = document.getElementById(errId);
+    if (!btn || !input || !err) return;
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const v = input.value.trim();
+      if (!v){ err.textContent = 'Please enter your email address'; err.classList.add('show'); input.classList.add('error'); }
+      else if (!isValid(v)){ err.textContent = 'Please enter a valid email address'; err.classList.add('show'); input.classList.add('error'); }
+      else window.location.href = '404.html';
+    });
+    input.addEventListener('input', () => {
+      if (input.value.trim()){ err.classList.remove('show'); input.classList.remove('error'); }
+    });
+    input.addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); btn.click(); } });
+  }
+  bind('footerSubscribeBtn', 'footerEmail', 'footerEmailError');
+  bind('mobileFooterSubscribeBtn', 'mobileFooterEmail', 'mobileFooterEmailError');
+}
+
+console.log('%c🧘 Yoga Studio — contact page ready', 'color:#7A8B7E;font-size:15px;font-weight:bold;');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Yoga Studio - Footer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background: #F5F3EF;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /*==========================
+        YOGA STUDIO FOOTER
+        ==========================*/
+        footer {
+            background: #ffffff;
+            padding: 50px 0 0;
+            margin-top: auto;
+            border-top: 4px solid #7A8B7E;
+            box-shadow: 0 -2px 20px rgba(94, 89, 80, 0.06);
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            width: 92%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /*===== MAIN GRID =====*/
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.2fr;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #E2DFD8;
+        }
+
+        /*===== COLUMN 1: Brand =====*/
+        .footer-brand-col {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .footer-brand-col .footer-logo {
+            display: inline-block;
+            text-decoration: none;
+            line-height: 0;
+            max-width: fit-content;
+        }
+
+        .footer-brand-col .footer-logo .logo-img {
+            height: 55px;
+            width: auto;
+            max-width: 150px;
+            object-fit: contain;
+            display: block;
+            filter: brightness(0) saturate(100%) invert(36%) sepia(18%) saturate(800%) hue-rotate(80deg) brightness(95%) contrast(88%);
+        }
+
+        .footer-brand-col .brand-description {
+            font-size: 14px;
+            color: #5A5E56;
+            line-height: 1.7;
+            max-width: 340px;
+        }
+
+        .footer-brand-col .brand-description strong {
+            color: #5F6E5A;
+            font-weight: 700;
+        }
+
+        .footer-brand-col .brand-tagline {
+            font-size: 13px;
+            color: #7A8B7E;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .footer-brand-col .brand-tagline i {
+            color: #7A8B7E;
+            margin-right: 6px;
+        }
+
+        .footer-brand-col .highlight-text {
+            background: #7A8B7E;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+            max-width: fit-content;
+            box-shadow: 0 4px 12px rgba(122, 139, 126, 0.22);
+        }
+
+        .footer-brand-col .highlight-text i {
+            margin-right: 6px;
+            color: #E8C9A0;
+        }
+
+        /*===== COLUMN HEADINGS =====*/
+        .footer-col h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #3A4A3F;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #7A8B7E;
+            display: inline-block;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /*===== QUICK LINKS =====*/
+        .footer-col ul li a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #3A4A3F;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-col ul li a i {
+            color: #7A8B7E;
+            font-size: 14px;
+            width: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: #C17B5A;
+            padding-left: 6px;
+        }
+
+        .footer-col ul li a:hover i {
+            color: #C17B5A;
+            transform: scale(1.15);
+        }
+
+        /*===== CONTACT =====*/
+        .footer-contact-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .footer-contact-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+            color: #5A5E56;
+            line-height: 1.6;
+        }
+
+        .footer-contact-list li i {
+            color: #7A8B7E;
+            font-size: 16px;
+            width: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .footer-contact-list li a {
+            color: #5A5E56;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-contact-list li a:hover { color: #7A8B7E; }
+
+        /*===== STUDIO HOURS =====*/
+        .footer-hours {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-hours li {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #5A5E56;
+            padding: 6px 0;
+            border-bottom: 1px solid #F0EDE8;
+        }
+
+        .footer-hours li:last-child { border-bottom: none; }
+        .footer-hours li .time { color: #3A4A3F; font-weight: 600; }
+
+        /* HOURS BADGE */
+        .footer-col .delivery-badge {
+            display: inline-block;
+            background: #C17B5A;
+            color: #ffffff !important;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(193, 123, 90, 0.28);
+            text-decoration: none !important;
+            line-height: 1.4;
+        }
+
+        .footer-col .delivery-badge:hover {
+            background: #A55A3F;
+            transform: translateY(-2px);
+            color: #ffffff !important;
+            text-decoration: none !important;
+            box-shadow: 0 6px 18px rgba(193, 123, 90, 0.35);
+        }
+
+        .footer-col .delivery-badge i { margin-right: 6px; }
+
+        /*===== NEWSLETTER =====*/
+        .footer-newsletter {
+            background: #F2EFE9;
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            border: 1px solid rgba(122, 139, 126, 0.12);
+        }
+
+        .footer-newsletter .newsletter-text h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #3A4A3F;
+            margin-bottom: 4px;
+        }
+
+        .footer-newsletter .newsletter-text p {
+            font-size: 0.85rem;
+            color: #5A5E56;
+        }
+
+        .footer-newsletter .newsletter-form {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .footer-newsletter .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .footer-newsletter .newsletter-form input {
+            padding: 12px 18px;
+            border: 2px solid #E2DFD8;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #3A4A3F;
+            outline: none;
+            transition: all 0.3s ease;
+            min-width: 260px;
+        }
+
+        .footer-newsletter .newsletter-form input:focus {
+            border-color: #7A8B7E;
+            box-shadow: 0 0 0 4px rgba(122, 139, 126, 0.10);
+        }
+
+        .footer-newsletter .newsletter-form input.error { border-color: #C17B5A; }
+
+        .footer-newsletter .newsletter-form button {
+            padding: 12px 24px;
+            background: #C17B5A;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(193, 123, 90, 0.30);
+            white-space: nowrap;
+        }
+
+        .footer-newsletter .newsletter-form button:hover {
+            background: #A55A3F;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(193, 123, 90, 0.40);
+        }
+
+        .footer-newsletter .newsletter-error {
+            color: #C17B5A;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: none;
+            padding-left: 4px;
+            line-height: 1.3;
+        }
+
+        .footer-newsletter .newsletter-error.show {
+            display: block;
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        /*===== BOTTOM ROW =====*/
+        .footer-bottom-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-copyright { font-size: 13px; color: #7A8B7E; }
+        .footer-copyright span { color: #5F6E5A; font-weight: 600; }
+
+        .footer-social { display: flex; align-items: center; gap: 12px; }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #F2EFE9;
+            color: #5A5E56;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .footer-social a:hover {
+            background: #7A8B7E;
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(122, 139, 126, 0.35);
+        }
+
+        .footer-payments { display: flex; align-items: center; gap: 12px; }
+        .footer-payments span { font-size: 13px; color: #7A8B7E; }
+        .footer-payments i {
+            font-size: 24px;
+            color: #7A8B7E;
+            transition: all 0.3s ease;
+        }
+        .footer-payments i:hover { color: #3A4A3F; transform: scale(1.05); }
+
+        /*==========================
+        MOBILE VIEW
+        ==========================*/
+        .mobile-view { display: none; }
+
+        /*==========================
+        RESPONSIVE
+        ==========================*/
+        @media(max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1.5fr 1fr 1fr;
+                gap: 30px;
+            }
+            .footer-brand-col .footer-logo .logo-img { height: 50px; max-width: 140px; }
+        }
+
+        @media(max-width: 900px) {
+            /* Hide desktop, show mobile view */
+            .footer-grid { display: none; }
+            .footer-bottom-row { display: none; }
+            .footer-newsletter { display: none; }
+
+            .mobile-view {
+                display: flex;
+                flex-direction: column;
+                gap: 22px;
+                padding: 20px 0;
+            }
+
+            /* Logo */
+            .mobile-view .mobile-logo {
+                display: inline-block;
+                text-decoration: none;
+                line-height: 0;
+                max-width: fit-content;
+            }
+            .mobile-view .mobile-logo .logo-img {
+                height: 60px;
+                width: auto;
+                max-width: 220px;
+                object-fit: contain;
+                display: block;
+                filter: brightness(0) saturate(100%) invert(36%) sepia(18%) saturate(800%) hue-rotate(80deg) brightness(95%) contrast(88%);
+            }
+
+            /* Brand info */
+            .mobile-view .mobile-brand {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .mobile-view .brand-description {
+                font-size: 14px;
+                color: #5A5E56;
+                line-height: 1.7;
+            }
+            .mobile-view .brand-description strong {
+                color: #5F6E5A;
+                font-weight: 700;
+            }
+            .mobile-view .brand-tagline {
+                font-size: 13px;
+                color: #7A8B7E;
+                font-weight: 500;
+            }
+            .mobile-view .brand-tagline i {
+                color: #7A8B7E;
+                margin-right: 6px;
+            }
+            .mobile-view .highlight-text {
+                background: #7A8B7E;
+                color: #ffffff;
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-size: 13px;
+                font-weight: 600;
+                display: inline-block;
+                max-width: fit-content;
+                box-shadow: 0 4px 12px rgba(122, 139, 126, 0.22);
+            }
+            .mobile-view .highlight-text i {
+                margin-right: 6px;
+                color: #E8C9A0;
+            }
+
+            /* Section divider */
+            .mobile-view .mobile-section {
+                padding-top: 18px;
+                border-top: 1px solid #E2DFD8;
+            }
+
+            .mobile-view .mobile-section h4 {
+                font-size: 15px;
+                font-weight: 700;
+                color: #3A4A3F;
+                margin-bottom: 14px;
+                padding-bottom: 8px;
+                border-bottom: 2px solid #7A8B7E;
+                display: inline-block;
+            }
+
+            .mobile-view .mobile-section ul {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .mobile-view .mobile-section ul li a {
+                font-size: 14px;
+                font-weight: 500;
+                color: #3A4A3F;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                transition: all 0.3s ease;
+            }
+
+            .mobile-view .mobile-section ul li a i {
+                color: #7A8B7E;
+                font-size: 14px;
+                width: 18px;
+                text-align: center;
+            }
+
+            .mobile-view .mobile-section ul li a:hover {
+                color: #C17B5A;
+                padding-left: 6px;
+            }
+            .mobile-view .mobile-section ul li a:hover i { color: #C17B5A; }
+
+            /* Contact list */
+            .mobile-view .mobile-contact-list {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+            .mobile-view .mobile-contact-list li {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                font-size: 14px;
+                color: #5A5E56;
+                line-height: 1.6;
+            }
+            .mobile-view .mobile-contact-list li i {
+                color: #7A8B7E;
+                font-size: 16px;
+                width: 20px;
+                margin-top: 2px;
+                flex-shrink: 0;
+            }
+            .mobile-view .mobile-contact-list li a {
+                color: #5A5E56;
+                text-decoration: none;
+            }
+            .mobile-view .mobile-contact-list li a:hover { color: #7A8B7E; }
+
+            /* Hours list */
+            .mobile-view .mobile-hours {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .mobile-view .mobile-hours li {
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+                color: #5A5E56;
+                padding: 6px 0;
+                border-bottom: 1px solid #F0EDE8;
+            }
+            .mobile-view .mobile-hours li:last-child { border-bottom: none; }
+            .mobile-view .mobile-hours li .time {
+                color: #3A4A3F;
+                font-weight: 600;
+            }
+
+            .mobile-view .delivery-badge {
+                display: inline-block;
+                background: #C17B5A;
+                color: #ffffff !important;
+                padding: 8px 18px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 600;
+                margin-top: 12px;
+                text-align: center;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 12px rgba(193, 123, 90, 0.28);
+                text-decoration: none !important;
+            }
+            .mobile-view .delivery-badge:hover {
+                background: #A55A3F;
+                transform: translateY(-2px);
+                color: #ffffff !important;
+                text-decoration: none !important;
+            }
+            .mobile-view .delivery-badge i { margin-right: 6px; }
+
+            /* Mobile newsletter */
+            .mobile-view .mobile-newsletter {
+                background: #F2EFE9;
+                border-radius: 14px;
+                padding: 18px 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                border: 1px solid rgba(122, 139, 126, 0.12);
+            }
+            .mobile-view .mobile-newsletter h3 {
+                font-size: 1rem;
+                font-weight: 700;
+                color: #3A4A3F;
+                margin-bottom: 4px;
+            }
+            .mobile-view .mobile-newsletter p {
+                font-size: 0.8rem;
+                color: #5A5E56;
+            }
+            .mobile-view .mobile-newsletter .newsletter-form {
+                display: flex;
+                gap: 8px;
+                align-items: flex-start;
+            }
+            .mobile-view .mobile-newsletter .input-wrapper {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                min-width: 0;
+            }
+            .mobile-view .mobile-newsletter input {
+                width: 100%;
+                padding: 10px 14px;
+                border: 2px solid #E2DFD8;
+                border-radius: 10px;
+                font-size: 0.85rem;
+                font-family: 'Inter', sans-serif;
+                background: #ffffff;
+                color: #3A4A3F;
+                outline: none;
+                transition: all 0.3s ease;
+            }
+            .mobile-view .mobile-newsletter input:focus {
+                border-color: #7A8B7E;
+                box-shadow: 0 0 0 4px rgba(122, 139, 126, 0.10);
+            }
+            .mobile-view .mobile-newsletter input.error { border-color: #C17B5A; }
+            .mobile-view .mobile-newsletter button {
+                padding: 10px 18px;
+                background: #C17B5A;
+                color: #ffffff;
+                border: none;
+                border-radius: 10px;
+                font-size: 0.85rem;
+                font-weight: 700;
+                cursor: pointer;
+                font-family: 'Inter', sans-serif;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                box-shadow: 0 4px 12px rgba(193, 123, 90, 0.28);
+                white-space: nowrap;
+            }
+            .mobile-view .mobile-newsletter button:hover { background: #A55A3F; }
+            .mobile-view .mobile-newsletter .newsletter-error {
+                color: #C17B5A;
+                font-size: 0.7rem;
+                font-weight: 500;
+                display: none;
+                padding-left: 4px;
+            }
+            .mobile-view .mobile-newsletter .newsletter-error.show {
+                display: block;
+                animation: shake 0.4s ease;
+            }
+
+            /* Mobile bottom row */
+            .mobile-view .mobile-bottom {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                padding-top: 18px;
+                border-top: 1px solid #E2DFD8;
+            }
+
+            .mobile-view .mobile-social {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+            .mobile-view .mobile-social-label {
+                font-size: 14px;
+                color: #7A8B7E;
+                font-weight: 500;
+            }
+            .mobile-view .mobile-social a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 38px;
+                height: 38px;
+                border-radius: 50%;
+                background: #F2EFE9;
+                color: #5A5E56;
+                text-decoration: none;
+                font-size: 16px;
+                transition: all 0.3s ease;
+            }
+            .mobile-view .mobile-social a:hover {
+                background: #7A8B7E;
+                color: #ffffff;
+                transform: translateY(-3px);
+                box-shadow: 0 6px 25px rgba(122, 139, 126, 0.35);
+            }
+
+            .mobile-view .mobile-payments {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+            .mobile-view .mobile-payments span {
+                font-size: 13px;
+                color: #7A8B7E;
+            }
+            .mobile-view .mobile-payments i {
+                font-size: 24px;
+                color: #7A8B7E;
+            }
+
+            .mobile-view .mobile-copyright {
+                font-size: 12px;
+                color: #7A8B7E;
+                text-align: center;
+                padding-top: 12px;
+                border-top: 1px solid #E2DFD8;
+            }
+            .mobile-view .mobile-copyright span {
+                color: #5F6E5A;
+                font-weight: 600;
+            }
+        }
+
+        @media(max-width: 480px) {
+            footer { padding: 30px 0 0; border-top-width: 3px; }
+            .footer-container { width: 94%; }
+
+            .mobile-view .mobile-logo .logo-img { height: 52px; max-width: 190px; }
+
+            .mobile-view .brand-description { font-size: 13px; }
+            .mobile-view .brand-tagline { font-size: 12px; }
+            .mobile-view .mobile-section h4 { font-size: 14px; }
+            .mobile-view .mobile-section ul li a { font-size: 13px; }
+            .mobile-view .mobile-contact-list li { font-size: 13px; }
+            .mobile-view .mobile-hours li { font-size: 13px; }
+            .mobile-view .mobile-social a { width: 34px; height: 34px; font-size: 14px; }
+            .mobile-view .mobile-payments i { font-size: 22px; }
+            .mobile-view .mobile-copyright { font-size: 11px; }
+            .mobile-view .mobile-newsletter input { font-size: 0.8rem; padding: 9px 12px; }
+            .mobile-view .mobile-newsletter button { font-size: 0.8rem; padding: 9px 14px; }
+        }
+
+        @media(max-width: 380px) {
+            .footer-container { width: 96%; }
+            .mobile-view .mobile-logo .logo-img { height: 46px; max-width: 170px; }
+            .mobile-view .brand-description { font-size: 12px; }
+            .mobile-view .mobile-newsletter { padding: 14px 12px; }
+            .mobile-view .mobile-newsletter h3 { font-size: 0.9rem; }
+            .mobile-view .mobile-newsletter p { font-size: 0.75rem; }
+            .mobile-view .mobile-contact-list li { font-size: 12px; }
+            .mobile-view .mobile-hours li { font-size: 12px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== YOGA STUDIO FOOTER ===== -->
+    <footer>
+        <div class="footer-container">
+
+            <!-- ===== DESKTOP VIEW ===== -->
+            <div class="footer-grid">
+
+                <!-- COLUMN 1: Brand -->
+                <div class="footer-brand-col">
+                    <a href="index.html" class="footer-logo">
+                        <img src="stacklylogo1.webp" alt="Yoga Studio Logo" class="logo-img">
+                    </a>
+                    <p class="brand-description">
+                        <strong>Yoga Studio</strong> is your sanctuary for mindful movement — offering Hatha, Vinyasa, Yin, and meditation classes in a calm, welcoming space. Breathe, stretch, and restore your balance with us.
+                    </p>
+                    <p class="brand-tagline">
+                        <i class="fas fa-spa"></i> Breathe · Move · Restore
+                    </p>
+                    <div class="highlight-text">
+                        <i class="fas fa-star"></i> Trusted by 2,000+ Students Since 2015
+                    </div>
+                </div>
+
+                <!-- COLUMN 2: Quick Links -->
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-house"></i> Home</a></li>
+                        <li><a href="classes.html"><i class="fas fa-person-praying"></i> Classes</a></li>
+                        <li><a href="schedule.html"><i class="fas fa-calendar-alt"></i> Schedule</a></li>
+                        <li><a href="pricing.html"><i class="fas fa-tag"></i> Pricing</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- COLUMN 3: Contact -->
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-contact-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>45 Serenity Lane, Wellness District,<br>New York, NY 10001</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="404.html">+1 (234) 567-8900</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="404.html">hello@yogastudio.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- COLUMN 4: Studio Hours -->
+                <div class="footer-col">
+                    <h4>Studio Hours</h4>
+                    <ul class="footer-hours">
+                        <li>
+                            <span class="day">Mon - Fri</span>
+                            <span class="time">6:00 AM - 9:00 PM</span>
+                        </li>
+                        <li>
+                            <span class="day">Saturday</span>
+                            <span class="time">7:00 AM - 8:00 PM</span>
+                        </li>
+                        <li>
+                            <span class="day">Sunday</span>
+                            <span class="time">8:00 AM - 6:00 PM</span>
+                        </li>
+                        <li>
+                            <span class="day">Drop-in</span>
+                            <span class="time">First Class Free</span>
+                        </li>
+                    </ul>
+                    <a href="404.html" class="delivery-badge">
+                        <i class="fas fa-spa"></i> First Class Free
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- ===== NEWSLETTER ===== -->
+            <div class="footer-newsletter">
+                <div class="newsletter-text">
+                    <h3><i class="fas fa-envelope-open-text" style="color:#7A8B7E;margin-right:8px;"></i>Join Our Mindful Newsletter</h3>
+                    <p>Subscribe for class updates, wellness tips, and exclusive workshop invitations!</p>
+                </div>
+                <div class="newsletter-form">
+                    <div class="input-wrapper">
+                        <input type="email" id="footerEmail" placeholder="Enter your email address">
+                        <div class="newsletter-error" id="footerEmailError">Please enter a valid email address</div>
+                    </div>
+                    <button type="button" id="footerSubscribeBtn">
+                        <i class="fas fa-paper-plane"></i> Subscribe
+                    </button>
+                </div>
+            </div>
+
+            <!-- ===== BOTTOM ROW ===== -->
+            <div class="footer-bottom-row">
+                <div class="footer-copyright">
+                    &copy; 2024 <span>Yoga Studio</span>. All rights reserved.
+                </div>
+
+                <div class="footer-social">
+                    <a href="404.html" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="404.html" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="404.html" aria-label="YouTube" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="404.html" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="404.html" aria-label="X (Twitter)" title="X"><i class="fab fa-x-twitter"></i></a>
+                </div>
+
+                <div class="footer-payments">
+                    <span>We Accept:</span>
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+
+            <!-- ===== MOBILE VIEW ===== -->
+            <div class="mobile-view">
+
+                <!-- Logo -->
+                <a href="index.html" class="mobile-logo">
+                    <img src="stacklylogo1.webp" alt="Yoga Studio Logo" class="logo-img">
+                </a>
+
+                <!-- Brand Info -->
+                <div class="mobile-brand">
+                    <p class="brand-description">
+                        <strong>Yoga Studio</strong> is your sanctuary for mindful movement — offering Hatha, Vinyasa, Yin, and meditation classes in a calm, welcoming space. Breathe, stretch, and restore your balance with us.
+                    </p>
+                    <p class="brand-tagline">
+                        <i class="fas fa-spa"></i> Breathe · Move · Restore
+                    </p>
+                    <div class="highlight-text">
+                        <i class="fas fa-star"></i> Trusted by 2,000+ Students Since 2015
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="mobile-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-house"></i> Home</a></li>
+                        <li><a href="classes.html"><i class="fas fa-person-praying"></i> Classes</a></li>
+                        <li><a href="schedule.html"><i class="fas fa-calendar-alt"></i> Schedule</a></li>
+                        <li><a href="pricing.html"><i class="fas fa-tag"></i> Pricing</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Us -->
+                <div class="mobile-section">
+                    <h4>Contact Us</h4>
+                    <ul class="mobile-contact-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>45 Serenity Lane, Wellness District, New York, NY 10001</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="404.html">+1 (234) 567-8900</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="404.html">hello@yogastudio.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Studio Hours -->
+                <div class="mobile-section">
+                    <h4>Studio Hours</h4>
+                    <ul class="mobile-hours">
+                        <li><span>Mon - Fri</span><span class="time">6:00 AM - 9:00 PM</span></li>
+                        <li><span>Saturday</span><span class="time">7:00 AM - 8:00 PM</span></li>
+                        <li><span>Sunday</span><span class="time">8:00 AM - 6:00 PM</span></li>
+                        <li><span>Drop-in</span><span class="time">First Class Free</span></li>
+                    </ul>
+                    <a href="404.html" class="delivery-badge">
+                        <i class="fas fa-spa"></i> First Class Free
+                    </a>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="mobile-newsletter">
+                    <div>
+                        <h3><i class="fas fa-envelope-open-text" style="color:#7A8B7E;margin-right:6px;"></i>Join Our Mindful Newsletter</h3>
+                        <p>Subscribe for class updates, wellness tips, and exclusive workshop invitations!</p>
+                    </div>
+                    <div class="newsletter-form">
+                        <div class="input-wrapper">
+                            <input type="email" id="mobileFooterEmail" placeholder="Enter your email address">
+                            <div class="newsletter-error" id="mobileFooterEmailError">Please enter a valid email address</div>
+                        </div>
+                        <button type="button" id="mobileFooterSubscribeBtn">
+                            <i class="fas fa-paper-plane"></i> Subscribe
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bottom: Social + Payments + Copyright -->
+                <div class="mobile-bottom">
+                    <div class="mobile-social">
+                        <span class="mobile-social-label">Follow us:</span>
+                        <a href="404.html" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="404.html" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="404.html" aria-label="YouTube" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="404.html" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="404.html" aria-label="X (Twitter)" title="X"><i class="fab fa-x-twitter"></i></a>
+                    </div>
+
+                    <div class="mobile-payments">
+                        <span>We Accept:</span>
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                    </div>
+
+                    <div class="mobile-copyright">
+                        &copy; 2026 <span>Yoga Studio</span>. All rights reserved.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        function validateEmail(email) {
+            return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
+        }
+
+        // DESKTOP NEWSLETTER
+        (function initDesktopNewsletter() {
+            var subscribeBtn = document.getElementById('footerSubscribeBtn');
+            var emailInput = document.getElementById('footerEmail');
+            var emailError = document.getElementById('footerEmailError');
+
+            if (subscribeBtn && emailInput && emailError) {
+                subscribeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var email = emailInput.value.trim();
+
+                    if (!email) {
+                        emailError.classList.add('show');
+                        emailError.textContent = 'Please enter your email address';
+                        emailInput.classList.add('error');
+                    } else if (!validateEmail(email)) {
+                        emailError.classList.add('show');
+                        emailError.textContent = 'Please enter a valid email address';
+                        emailInput.classList.add('error');
+                    } else {
+                        emailError.classList.remove('show');
+                        emailInput.classList.remove('error');
+                        window.location.href = '404.html';
+                    }
+                });
+
+                emailInput.addEventListener('input', function() {
+                    if (this.value.trim()) {
+                        emailError.classList.remove('show');
+                        this.classList.remove('error');
+                    }
+                });
+
+                emailInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') subscribeBtn.click();
+                });
+            }
+        })();
+
+        // MOBILE NEWSLETTER
+        (function initMobileNewsletter() {
+            var subscribeBtn = document.getElementById('mobileFooterSubscribeBtn');
+            var emailInput = document.getElementById('mobileFooterEmail');
+            var emailError = document.getElementById('mobileFooterEmailError');
+
+            if (subscribeBtn && emailInput && emailError) {
+                subscribeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var email = emailInput.value.trim();
+
+                    if (!email) {
+                        emailError.classList.add('show');
+                        emailError.textContent = 'Please enter your email address';
+                        emailInput.classList.add('error');
+                    } else if (!validateEmail(email)) {
+                        emailError.classList.add('show');
+                        emailError.textContent = 'Please enter a valid email address';
+                        emailInput.classList.add('error');
+                    } else {
+                        emailError.classList.remove('show');
+                        emailInput.classList.remove('error');
+                        window.location.href = '404.html';
+                    }
+                });
+
+                emailInput.addEventListener('input', function() {
+                    if (this.value.trim()) {
+                        emailError.classList.remove('show');
+                        this.classList.remove('error');
+                    }
+                });
+
+                emailInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') subscribeBtn.click();
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>

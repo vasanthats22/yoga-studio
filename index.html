@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Yoga Studio - Home</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+<style>
+/* ================================================================
+   YOGA STUDIO — UNIFIED THEME
+   Matches navbar colors + fonts exactly
+   ================================================================ */
+:root{
+  --sage:#7A8B7E;
+  --sage-d:#5F6E5A;
+  --sage-l:#9BAA9E;
+  --sage-soft:#B8C4B9;
+  --clay:#C17B5A;
+  --clay-d:#A55A3F;
+  --clay-l:#D9A48C;
+  --sand:#E8DFD3;
+  --gold:#D4A574;
+
+  --stone:#F5F3EF;
+  --stone-2:#F2EFE9;
+  --cream:#FBF8F3;
+  --bg:#F5F3EF;
+
+  --text:#3A4A3F;
+  --text-soft:#5A5E56;
+  --text-mute:#8A8E86;
+  --white:#ffffff;
+  --line:#E2DFD8;
+
+  --sh1:0 2px 10px rgba(94,89,80,.05);
+  --sh2:0 14px 34px rgba(94,89,80,.09);
+  --sh3:0 28px 62px rgba(94,89,80,.15);
+
+  --r-s:14px;
+  --r-m:22px;
+  --r-l:30px;
+  --r-xl:42px;
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-bounce:cubic-bezier(.34,1.56,.64,1);
+
+  --wrap:1240px;
+}
+
+/* ================================================================
+   BASE
+   ================================================================ */
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  width:100%;max-width:100%;overflow-x:hidden;
+}
+
+body{
+  font-family:'Inter','Segoe UI',Roboto,system-ui,sans-serif;
+  font-size:15px;line-height:1.65;color:var(--text);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+  position:relative;width:100%;max-width:100%;min-width:0;
+}
+
+@supports (overflow-x: clip){
+  body{overflow-x:clip;}
+}
+
+h1,h2,h3,h4,h5{
+  font-family:'Outfit','Inter',sans-serif;
+  font-weight:800;line-height:1.08;letter-spacing:-.025em;color:var(--text);
+}
+
+img{display:block;max-width:100%;}
+a{text-decoration:none;color:inherit;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+#header-placeholder,#footer-placeholder{
+  flex-shrink:0;width:100%;max-width:100%;min-width:0;overflow-x:clip;
+}
+
+main{
+  flex:1;width:100%;max-width:100%;min-width:0;overflow-x:clip;
+}
+
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 22px;}
+
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-track{background:var(--stone-2);}
+::-webkit-scrollbar-thumb{background:var(--sage);border-radius:20px;border:2px solid var(--stone-2);}
+::-webkit-scrollbar-thumb:hover{background:var(--clay);}
+::selection{background:var(--clay);color:#fff;}
+
+/* ================================================================
+   UTILITIES
+   ================================================================ */
+.sec{padding:76px 0;position:relative;overflow-x:clip;}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--clay-d);background:rgba(193,123,90,.11);
+  border:1px solid rgba(193,123,90,.16);
+  padding:7px 15px;border-radius:100px;margin-bottom:16px;
+}
+.eyebrow.sage{color:var(--sage-d);background:rgba(122,139,126,.09);border-color:rgba(122,139,126,.15);}
+
+.head{max-width:660px;margin-bottom:44px;}
+.head.center{margin-left:auto;margin-right:auto;text-align:center;}
+.head h2{font-size:clamp(1.75rem,3.6vw,2.6rem);margin-bottom:14px;}
+.head h2 em{font-style:normal;color:var(--sage);position:relative;}
+.head h2 em::after{
+  content:'';position:absolute;left:0;right:0;bottom:2px;height:9px;
+  background:rgba(193,123,90,.22);border-radius:6px;z-index:-1;
+}
+.head p{font-size:.96rem;color:var(--text-soft);line-height:1.75;}
+
+/* Visible section heading (small editorial label) */
+.section-label{
+  display:flex;align-items:center;gap:14px;
+  font-size:.72rem;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;
+  color:var(--text-mute);
+  margin-bottom:26px;
+}
+.section-label::before{
+  content:'';width:32px;height:2px;background:var(--clay);
+  border-radius:2px;
+}
+.section-label.center{justify-content:center;}
+.section-label.center::after{
+  content:'';width:32px;height:2px;background:var(--clay);
+  border-radius:2px;
+}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:13px 26px;border-radius:100px;
+  font-size:.85rem;font-weight:700;letter-spacing:.1px;line-height:1;
+  border:1.6px solid transparent;cursor:pointer;
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .3s ease,color .3s ease,border-color .3s ease;
+  white-space:nowrap;
+}
+.btn i{font-size:.85em;}
+.btn-clay{background:var(--clay);color:#fff;box-shadow:0 10px 24px rgba(193,123,90,.34);}
+.btn-clay:hover{background:var(--clay-d);transform:translateY(-3px);box-shadow:0 16px 34px rgba(193,123,90,.44);}
+.btn-sage{background:var(--sage);color:#fff;box-shadow:0 10px 24px rgba(122,139,126,.28);}
+.btn-sage:hover{background:var(--sage-d);transform:translateY(-3px);box-shadow:0 16px 34px rgba(122,139,126,.38);}
+.btn-ghost{border-color:var(--line);background:#fff;color:var(--text);box-shadow:var(--sh1);}
+.btn-ghost:hover{border-color:var(--sage);color:var(--sage);transform:translateY(-3px);box-shadow:var(--sh2);}
+.btn-sm{padding:10px 18px;font-size:.76rem;}
+.btn-lg{padding:16px 32px;font-size:.92rem;}
+
+.icon-btn{
+  width:46px;height:46px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#fff;color:var(--sage);border:1.5px solid var(--line);
+  transition:all .35s var(--ease);flex-shrink:0;font-size:.9rem;
+}
+.icon-btn:hover{background:var(--sage);color:#fff;border-color:var(--sage);transform:translateY(-3px) scale(1.05);box-shadow:var(--sh2);}
+.icon-btn.clay:hover{background:var(--clay);border-color:var(--clay);box-shadow:0 12px 26px rgba(193,123,90,.34);}
+
+/* ================================================================
+   SCROLL PROGRESS
+   ================================================================ */
+#scrollProgress{
+  position:fixed;top:0;left:0;height:3px;width:0%;
+  background:linear-gradient(90deg,var(--sage),var(--sage-l),var(--clay));
+  z-index:9999;transition:width .1s linear;
+  box-shadow:0 0 12px rgba(193,123,90,.45);
+}
+
+/* ================================================================
+   TICKER
+   ================================================================ */
+.ticker{
+  background:linear-gradient(90deg,#3A4A3F 0%,#5F6E5A 50%,#3A4A3F 100%);
+  color:#E8F0E8;overflow:hidden;max-width:100%;padding:12px 0;
+  position:relative;
+}
+.ticker::before,.ticker::after{
+  content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none;
+}
+.ticker::before{left:0;background:linear-gradient(90deg,#3A4A3F,transparent);}
+.ticker::after{right:0;background:linear-gradient(270deg,#3A4A3F,transparent);}
+.ticker-track{display:flex;width:max-content;animation:tickMove 38s linear infinite;}
+.ticker:hover .ticker-track{animation-play-state:paused;}
+.ticker-set{display:flex;align-items:center;gap:42px;padding-right:42px;}
+.ticker-item{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.68rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  white-space:nowrap;color:#D8E0D8;
+}
+.ticker-item i{color:var(--clay-l);font-size:.76rem;}
+@keyframes tickMove{to{transform:translateX(-50%);}}
+
+/* ================================================================
+   HERO
+   ================================================================ */
+.hero{
+  position:relative;
+  padding:64px 0 40px;
+  overflow:hidden;
+  text-align:center;
+}
+.hero-blob{
+  position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;
+}
+.hero-blob.b1{
+  width:480px;height:480px;top:-160px;left:-140px;
+  background:radial-gradient(circle,rgba(193,123,90,.28),transparent 70%);
+}
+.hero-blob.b2{
+  width:520px;height:520px;bottom:-220px;right:-180px;
+  background:radial-gradient(circle,rgba(122,139,126,.24),transparent 70%);
+}
+
+.hero-inner{position:relative;z-index:2;}
+
+.hero-chip{
+  display:inline-flex;align-items:center;gap:9px;
+  background:#fff;border:1.5px solid var(--line);
+  color:var(--sage-d);
+  font-size:.7rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  padding:8px 16px;border-radius:100px;
+  box-shadow:var(--sh1);margin-bottom:26px;
+}
+.hero-chip .dot{
+  width:7px;height:7px;border-radius:50%;background:var(--sage-l);
+  box-shadow:0 0 0 0 rgba(122,139,126,.6);animation:ping 2s infinite;
+}
+.hero-chip i{color:var(--clay);}
+@keyframes ping{
+  0%{box-shadow:0 0 0 0 rgba(122,139,126,.55);}
+  70%{box-shadow:0 0 0 10px rgba(122,139,126,0);}
+  100%{box-shadow:0 0 0 0 rgba(122,139,126,0);}
+}
+
+.hero-title{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(2.4rem,5.6vw,4.4rem);
+  font-weight:900;
+  letter-spacing:-.035em;line-height:1.02;
+  margin-bottom:24px;
+}
+.hero-title .hl{color:var(--sage-d);position:relative;display:inline-block;}
+.hero-title .hl::after{
+  content:'';position:absolute;left:0;right:0;bottom:4px;height:12px;
+  background:linear-gradient(90deg,rgba(193,123,90,.35),rgba(217,164,140,.22));
+  border-radius:8px;z-index:-1;
+}
+.hero-title .ol{color:var(--clay);}
+
+.hero-sub{
+  font-size:1.05rem;color:var(--text-soft);line-height:1.75;
+  max-width:620px;margin:0 auto 34px;
+}
+
+.hero-cta{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:60px;
+}
+
+.hero-stage{
+  position:relative;
+  max-width:920px;
+  margin:0 auto;
+  aspect-ratio:16/8;
+  border-radius:var(--r-xl);
+  overflow:hidden;
+  box-shadow:var(--sh3);
+  border:8px solid #fff;
+  background:linear-gradient(135deg,rgba(122,139,126,.14),rgba(193,123,90,.16));
+}
+.hero-stage img{
+  width:100%;height:100%;object-fit:cover;
+}
+.hero-stage::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(58,74,63,.45) 100%);
+  pointer-events:none;
+}
+.hero-stage .stage-caption{
+  position:absolute;left:24px;right:24px;bottom:22px;z-index:2;
+  color:#fff;text-align:left;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+}
+.stage-caption .cap-left b{
+  display:block;font-family:'Outfit',sans-serif;
+  font-size:1.15rem;font-weight:800;margin-bottom:2px;
+}
+.stage-caption .cap-left small{
+  font-size:.72rem;font-weight:600;color:rgba(255,255,255,.82);
+  letter-spacing:.4px;
+}
+.stage-caption .cap-right{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.3);
+  padding:9px 16px;border-radius:100px;
+  font-size:.72rem;font-weight:700;letter-spacing:.4px;
+}
+
+.hero-float{
+  position:absolute;z-index:3;
+  background:#fff;border:1.5px solid var(--line);
+  border-radius:16px;padding:12px 16px;
+  display:flex;align-items:center;gap:11px;
+  box-shadow:0 16px 36px rgba(94,89,80,.14);
+  font-size:.76rem;font-weight:800;color:var(--text);
+}
+.hero-float i{
+  width:32px;height:32px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:.82rem;
+}
+.hero-float small{
+  display:block;font-size:.64rem;font-weight:600;color:var(--text-mute);
+  letter-spacing:.2px;
+}
+.hero-float.f1{top:6%;left:-28px;animation:floaty 5s ease-in-out infinite;}
+.hero-float.f1 i{background:rgba(193,123,90,.14);color:var(--clay-d);}
+.hero-float.f2{bottom:14%;right:-28px;animation:floaty 6s ease-in-out infinite .6s;}
+.hero-float.f2 i{background:rgba(122,139,126,.12);color:var(--sage-d);}
+@keyframes floaty{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-12px);}
+}
+
+@media (max-width:640px){
+  .hero-float{display:none;}
+  .hero-stage{aspect-ratio:4/3;border-width:6px;}
+}
+
+/* ================================================================
+   INTRO STATS
+   ================================================================ */
+.intro-strip{
+  background:#fff;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:40px 0;
+}
+.intro-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+}
+.intro-cell{
+  padding:8px 26px;
+  border-right:1px dashed var(--line);
+  text-align:left;
+}
+.intro-cell:last-child{border-right:none;}
+.intro-cell .num{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(1.8rem,3.2vw,2.4rem);
+  font-weight:900;color:var(--sage);
+  letter-spacing:-.04em;line-height:1;
+  margin-bottom:8px;
+}
+.intro-cell .lbl{
+  font-size:.7rem;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--text-mute);
+}
+@media (max-width:900px){
+  .intro-grid{grid-template-columns:repeat(2,1fr);gap:26px 0;}
+  .intro-cell:nth-child(2){border-right:none;}
+  .intro-cell:nth-child(1),
+  .intro-cell:nth-child(2){border-bottom:1px dashed var(--line);padding-bottom:22px;}
+  .intro-cell:nth-child(3),
+  .intro-cell:nth-child(4){padding-top:22px;}
+}
+@media (max-width:520px){
+  .intro-grid{grid-template-columns:1fr;gap:0;}
+  .intro-cell{border-right:none;border-bottom:1px dashed var(--line);padding:18px 0;}
+  .intro-cell:last-child{border-bottom:none;}
+}
+
+/* ================================================================
+   CLASSES
+   ================================================================ */
+.classes-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.class-card{
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-radius:var(--r-l);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .35s ease;
+}
+.class-card:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--sh3);
+  border-color:rgba(193,123,90,.32);
+}
+.class-media{
+  position:relative;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  background:linear-gradient(135deg,rgba(122,139,126,.12),rgba(193,123,90,.14));
+}
+.class-media img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .9s var(--ease);
+}
+.class-card:hover .class-media img{transform:scale(1.06);}
+.class-media .badge{
+  position:absolute;top:14px;left:14px;
+  background:var(--clay);color:#fff;
+  font-size:.6rem;font-weight:800;letter-spacing:1.2px;
+  padding:5px 11px;border-radius:100px;
+  text-transform:uppercase;
+}
+.class-media .badge.sage{background:var(--sage);}
+.class-media .badge.gold{background:#B8935E;}
+
+.class-body{
+  padding:22px 24px 24px;
+  display:flex;flex-direction:column;flex:1;
+}
+.class-tag{
+  font-size:.64rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--clay-d);margin-bottom:8px;
+}
+.class-title{
+  font-family:'Outfit',sans-serif;
+  font-size:1.4rem;font-weight:800;letter-spacing:-.02em;
+  margin-bottom:8px;
+}
+.class-desc{
+  font-size:.88rem;color:var(--text-soft);line-height:1.7;
+  margin-bottom:16px;flex:1;
+}
+.class-meta{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-top:16px;border-top:1px dashed var(--line);
+}
+.class-meta .info{
+  font-size:.72rem;font-weight:700;color:var(--text-mute);
+  letter-spacing:.4px;
+}
+.class-meta .arrow{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#EEF2EC;color:var(--sage-d);
+  transition:all .35s var(--ease);
+  flex-shrink:0;
+}
+.class-card:hover .arrow{
+  background:var(--clay);color:#fff;
+  transform:rotate(-45deg);
+}
+
+@media (max-width:1024px){
+  .classes-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:640px){
+  .classes-grid{grid-template-columns:1fr;}
+}
+
+/* ================================================================
+   ABOUT SPLIT
+   ================================================================ */
+.about{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+  padding:76px 0;
+}
+.about-media{
+  position:relative;
+  aspect-ratio:1/1;
+  border-radius:var(--r-l);
+  overflow:hidden;
+  box-shadow:var(--sh2);
+  background:linear-gradient(135deg,rgba(122,139,126,.12),rgba(193,123,90,.14));
+}
+.about-media img{width:100%;height:100%;object-fit:cover;}
+.about-media .stat{
+  position:absolute;left:36px;right:36px;bottom:36px;z-index:2;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(10px);
+  border-radius:18px;
+  box-shadow:0 12px 30px rgba(94,89,80,.14);
+  padding:18px 22px;
+}
+.about-media .stat b{
+  display:block;font-family:'Outfit',sans-serif;
+  font-size:1.5rem;font-weight:900;color:var(--sage-d);
+  line-height:1;margin-bottom:4px;
+}
+.about-media .stat small{
+  font-size:.68rem;font-weight:700;color:var(--text-mute);
+  letter-spacing:1px;text-transform:uppercase;
+}
+.about-media .stat .divider{
+  width:1px;height:38px;background:var(--line);
+}
+
+.about-copy h2{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(1.75rem,3.6vw,2.6rem);
+  font-weight:800;letter-spacing:-.025em;
+  margin-bottom:18px;
+}
+.about-copy h2 em{color:var(--sage);font-style:normal;}
+.about-copy p{
+  font-size:.96rem;color:var(--text-soft);line-height:1.8;
+  margin-bottom:18px;
+}
+.about-list{
+  list-style:none;margin:22px 0 30px;
+  display:flex;flex-direction:column;gap:12px;
+}
+.about-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:.9rem;color:var(--text-soft);
+}
+.about-list i{
+  color:var(--sage);
+  font-size:.86rem;
+  margin-top:4px;flex-shrink:0;
+}
+
+@media (max-width:1024px){
+  .about{grid-template-columns:1fr;gap:44px;}
+}
+
+/* ================================================================
+   SCHEDULE PREVIEW
+   Only the "Reserve" link is clickable.
+   ================================================================ */
+.schedule-preview{
+  background:#fff;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:76px 0;
+}
+.schedule-table{
+  width:100%;
+  border-top:2px solid var(--text);
+  margin-top:20px;
+}
+.schedule-row{
+  display:grid;
+  grid-template-columns:90px 1.2fr 1fr 1fr 130px;
+  gap:24px;align-items:center;
+  padding:22px 0;
+  border-bottom:1px solid var(--line);
+  transition:background .3s var(--ease);
+}
+.schedule-row:hover{background:var(--stone-2);}
+.schedule-row .day{
+  font-family:'Outfit',sans-serif;
+  font-size:1rem;font-weight:800;color:var(--clay-d);
+  letter-spacing:-.01em;
+}
+.schedule-row .time{
+  font-family:'Outfit',sans-serif;
+  font-size:1.2rem;font-weight:800;color:var(--text);
+  letter-spacing:-.02em;
+}
+.schedule-row .name{
+  font-size:.9rem;font-weight:600;color:var(--text-soft);
+}
+.schedule-row .lvl{
+  font-size:.68rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--text-mute);
+}
+.schedule-row .cta{
+  justify-self:end;
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.72rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--sage-d);
+  text-decoration:none;
+  transition:color .3s var(--ease);
+  cursor:pointer;
+}
+.schedule-row .cta:hover{color:var(--clay-d);}
+.schedule-row .cta i{transition:transform .3s var(--ease);}
+.schedule-row .cta:hover i{transform:translateX(4px);}
+
+@media (max-width:900px){
+  .schedule-row{
+    grid-template-columns:70px 1fr auto;
+    gap:16px;
+  }
+  .schedule-row .name,
+  .schedule-row .lvl{display:none;}
+}
+@media (max-width:520px){
+  .schedule-row{
+    grid-template-columns:60px 1fr auto;
+    gap:12px;
+    padding:16px 0;
+  }
+  .schedule-row .time{font-size:1rem;}
+}
+
+/* ================================================================
+   QUOTE
+   ================================================================ */
+.quote-section{
+  background:var(--stone-2);
+  padding:80px 0;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.quote-section::before,
+.quote-section::after{
+  content:'';position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;
+}
+.quote-section::before{
+  width:400px;height:400px;top:-120px;left:-100px;
+  background:radial-gradient(circle,rgba(193,123,90,.20),transparent 70%);
+}
+.quote-section::after{
+  width:400px;height:400px;bottom:-120px;right:-100px;
+  background:radial-gradient(circle,rgba(122,139,126,.22),transparent 70%);
+}
+.quote-section .wrap{position:relative;z-index:2;max-width:900px;margin:0 auto;}
+.quote-mark{
+  width:64px;height:64px;border-radius:50%;
+  background:var(--clay);color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:26px;
+  box-shadow:0 12px 30px rgba(193,123,90,.35);
+}
+.quote-text{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(1.3rem,2.6vw,1.85rem);
+  font-weight:700;line-height:1.4;letter-spacing:-.015em;
+  color:var(--text);
+  margin-bottom:26px;
+}
+.quote-text em{font-style:normal;color:var(--sage-d);}
+.quote-author{
+  font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-mute);
+}
+
+/* ================================================================
+   TEACHERS
+   ================================================================ */
+.teachers-row{
+  display:flex;gap:20px;overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  overscroll-behavior-x:contain;
+  max-width:100%;
+  padding:6px 4px 26px;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.teachers-row::-webkit-scrollbar{display:none;}
+
+.teacher-card{
+  flex:0 0 260px;scroll-snap-align:start;
+  background:#fff;border:1.5px solid var(--line);
+  border-radius:var(--r-m);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .3s ease;
+}
+.teacher-card:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--sh3);
+  border-color:rgba(193,123,90,.35);
+}
+.teacher-media{
+  position:relative;
+  aspect-ratio:1/1;
+  overflow:hidden;
+  background:linear-gradient(135deg,rgba(122,139,126,.12),rgba(193,123,90,.14));
+}
+.teacher-media img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .9s var(--ease);
+}
+.teacher-card:hover .teacher-media img{transform:scale(1.06);}
+.teacher-media .spec{
+  position:absolute;top:12px;left:12px;
+  background:#fff;color:var(--sage-d);
+  font-size:.6rem;font-weight:800;letter-spacing:1px;
+  padding:5px 10px;border-radius:100px;
+  text-transform:uppercase;
+}
+.teacher-body{
+  padding:18px 18px 20px;
+  display:flex;flex-direction:column;flex:1;
+}
+.teacher-name{
+  font-family:'Outfit',sans-serif;
+  font-size:1.05rem;font-weight:800;
+  letter-spacing:-.015em;margin-bottom:4px;
+}
+.teacher-exp{
+  font-size:.72rem;color:var(--text-mute);font-weight:600;
+  margin-bottom:12px;
+}
+.teacher-stars{
+  display:flex;align-items:center;gap:6px;
+  font-size:.7rem;margin-bottom:14px;
+}
+.teacher-stars .s{color:var(--clay);letter-spacing:1px;}
+.teacher-stars .c{color:var(--text-mute);font-weight:600;}
+.teacher-foot{
+  margin-top:auto;padding-top:13px;border-top:1px dashed var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.teacher-foot .ttl{
+  font-size:.7rem;font-weight:800;color:var(--sage-d);
+  letter-spacing:.3px;
+}
+.teacher-foot .days{
+  font-size:.66rem;color:var(--text-mute);font-weight:600;
+}
+.teacher-foot a{
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--stone-2);color:var(--sage-d);
+  transition:all .3s var(--ease);
+}
+.teacher-card:hover .teacher-foot a{
+  background:var(--clay);color:#fff;
+}
+
+.rail-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:24px;flex-wrap:wrap;margin-bottom:34px;
+}
+.rail-nav{display:flex;gap:10px;}
+
+/* ================================================================
+   FAQ
+   ================================================================ */
+.faq-wrap{
+  max-width:820px;margin:0 auto;
+}
+.faq-item{
+  background:#fff;border:1.5px solid var(--line);
+  border-radius:var(--r-m);
+  margin-bottom:14px;
+  overflow:hidden;
+  transition:border-color .3s ease,box-shadow .3s ease;
+}
+.faq-item:hover{border-color:rgba(122,139,126,.3);}
+.faq-item.open{border-color:rgba(193,123,90,.45);box-shadow:0 18px 40px rgba(193,123,90,.1);}
+.faq-head{
+  width:100%;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:22px 26px;
+  text-align:left;
+  transition:background .3s ease;
+}
+.faq-item.open .faq-head{
+  background:linear-gradient(90deg,rgba(193,123,90,.06),transparent);
+}
+.faq-title{
+  font-family:'Outfit',sans-serif;
+  font-size:1rem;font-weight:800;letter-spacing:-.015em;
+  color:var(--text);
+  flex:1;
+}
+.faq-icon{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--stone);
+  color:var(--sage-d);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;flex-shrink:0;
+  transition:all .35s var(--ease);
+}
+.faq-item.open .faq-icon{
+  background:var(--clay);color:#fff;
+  transform:rotate(135deg);
+}
+.faq-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .45s var(--ease);
+}
+.faq-body p{
+  padding:0 26px 24px;
+  font-size:.9rem;color:var(--text-soft);line-height:1.8;
+}
+
+/* ================================================================
+   TESTIMONIALS
+   ================================================================ */
+.testimonials-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+.t-card{
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-radius:var(--r-l);
+  padding:32px 28px;
+  display:flex;flex-direction:column;gap:18px;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .35s ease;
+  position:relative;
+}
+.t-card:hover{
+  transform:translateY(-5px);
+  box-shadow:var(--sh2);
+  border-color:rgba(193,123,90,.32);
+}
+.t-card .qmark{
+  position:absolute;top:22px;right:26px;
+  font-family:Georgia,serif;
+  font-size:3rem;line-height:1;
+  color:rgba(193,123,90,.14);
+  pointer-events:none;
+}
+.t-card .stars{
+  color:var(--clay);
+  font-size:.85rem;letter-spacing:2.4px;
+}
+.t-card p{
+  font-size:.92rem;line-height:1.75;color:var(--text-soft);
+  flex:1;
+}
+.t-user{
+  display:flex;align-items:center;gap:13px;
+  padding-top:18px;border-top:1px dashed var(--line);
+}
+.t-avatar{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Outfit',sans-serif;
+  font-size:.82rem;font-weight:800;color:#fff;
+  flex-shrink:0;
+}
+.t-avatar.a1{background:linear-gradient(135deg,var(--sage),var(--sage-l));}
+.t-avatar.a2{background:linear-gradient(135deg,var(--clay),var(--clay-d));}
+.t-avatar.a3{background:linear-gradient(135deg,#B8935E,#D4A574);}
+.t-user strong{
+  display:block;font-size:.88rem;font-weight:800;
+  letter-spacing:-.01em;color:var(--text);
+}
+.t-user small{
+  font-size:.7rem;color:var(--text-mute);font-weight:600;
+}
+
+@media (max-width:1024px){
+  .testimonials-grid{grid-template-columns:1fr;}
+}
+
+/* ================================================================
+   FINAL CTA
+   ================================================================ */
+.final-cta{
+  background:linear-gradient(135deg,#5F6E5A 0%,#7A8B7E 60%,#8FA292 100%);
+  border-radius:var(--r-xl);
+  padding:64px 48px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  box-shadow:var(--sh3);
+}
+.final-cta::before{
+  content:'';position:absolute;top:-80px;left:-80px;
+  width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(193,123,90,.30),transparent 70%);
+  pointer-events:none;
+}
+.final-cta::after{
+  content:'';position:absolute;bottom:-100px;right:-60px;
+  width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%);
+  pointer-events:none;
+}
+.final-cta .inner{
+  position:relative;z-index:2;
+  max-width:640px;margin:0 auto;
+}
+.final-cta .chip{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:#fff;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+  padding:7px 15px;border-radius:100px;
+  margin-bottom:18px;
+}
+.final-cta h2{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(1.7rem,3.6vw,2.5rem);
+  font-weight:900;color:#fff;
+  margin-bottom:14px;letter-spacing:-.03em;line-height:1.1;
+}
+.final-cta p{
+  color:rgba(255,255,255,.82);
+  font-size:.98rem;line-height:1.75;
+  margin-bottom:30px;
+}
+.final-cta .actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+}
+.btn-white{
+  background:#fff;color:var(--text);
+  box-shadow:0 10px 26px rgba(0,0,0,.18);
+}
+.btn-white:hover{
+  background:var(--clay);color:#fff;
+}
+.btn-outline-white{
+  background:transparent;color:#fff;
+  border:1.5px solid rgba(255,255,255,.5);
+}
+.btn-outline-white:hover{
+  background:#fff;color:var(--text);
+  border-color:#fff;
+}
+
+@media (max-width:640px){
+  .final-cta{padding:44px 24px;border-radius:var(--r-l);}
+}
+
+/* ================================================================
+   AOS safety
+   ================================================================ */
+@media (max-width:900px){
+  [data-aos="fade-left"],[data-aos="fade-right"]{
+    transform:translate3d(0,34px,0) !important;
+    opacity:0;
+  }
+  [data-aos="fade-left"].aos-animate,
+  [data-aos="fade-right"].aos-animate{
+    transform:translate3d(0,0,0) !important;
+    opacity:1;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width:1024px){
+  .sec{padding:62px 0;}
+  .hero{padding:44px 0 30px;}
+  .about{padding:62px 0;}
+  .schedule-preview{padding:62px 0;}
+  .quote-section{padding:64px 0;}
+}
+
+@media (max-width:640px){
+  .sec{padding:52px 0;}
+  .wrap{padding:0 16px;}
+  .hero{padding:34px 0 20px;}
+  .hero-title{font-size:2rem;}
+  .hero-cta{flex-direction:column;align-items:stretch;}
+  .hero-cta .btn{justify-content:center;}
+  .hero-sub{font-size:.96rem;}
+  .head h2{font-size:1.55rem;}
+  .head p{font-size:.9rem;}
+  .about-media .stat{left:22px;right:22px;bottom:22px;}
+  .about-media .stat b{font-size:1.2rem;}
+  .rail-head{flex-direction:column;align-items:flex-start;}
+  .t-card{padding:26px 22px;}
+  .final-cta .actions{flex-direction:column;align-items:stretch;}
+  .final-cta .actions .btn{justify-content:center;}
+}
+
+@media (max-width:380px){
+  .hero-title{font-size:1.75rem;}
+  .intro-cell .num{font-size:1.6rem;}
+  .teacher-card{flex:0 0 220px;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= SCROLL PROGRESS ================= -->
+<div id="scrollProgress" data-aos="fade-down" data-aos-duration="400"></div>
+
+<!-- ================= HEADER ================= -->
+<div id="header-placeholder"></div>
+
+<main>
+
+  <!-- ================= TICKER BAR ================= -->
+  <div class="ticker" aria-hidden="true" data-aos="fade-down" data-aos-duration="600">
+    <div class="ticker-track">
+      <div class="ticker-set">
+        <span class="ticker-item"><i class="fas fa-spa"></i> First class free</span>
+        <span class="ticker-item"><i class="fas fa-leaf"></i> Small groups · max 12 mats</span>
+        <span class="ticker-item"><i class="fas fa-person-praying"></i> Hatha · Vinyasa · Yin</span>
+        <span class="ticker-item"><i class="fas fa-clock"></i> Open daily 6 am – 9 pm</span>
+        <span class="ticker-item"><i class="fas fa-certificate"></i> RYT-certified teachers</span>
+        <span class="ticker-item"><i class="fas fa-heart"></i> 2,000+ students</span>
+      </div>
+      <div class="ticker-set">
+        <span class="ticker-item"><i class="fas fa-spa"></i> First class free</span>
+        <span class="ticker-item"><i class="fas fa-leaf"></i> Small groups · max 12 mats</span>
+        <span class="ticker-item"><i class="fas fa-person-praying"></i> Hatha · Vinyasa · Yin</span>
+        <span class="ticker-item"><i class="fas fa-clock"></i> Open daily 6 am – 9 pm</span>
+        <span class="ticker-item"><i class="fas fa-certificate"></i> RYT-certified teachers</span>
+        <span class="ticker-item"><i class="fas fa-heart"></i> 2,000+ students</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="hero">
+    <span class="hero-blob b1" data-aos="fade-right" data-aos-duration="1200"></span>
+    <span class="hero-blob b2" data-aos="fade-left" data-aos-duration="1200"></span>
+
+    <div class="wrap">
+      <div class="hero-inner">
+
+        <span class="hero-chip" data-aos="fade-down" data-aos-delay="100">
+          <span class="dot"></span>
+          <i class="fas fa-spa"></i> First class free · No commitment
+        </span>
+
+        <h1 class="hero-title" data-aos="fade-up" data-aos-delay="200">
+          Breathe. Move.<br>
+          Come home to <span class="hl">yourself</span>.
+        </h1>
+
+        <p class="hero-sub" data-aos="fade-up" data-aos-delay="300">
+          A calm, welcoming yoga studio in the heart of the city.
+          Small classes, certified teachers, and a space that feels like a deep exhale.
+        </p>
+
+        <div class="hero-cta" data-aos="fade-up" data-aos-delay="400">
+          <a href="404.html" class="btn btn-lg btn-clay" data-aos="zoom-in" data-aos-delay="450">
+            <i class="fas fa-calendar-check"></i> Book Free Class
+          </a>
+          <a href="404.html" class="btn btn-lg btn-ghost" data-aos="zoom-in" data-aos-delay="500">
+            <i class="fas fa-clock"></i> View Schedule
+          </a>
+        </div>
+
+        <div class="hero-stage" data-aos="zoom-in" data-aos-delay="350">
+          <img src="ys1.webp"
+               alt="Yoga studio practice"
+               onerror="this.parentElement.style.background='linear-gradient(135deg,#E6ECE3,#E8C9B6)';this.remove();">
+
+          <div class="stage-caption">
+            <div class="cap-left" data-aos="fade-right" data-aos-delay="500">
+              <b>Morning Flow · Hatha</b>
+              <small>With Maya Thompson · Mon &amp; Wed 7 am</small>
+            </div>
+            <span class="cap-right" data-aos="fade-left" data-aos-delay="500">
+              <i class="fas fa-users"></i> 12 mats max
+            </span>
+          </div>
+        </div>
+
+        <div class="hero-float f1" data-aos="fade-right" data-aos-delay="600">
+          <i class="fas fa-leaf"></i>
+          <div>Small Groups<small>Max 12 students</small></div>
+        </div>
+
+        <div class="hero-float f2" data-aos="fade-left" data-aos-delay="600">
+          <i class="fas fa-star"></i>
+          <div>4.9 / 5.0<small>1,240 reviews</small></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INTRO STATS ================= -->
+  <section class="intro-strip" id="intro" aria-labelledby="intro-heading">
+    <div class="wrap">
+      <h2 class="section-label center" id="intro-heading" data-aos="fade-down">Yoga Studio in Numbers</h2>
+      <div class="intro-grid">
+        <div class="intro-cell" data-aos="fade-up" data-aos-delay="0">
+          <div class="num" data-count="2000" data-suffix="+">0</div>
+          <div class="lbl">Students welcomed</div>
+        </div>
+        <div class="intro-cell" data-aos="fade-up" data-aos-delay="80">
+          <div class="num" data-count="15" data-suffix="">0</div>
+          <div class="lbl">Weekly classes</div>
+        </div>
+        <div class="intro-cell" data-aos="fade-up" data-aos-delay="160">
+          <div class="num" data-count="8" data-suffix="">0</div>
+          <div class="lbl">Certified teachers</div>
+        </div>
+        <div class="intro-cell" data-aos="fade-up" data-aos-delay="240">
+          <div class="num" data-count="9" data-suffix=" yrs">0</div>
+          <div class="lbl">In practice</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLASSES ================= -->
+  <section class="sec" id="classes" aria-labelledby="classes-heading">
+    <div class="wrap">
+
+      <h2 class="section-label center" data-aos="fade-down">Our Classes</h2>
+
+      <div class="head center" data-aos="fade-up">
+        <span class="eyebrow"><i class="fas fa-layer-group"></i> Practice Styles</span>
+        <h2 id="classes-heading">Every practice, <em>every body</em></h2>
+        <p>From gentle restorative to dynamic vinyasa — find the style that fits your day.</p>
+      </div>
+
+      <div class="classes-grid">
+
+        <article class="class-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="class-media">
+            <span class="badge">Most Popular</span>
+            <img src="ys2.webp"
+                 alt="Hatha Yoga"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#E6ECE3,#B7C3B4)';this.remove();">
+          </div>
+          <div class="class-body">
+            <div class="class-tag">Foundational</div>
+            <h3 class="class-title">Hatha Yoga</h3>
+            <p class="class-desc">Slow, steady postures held with breath. Perfect for beginners and anyone who wants to build a strong, mindful foundation.</p>
+            <div class="class-meta">
+              <span class="info">All levels · 60 min</span>
+              <a href="404.html" class="arrow" aria-label="View Hatha"><i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="class-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="class-media">
+            <span class="badge sage">Dynamic</span>
+            <img src="ys3.webp"
+                 alt="Vinyasa Flow"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#E8C9B6,#C28163)';this.remove();">
+          </div>
+          <div class="class-body">
+            <div class="class-tag">Movement</div>
+            <h3 class="class-title">Vinyasa Flow</h3>
+            <p class="class-desc">Breath-led, fluid sequences that build heat and strength. Expect to sweat, soften, and leave feeling lighter.</p>
+            <div class="class-meta">
+              <span class="info">Intermediate · 60 min</span>
+              <a href="404.html" class="arrow" aria-label="View Vinyasa"><i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="class-card" data-aos="fade-up" data-aos-delay="160">
+          <div class="class-media">
+            <span class="badge gold">Restorative</span>
+            <img src="ys4.webp"
+                 alt="Yin Yoga"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#EFE7DA,#B7C3B4)';this.remove();">
+          </div>
+          <div class="class-body">
+            <div class="class-tag">Stillness</div>
+            <h3 class="class-title">Yin &amp; Restorative</h3>
+            <p class="class-desc">Deep, slow stretches held for minutes at a time. Props, blankets, and complete permission to do absolutely nothing.</p>
+            <div class="class-meta">
+              <span class="info">All levels · 75 min</span>
+              <a href="404.html" class="arrow" aria-label="View Yin"><i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div style="text-align:center;margin-top:40px;" data-aos="fade-up" data-aos-delay="100">
+        <a href="404.html" class="btn btn-sage btn-lg">
+          <i class="fas fa-layer-group"></i> See all classes
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= ABOUT SPLIT ================= -->
+  <section class="wrap" id="about" aria-labelledby="about-heading">
+    <h2 class="section-label" data-aos="fade-down">Our Space</h2>
+    <div class="about">
+
+      <div class="about-media" data-aos="fade-right" data-aos-duration="1000">
+        <img src="ys5.webp"
+             alt="Yoga studio interior"
+             onerror="this.parentElement.style.background='linear-gradient(135deg,#E6ECE3,#E8C9B6)';this.remove();">
+
+        <div class="stat">
+          <div data-aos="fade-up" data-aos-delay="300">
+            <b>12</b>
+            <small>Mats per class</small>
+          </div>
+          <div class="divider"></div>
+          <div data-aos="fade-up" data-aos-delay="400">
+            <b>8</b>
+            <small>Teachers</small>
+          </div>
+          <div class="divider"></div>
+          <div data-aos="fade-up" data-aos-delay="500">
+            <b>4.9</b>
+            <small>Rating</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-copy" data-aos="fade-left" data-aos-duration="1000">
+        <span class="eyebrow sage"><i class="fas fa-leaf"></i> Our Space</span>
+        <h2 id="about-heading">A studio built around <em>breath</em> — not performance.</h2>
+        <p>
+          We opened our doors in 2015 with a simple idea: yoga should feel like coming home,
+          not competing. No mirrors, no rankings, no advanced-pose worship. Just you, your
+          breath, and a room full of people doing the same honest work.
+        </p>
+        <p>
+          Every class is capped at twelve mats, so your teacher can actually see you, correct
+          you gently, and offer modifications that fit your body — not the person next to you.
+        </p>
+        <ul class="about-list">
+          <li data-aos="fade-up" data-aos-delay="100"><i class="fas fa-check"></i> Certified RYT-200+ teachers only</li>
+          <li data-aos="fade-up" data-aos-delay="150"><i class="fas fa-check"></i> Mats, blocks, straps &amp; blankets provided</li>
+          <li data-aos="fade-up" data-aos-delay="200"><i class="fas fa-check"></i> Beginner-friendly — no flexibility required</li>
+          <li data-aos="fade-up" data-aos-delay="250"><i class="fas fa-check"></i> Herbal tea after every evening class</li>
+        </ul>
+        <a href="404.html" class="btn btn-clay" data-aos="fade-up" data-aos-delay="300">
+          <i class="fas fa-location-dot"></i> Visit the studio
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SCHEDULE PREVIEW ================= -->
+  <section class="schedule-preview" id="schedule" aria-labelledby="schedule-heading">
+    <div class="wrap">
+
+      <h2 class="section-label center" data-aos="fade-down">This Week's Schedule</h2>
+
+      <div class="head center" data-aos="fade-up">
+        <span class="eyebrow sage"><i class="fas fa-calendar-alt"></i> This Week</span>
+        <h2 id="schedule-heading">Come as you <em>are</em></h2>
+        <p>A sample of the week ahead. Reserve a mat online, or walk in and we'll find you a spot.</p>
+      </div>
+
+      <div class="schedule-table" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="schedule-row" data-aos="fade-up" data-aos-delay="0">
+          <span class="day">Mon</span>
+          <span class="time">7:00 am</span>
+          <span class="name">Hatha · Maya Thompson</span>
+          <span class="lvl">All levels</span>
+          <a href="404.html" class="cta">Reserve <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="schedule-row" data-aos="fade-up" data-aos-delay="60">
+          <span class="day">Tue</span>
+          <span class="time">6:00 pm</span>
+          <span class="name">Vinyasa · Arjun Mehta</span>
+          <span class="lvl">Intermediate</span>
+          <a href="404.html" class="cta">Reserve <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="schedule-row" data-aos="fade-up" data-aos-delay="120">
+          <span class="day">Wed</span>
+          <span class="time">8:00 pm</span>
+          <span class="name">Yin · Sarah Lin</span>
+          <span class="lvl">All levels</span>
+          <a href="404.html" class="cta">Reserve <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="schedule-row" data-aos="fade-up" data-aos-delay="180">
+          <span class="day">Thu</span>
+          <span class="time">9:00 am</span>
+          <span class="name">Prenatal · Priya Nair</span>
+          <span class="lvl">Prenatal</span>
+          <a href="404.html" class="cta">Reserve <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="schedule-row" data-aos="fade-up" data-aos-delay="240">
+          <span class="day">Sat</span>
+          <span class="time">9:00 am</span>
+          <span class="name">Meditation · David Chen</span>
+          <span class="lvl">Beginner</span>
+          <a href="404.html" class="cta">Reserve <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;margin-top:34px;" data-aos="fade-up" data-aos-delay="200">
+        <a href="404.html" class="btn btn-sage btn-lg">
+          <i class="fas fa-calendar-check"></i> View full schedule
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= QUOTE ================= -->
+  <section class="quote-section" id="quote" aria-labelledby="quote-heading">
+    <div class="wrap">
+      <h2 class="section-label center" id="quote-heading" data-aos="fade-down">Words to Practice By</h2>
+      <div class="quote-mark" data-aos="zoom-in" data-aos-duration="800">
+        <i class="fas fa-om"></i>
+      </div>
+      <p class="quote-text" data-aos="fade-up" data-aos-delay="150">
+        “Yoga is not about touching your toes. It is what you learn on the way <em>down</em>.”
+      </p>
+      <p class="quote-author" data-aos="fade-up" data-aos-delay="300">— Jigar Gor</p>
+    </div>
+  </section>
+
+  <!-- ================= TEACHERS ================= -->
+  <section class="sec" id="teachers" aria-labelledby="teachers-heading">
+    <div class="wrap">
+
+      <h2 class="section-label" data-aos="fade-down">Meet Your Teachers</h2>
+
+      <div class="rail-head" data-aos="fade-up">
+        <div class="head" style="margin-bottom:0;max-width:560px;">
+          <span class="eyebrow"><i class="fas fa-users"></i> Our Teachers</span>
+          <h2 id="teachers-heading">People who hold <em>the room</em></h2>
+          <p>Certified, compassionate, and genuinely invested in your practice.</p>
+        </div>
+        <div class="rail-nav" data-aos="fade-left" data-aos-delay="150">
+          <button class="icon-btn rail-prev" aria-label="Previous teachers">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <button class="icon-btn clay rail-next" aria-label="Next teachers">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="teachers-row" id="teacherRail" data-aos="fade-up" data-aos-delay="100">
+
+        <article class="teacher-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="teacher-media">
+            <span class="spec">Hatha</span>
+            <img src="ys6.webp"
+                 alt="Maya Thompson"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#E6ECE3,#B7C3B4)';this.remove();">
+          </div>
+          <div class="teacher-body">
+            <h3 class="teacher-name">Maya Thompson</h3>
+            <div class="teacher-exp">RYT-500 · 12 years experience</div>
+            <div class="teacher-stars"><span class="s">★★★★★</span><span class="c">(180)</span></div>
+            <div class="teacher-foot">
+              <div>
+                <div class="ttl">Hatha · Yin</div>
+                <div class="days">Mon / Wed / Fri</div>
+              </div>
+              <a href="404.html" aria-label="View Maya"><i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="teacher-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="teacher-media">
+            <span class="spec">Vinyasa</span>
+            <img src="ys7.webp"
+                 alt="Arjun Mehta"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#E8C9B6,#C28163)';this.remove();">
+          </div>
+          <div class="teacher-body">
+            <h3 class="teacher-name">Arjun Mehta</h3>
+            <div class="teacher-exp">RYT-500 · 8 years experience</div>
+            <div class="teacher-stars"><span class="s">★★★★★</span><span class="c">(156)</span></div>
+            <div class="teacher-foot">
+              <div>
+                <div class="ttl">Vinyasa · Power</div>
+                <div class="days">Tue / Thu / Sat</div>
+              </div>
+              <a href="404.html" aria-label="View Arjun"><i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="teacher-card" data-aos="fade-up" data-aos-delay="160">
+          <div class="teacher-media">
+            <span class="spec">Restorative</span>
+            <img src="ys8.webp"
+                 alt="Sarah Lin"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#EFE7DA,#B7C3B4)';this.remove();">
+          </div>
+          <div class="teacher-body">
+            <h3 class="teacher-name">Sarah Lin</h3>
+            <div class="teacher-exp">RYT-200 · 6 years experience</div>
+            <div class="teacher-stars"><span class="s">★★★★☆</span><span class="c">(112)</span></div>
+            <div class="teacher-foot">
+              <div>
+                <div class="ttl">Restorative · Yin</div>
+                <div class="days">Wed / Sun</div>
+              </div>
+              <a href="404.html" aria-label="View Sarah"><i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="teacher-card" data-aos="fade-up" data-aos-delay="240">
+          <div class="teacher-media">
+            <span class="spec">Prenatal</span>
+            <img src="ys9.webp"
+                 alt="Priya Nair"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#E6ECE3,#E8C9B6)';this.remove();">
+          </div>
+          <div class="teacher-body">
+            <h3 class="teacher-name">Priya Nair</h3>
+            <div class="teacher-exp">RPYT · 9 years experience</div>
+            <div class="teacher-stars"><span class="s">★★★★★</span><span class="c">(98)</span></div>
+            <div class="teacher-foot">
+              <div>
+                <div class="ttl">Prenatal · Hatha</div>
+                <div class="days">Mon / Thu</div>
+              </div>
+              <a href="404.html" aria-label="View Priya"><i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="teacher-card" data-aos="fade-up" data-aos-delay="320">
+          <div class="teacher-media">
+            <span class="spec">Meditation</span>
+            <img src="ys10.webp"
+                 alt="David Chen"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#EFE7DA,#E8C9B6)';this.remove();">
+          </div>
+          <div class="teacher-body">
+            <h3 class="teacher-name">David Chen</h3>
+            <div class="teacher-exp">Certified · 10 years practice</div>
+            <div class="teacher-stars"><span class="s">★★★★★</span><span class="c">(134)</span></div>
+            <div class="teacher-foot">
+              <div>
+                <div class="ttl">Meditation · Breath</div>
+                <div class="days">Tue / Sat</div>
+              </div>
+              <a href="404.html" aria-label="View David"><i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="teacher-card" data-aos="fade-up" data-aos-delay="400">
+          <div class="teacher-media">
+            <span class="spec">Yin</span>
+            <img src="ys11.webp"
+                 alt="Elena Rossi"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#E8C9B6,#EFE7DA)';this.remove();">
+          </div>
+          <div class="teacher-body">
+            <h3 class="teacher-name">Elena Rossi</h3>
+            <div class="teacher-exp">RYT-300 · 7 years experience</div>
+            <div class="teacher-stars"><span class="s">★★★★☆</span><span class="c">(87)</span></div>
+            <div class="teacher-foot">
+              <div>
+                <div class="ttl">Yin · Restorative</div>
+                <div class="days">Fri / Sun</div>
+              </div>
+              <a href="404.html" aria-label="View Elena"><i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div style="text-align:center;margin-top:14px;" data-aos="fade-up" data-aos-delay="100">
+        <a href="404.html" class="btn btn-sage btn-lg">
+          <i class="fas fa-users"></i> Meet all instructors
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="sec" id="faq" style="padding-top:0;" aria-labelledby="faq-heading">
+    <div class="wrap">
+
+      <h2 class="section-label center" data-aos="fade-down">Frequently Asked Questions</h2>
+
+      <div class="head center" data-aos="fade-up">
+        <span class="eyebrow"><i class="fas fa-circle-question"></i> Common Questions</span>
+        <h2 id="faq-heading">First time? <em>Start here</em></h2>
+        <p>Everything you might want to know before your first class.</p>
+      </div>
+
+      <div class="faq-wrap" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="faq-item open" data-aos="fade-up" data-aos-delay="0">
+          <button class="faq-head" type="button">
+            <span class="faq-title">Do I need to be flexible to start yoga?</span>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-body">
+            <p>Not at all — flexibility is a result of yoga, not a prerequisite. Every pose has a variation, and our teachers will meet you exactly where your body is today.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="80">
+          <button class="faq-head" type="button">
+            <span class="faq-title">What should I bring to class?</span>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-body">
+            <p>Just yourself. We provide mats, blocks, straps, and blankets. Wear anything comfortable that lets you move freely. A water bottle is nice, but we have filtered water on site.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="160">
+          <button class="faq-head" type="button">
+            <span class="faq-title">How early should I arrive?</span>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-body">
+            <p>Aim for 10 minutes early — enough time to sign in, set up your mat, and settle without rushing. If you're running late, that's okay; just enter quietly.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="240">
+          <button class="faq-head" type="button">
+            <span class="faq-title">Is my first class really free?</span>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-body">
+            <p>Yes — your first class is on us. No card required, no commitment. Just book online or walk in and tell us it's your first visit.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="320">
+          <button class="faq-head" type="button">
+            <span class="faq-title">Can I pause or cancel my membership?</span>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-body">
+            <p>Any time, no lock-in. Pause for up to two months per year, or cancel with 14 days' notice. We'd rather you leave feeling good than stuck.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <section class="sec" id="testimonials" style="padding-top:0;" aria-labelledby="testimonials-heading">
+    <div class="wrap">
+
+      <h2 class="section-label center" data-aos="fade-down">Student Stories</h2>
+
+      <div class="head center" data-aos="fade-up">
+        <span class="eyebrow"><i class="fas fa-heart"></i> Testimonials</span>
+        <h2 id="testimonials-heading">Words from <em>the mat</em></h2>
+        <p>Real reviews from real practitioners — unedited and unfiltered.</p>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <article class="t-card" data-aos="fade-up" data-aos-delay="0">
+          <span class="qmark">"</span>
+          <div class="stars">★★★★★</div>
+          <p>I came in stressed and stiff. Three months later I'm sleeping better and my back pain is gone. The small classes make all the difference.</p>
+          <div class="t-user">
+            <span class="t-avatar a1">AM</span>
+            <div>
+              <strong>Anna Martinez</strong>
+              <small>Weekly practitioner · 6 months</small>
+            </div>
+          </div>
+        </article>
+
+        <article class="t-card" data-aos="fade-up" data-aos-delay="100">
+          <span class="qmark">"</span>
+          <div class="stars">★★★★★</div>
+          <p>The teachers actually see you. They notice when you're struggling and offer a gentler option without making it a thing.</p>
+          <div class="t-user">
+            <span class="t-avatar a2">RK</span>
+            <div>
+              <strong>Rahul Kapoor</strong>
+              <small>Vinyasa regular · 1 year</small>
+            </div>
+          </div>
+        </article>
+
+        <article class="t-card" data-aos="fade-up" data-aos-delay="200">
+          <span class="qmark">"</span>
+          <div class="stars">★★★★★</div>
+          <p>As a complete beginner I was nervous. The teacher made me feel welcome from minute one. I've been coming twice a week since.</p>
+          <div class="t-user">
+            <span class="t-avatar a3">MB</span>
+            <div>
+              <strong>Marcus Bell</strong>
+              <small>Beginner · 3 months</small>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FINAL CTA ================= -->
+  <section class="sec" id="cta" style="padding-top:0;padding-bottom:80px;" aria-labelledby="cta-heading">
+    <div class="wrap">
+
+      <h2 class="section-label center" data-aos="fade-down">Book Your First Class</h2>
+
+      <div class="final-cta" data-aos="zoom-in" data-aos-duration="1000">
+        <div class="inner">
+          <span class="chip" data-aos="fade-down" data-aos-delay="150">
+            <i class="fas fa-spa"></i> Your mat is waiting
+          </span>
+          <h2 id="cta-heading" data-aos="fade-up" data-aos-delay="250">Take the first breath.<br>We'll meet you there.</h2>
+          <p data-aos="fade-up" data-aos-delay="350">
+            No experience needed. No pressure. Just a calm hour that belongs to you.
+            Your first class is free.
+          </p>
+          <div class="actions">
+            <a href="404.html" class="btn btn-lg btn-white" data-aos="zoom-in" data-aos-delay="450">
+              <i class="fas fa-calendar-check"></i> Book Free Class
+            </a>
+            <a href="404.html" class="btn btn-lg btn-outline-white" data-aos="zoom-in" data-aos-delay="500">
+              <i class="fas fa-location-dot"></i> Visit the Studio
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<div id="footer-placeholder"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+/* AOS */
+AOS.init({
+  duration: 850,
+  easing: 'ease-out-cubic',
+  once: true,
+  offset: 60,
+  mirror: false,
+  disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+});
+
+/* Scroll progress */
+(function(){
+  const bar = document.getElementById('scrollProgress');
+  function onScroll(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop || document.body.scrollTop;
+    const height = h.scrollHeight - h.clientHeight;
+    bar.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+
+/* Count-up stats */
+(function(){
+  const nums = document.querySelectorAll('[data-count]');
+  if (!nums.length) return;
+  function run(el){
+    const target = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const start = performance.now();
+    function frame(now){
+      const p = Math.min(1, (now - start) / 1500);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased) + suffix;
+      if (p < 1) requestAnimationFrame(frame);
+      else el.textContent = target + suffix;
+    }
+    requestAnimationFrame(frame);
+  }
+  if (!('IntersectionObserver' in window)){ nums.forEach(run); return; }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting){ run(e.target); io.unobserve(e.target); } });
+  }, { threshold: .5 });
+  nums.forEach(n => io.observe(n));
+})();
+
+/* FAQ accordion */
+(function(){
+  const items = document.querySelectorAll('.faq-item');
+  function closeAll(except){
+    items.forEach(item => {
+      if (item === except) return;
+      item.classList.remove('open');
+      const body = item.querySelector('.faq-body');
+      if (body) body.style.maxHeight = null;
+    });
+  }
+  items.forEach(item => {
+    const head = item.querySelector('.faq-head');
+    const body = item.querySelector('.faq-body');
+    if (!head || !body) return;
+    if (item.classList.contains('open')){
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+    head.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      if (isOpen){
+        item.classList.remove('open');
+        body.style.maxHeight = null;
+      } else {
+        closeAll(item);
+        item.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    });
+  });
+  window.addEventListener('resize', () => {
+    const open = document.querySelector('.faq-item.open .faq-body');
+    if (open) open.style.maxHeight = open.scrollHeight + 'px';
+  });
+})();
+
+/* Teacher rail arrows */
+(function(){
+  const rail = document.getElementById('teacherRail');
+  if (!rail) return;
+  const prev = document.querySelector('.rail-prev');
+  const next = document.querySelector('.rail-next');
+  const step = 280;
+  if (prev) prev.addEventListener('click', () => rail.scrollBy({ left: -step, behavior: 'smooth' }));
+  if (next) next.addEventListener('click', () => rail.scrollBy({ left: step, behavior: 'smooth' }));
+})();
+
+/* Load header + footer (with init hooks) */
+document.addEventListener('DOMContentLoaded', function(){
+
+  fetch('header.html')
+    .then(r => r.ok ? r.text() : Promise.reject('Header not found'))
+    .then(html => {
+      document.getElementById('header-placeholder').innerHTML = html;
+      initHeader();
+    })
+    .catch(err => console.warn('Header not loaded:', err));
+
+  fetch('footer.html')
+    .then(r => r.ok ? r.text() : Promise.reject('Footer not found'))
+    .then(html => {
+      document.getElementById('footer-placeholder').innerHTML = html;
+      initFooter();
+    })
+    .catch(err => console.warn('Footer not loaded:', err));
+});
+
+function initHeader(){
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (!hamburger || !mobileMenu) return;
+  const toggle = () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+  };
+  const close = () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+  hamburger.addEventListener('click', toggle);
+  document.addEventListener('click', e => {
+    if (mobileMenu.classList.contains('active') &&
+        !hamburger.contains(e.target) &&
+        !mobileMenu.contains(e.target)) close();
+  });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  window.addEventListener('resize', () => { if (window.innerWidth > 768) close(); });
+  document.querySelectorAll('.mobile-nav-link, .mobile-action-link')
+    .forEach(l => l.addEventListener('click', close));
+}
+
+function initFooter(){
+  const isValid = e => /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(e);
+  function bind(btnId, inputId, errId){
+    const btn = document.getElementById(btnId);
+    const input = document.getElementById(inputId);
+    const err = document.getElementById(errId);
+    if (!btn || !input || !err) return;
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const v = input.value.trim();
+      if (!v){ err.textContent = 'Please enter your email address'; err.classList.add('show'); input.classList.add('error'); }
+      else if (!isValid(v)){ err.textContent = 'Please enter a valid email address'; err.classList.add('show'); input.classList.add('error'); }
+      else window.location.href = '404.html';
+    });
+    input.addEventListener('input', () => {
+      if (input.value.trim()){ err.classList.remove('show'); input.classList.remove('error'); }
+    });
+    input.addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); btn.click(); } });
+  }
+  bind('footerSubscribeBtn', 'footerEmail', 'footerEmailError');
+  bind('mobileFooterSubscribeBtn', 'mobileFooterEmail', 'mobileFooterEmailError');
+}
+
+console.log('%c🧘 Yoga Studio — home page ready', 'color:#7A8B7E;font-size:15px;font-weight:bold;');
+</script>
+
+</body>
+</html>

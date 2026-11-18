@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+<title>Yoga Studio - Sign Up</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   YOGA STUDIO — SIGNUP PAGE
+   ================================================================ */
+:root{
+  --sage:#7A8B7E;
+  --sage-d:#5F6E5A;
+  --sage-l:#9BAA9E;
+  --sage-soft:#B8C4B9;
+  --clay:#C17B5A;
+  --clay-d:#A55A3F;
+  --clay-l:#D9A48C;
+  --sand:#E8DFD3;
+  --gold:#D4A574;
+
+  --stone:#F5F3EF;
+  --stone-2:#F2EFE9;
+  --cream:#FBF8F3;
+  --bg:#F5F3EF;
+
+  --text:#3A4A3F;
+  --text-soft:#5A5E56;
+  --text-mute:#8A8E86;
+  --white:#ffffff;
+  --line:#E2DFD8;
+  --line-soft:#EFEAE2;
+
+  --sh1:0 2px 10px rgba(94,89,80,.05);
+  --sh2:0 14px 34px rgba(94,89,80,.09);
+  --sh3:0 28px 62px rgba(94,89,80,.15);
+
+  --r-s:14px;
+  --r-m:22px;
+  --r-l:30px;
+  --r-xl:42px;
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{overflow-x:hidden;}
+
+body{
+  font-family:'Inter','Segoe UI',Roboto,system-ui,sans-serif;
+  background:var(--bg);
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;
+  width:100%;
+  color:var(--text);
+  font-size:15px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4,h5{
+  font-family:'Outfit','Inter',sans-serif;
+  font-weight:800;
+  line-height:1.08;
+  letter-spacing:-.025em;
+  color:var(--text);
+}
+
+#header-placeholder,
+#footer-placeholder{width:100%;flex-shrink:0;}
+
+.main-wrapper{
+  max-width:1140px;
+  width:100%;
+  margin:0 auto;
+  padding:0 16px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.signup-wrapper{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:2rem 0;
+  width:100%;
+  flex:1;
+}
+
+.signup-card{
+  display:flex;
+  flex-direction:column;
+  max-width:880px;
+  width:100%;
+  background:#ffffff;
+  border-radius:24px;
+  box-shadow:0 8px 40px rgba(94,89,80,.12), inset 0 -3px 0 0 var(--clay);
+  border:1px solid var(--line);
+  overflow:hidden;
+}
+
+/* ---------- Visual Panel ---------- */
+.signup-visual{
+  display:flex;
+  background:linear-gradient(135deg,var(--sage-d) 0%,var(--sage) 100%);
+  padding:1.5rem;
+  align-items:center;
+  justify-content:center;
+  min-height:260px;
+  border-bottom:3px solid var(--clay);
+  position:relative;
+  overflow:hidden;
+}
+.signup-visual::before{
+  content:'';
+  position:absolute;
+  top:-40px;right:-40px;
+  width:200px;height:200px;
+  border-radius:50%;
+  background:rgba(193,123,90,.28);
+}
+.signup-visual::after{
+  content:'';
+  position:absolute;
+  bottom:-30px;left:-30px;
+  width:140px;height:140px;
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+}
+.signup-visual img{
+  width:100%;
+  max-width:240px;
+  height:auto;
+  object-fit:contain;
+  display:block;
+  position:relative;
+  z-index:2;
+  filter:drop-shadow(0 14px 30px rgba(30,40,30,.35));
+  animation:floatImage 4s ease-in-out infinite;
+}
+@keyframes floatImage{
+  0%,100%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-10px) scale(1.02);}
+}
+
+.signup-form{
+  flex:1;
+  padding:2rem 1.5rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:#ffffff;
+  text-align:center;
+}
+.signup-heading{
+  font-size:1.6rem;
+  font-weight:800;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.signup-subhead{
+  font-size:.85rem;
+  color:var(--text-soft);
+  margin-bottom:22px;
+  line-height:1.6;
+}
+.signup-subhead strong{color:var(--sage-d);font-weight:700;}
+
+.signup-google-row{
+  display:flex;align-items:center;gap:.6rem;
+  margin-bottom:16px;
+  cursor:pointer;
+  font-weight:600;
+  color:var(--text);
+  font-size:.85rem;
+  transition:all .2s ease;
+  border-radius:10px;
+  padding:10px 16px;
+  background:var(--stone);
+  border:1.5px solid var(--line);
+  justify-content:center;
+  text-decoration:none;
+}
+.signup-google-row:hover{
+  background:#ffffff;
+  border-color:var(--sage-d);
+  box-shadow:0 2px 10px rgba(122,139,126,.2);
+  transform:translateY(-1px);
+}
+.signup-google-icon{display:inline-flex;width:1.5rem;height:1.5rem;flex-shrink:0;}
+.signup-google-icon svg{width:100%;height:100%;display:block;}
+
+.signup-divider{
+  display:flex;align-items:center;gap:.7rem;
+  margin:4px 0 18px;
+  justify-content:center;
+}
+.signup-divider hr{flex:1;border:none;height:1px;background:var(--line);}
+.signup-divider span{
+  color:var(--text-mute);
+  font-size:.75rem;font-weight:600;
+  letter-spacing:.5px;text-transform:uppercase;
+}
+
+.signup-input-group{
+  position:relative;
+  margin-bottom:14px;
+  width:100%;
+}
+.signup-input-group i{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--sage-d);
+  font-size:.9rem;
+  width:1.1rem;
+  text-align:center;
+  pointer-events:none;
+  z-index:2;
+}
+.signup-input-group input,
+.signup-input-group select{
+  width:100%;
+  padding:.78rem .95rem .78rem 2.5rem;
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  font-size:.88rem;
+  background:var(--stone);
+  transition:.15s;
+  outline:none;
+  color:var(--text);
+  font-family:inherit;
+  cursor:pointer;
+}
+.signup-input-group select{
+  appearance:none;
+  -webkit-appearance:none;
+  padding-right:2.5rem;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235F6E5A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 1rem center;
+  background-size:12px;
+}
+.signup-input-group input:focus,
+.signup-input-group select:focus{
+  border-color:var(--sage);
+  box-shadow:0 0 0 3px rgba(122,139,126,.15);
+  background:#fff;
+}
+.signup-input-group input::placeholder{color:var(--text-mute);font-weight:400;}
+
+.signup-error-msg{
+  color:var(--clay-d);
+  font-size:.75rem;
+  font-weight:500;
+  margin-top:4px;
+  margin-bottom:12px;
+  display:none;
+  padding-left:.5rem;
+  text-align:left;
+  line-height:1.4;
+}
+.signup-error-msg.show{display:block;}
+.signup-input-group.has-error{margin-bottom:0;}
+.signup-terms-row.has-error{margin-bottom:0;}
+
+.signup-terms-row{
+  display:flex;align-items:center;gap:.6rem;
+  margin:.3rem 0 1.2rem 0;
+  font-size:.82rem;color:var(--text);
+  cursor:pointer;
+  justify-content:flex-start;
+  text-align:left;
+  font-weight:500;
+}
+.signup-terms-row input[type="checkbox"]{
+  width:16px;height:16px;
+  accent-color:var(--sage);
+  cursor:pointer;flex-shrink:0;
+}
+.signup-terms-row a{color:var(--clay-d);text-decoration:none;font-weight:700;}
+.signup-terms-row a:hover{color:var(--clay);text-decoration:underline;}
+
+.signup-btn-wrapper{display:flex;margin-bottom:18px;width:100%;}
+.signup-submit-btn{
+  width:100%;
+  padding:.9rem .9rem;
+  background:var(--clay);
+  border:none;
+  border-radius:10px;
+  font-weight:700;
+  font-size:.9rem;
+  color:#fff;
+  cursor:pointer;
+  transition:all .35s ease;
+  letter-spacing:.6px;
+  box-shadow:0 6px 18px rgba(193,123,90,.4);
+  text-transform:uppercase;
+  font-family:inherit;
+  position:relative;
+  overflow:hidden;
+}
+.signup-submit-btn::before{
+  content:'';
+  position:absolute;
+  top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+  transition:left .5s ease;
+}
+.signup-submit-btn:hover::before{left:100%;}
+.signup-submit-btn:hover{
+  background:var(--clay-d);
+  transform:translateY(-2px);
+  box-shadow:0 10px 28px rgba(193,123,90,.55);
+}
+.signup-submit-btn:disabled{opacity:.9;cursor:wait;transform:none;}
+
+.signup-feedback{
+  display:none;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:.8rem;
+  font-weight:600;
+  line-height:1.5;
+  margin-bottom:16px;
+  text-align:left;
+}
+.signup-feedback.show{display:block;}
+.signup-feedback.success{
+  background:#edf2ee;
+  color:#3a5840;
+  border:1px solid #b4c7b6;
+  border-left:4px solid var(--sage-d);
+}
+.signup-feedback.error{
+  background:#fdf0ec;
+  color:#8a442e;
+  border:1px solid #ebc7ba;
+  border-left:4px solid var(--clay);
+}
+.signup-feedback i{margin-right:6px;}
+
+.signin-text{text-align:center;font-size:.85rem;color:var(--text-soft);}
+.signin-text a{color:var(--sage-d);font-weight:700;text-decoration:none;}
+.signin-text a:hover{color:var(--clay-d);text-decoration:underline;}
+
+@media (min-width:768px){
+  .signup-card{flex-direction:row;min-height:580px;border-radius:24px;}
+  .signup-visual{
+    flex:.9;
+    min-height:280px;
+    padding:2rem;
+    border-bottom:none;
+    border-right:3px solid var(--clay);
+  }
+  .signup-visual img{max-width:280px;}
+  .signup-form{padding:2.5rem 2.5rem 2.5rem 2rem;flex:1.1;text-align:left;}
+  .signup-heading{font-size:1.85rem;}
+  .signup-subhead{font-size:.9rem;margin-bottom:24px;}
+  .signup-divider{justify-content:flex-start;}
+  .signup-google-row{justify-content:flex-start;}
+}
+@media (max-width:767px){
+  .signup-wrapper{padding:1.5rem 0;}
+  .signup-card{max-width:470px;margin:0 auto;border-radius:18px;}
+  .signup-form{padding:2rem 1.5rem;text-align:center;}
+}
+@media (max-width:420px){
+  .signup-form{padding:1.5rem 1rem;}
+  .signup-heading{font-size:1.4rem;}
+  .signup-subhead{font-size:.8rem;margin-bottom:18px;}
+  .signup-input-group input,
+  .signup-input-group select{padding:.65rem .7rem .65rem 2.3rem;font-size:.82rem;}
+  .signup-submit-btn{padding:.75rem .6rem;font-size:.82rem;}
+  .signup-visual{min-height:220px;padding:1rem;}
+  .signup-visual img{max-width:180px;}
+  .signup-error-msg{font-size:.72rem;padding-left:.4rem;}
+  .signup-terms-row{font-size:.75rem;}
+}
+
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--stone-2);}
+::-webkit-scrollbar-thumb{background:var(--sage);border-radius:4px;}
+::-webkit-scrollbar-thumb:hover{background:var(--clay);}
+</style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<div class="main-wrapper">
+  <div class="signup-wrapper">
+    <div class="signup-card">
+
+      <div class="signup-visual">
+        <img src="ys1.webp"
+             alt="Yoga Studio"
+             loading="lazy"
+             onerror="this.style.display='none'; document.getElementById('signupSvgFallback').style.display='block';" />
+        <div id="signupSvgFallback" style="display:none;width:100%;max-width:240px;position:relative;z-index:2;">
+          <svg viewBox="0 0 300 340" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <rect width="300" height="340" rx="16" fill="#5F6E5A"/>
+            <circle cx="150" cy="150" r="100" fill="#C17B5A" opacity="0.25"/>
+            <circle cx="150" cy="150" r="70" fill="none" stroke="#D9A48C" stroke-width="2" stroke-dasharray="6 6"/>
+            <ellipse cx="150" cy="170" rx="55" ry="18" fill="#E8DFD3" opacity="0.9"/>
+            <path d="M150 130 Q130 150 130 170 Q150 158 150 130 Z" fill="#FBF8F3"/>
+            <path d="M150 130 Q170 150 170 170 Q150 158 150 130 Z" fill="#FBF8F3"/>
+            <path d="M120 145 Q110 165 125 178 Q135 165 130 148 Z" fill="#FBF8F3" opacity="0.85"/>
+            <path d="M180 145 Q190 165 175 178 Q165 165 170 148 Z" fill="#FBF8F3" opacity="0.85"/>
+            <circle cx="150" cy="145" r="8" fill="#C17B5A"/>
+            <text x="150" y="255" text-anchor="middle" font-family="Outfit, sans-serif" font-size="15" font-weight="900" fill="#FBF8F3">YOGA STUDIO</text>
+            <text x="150" y="275" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#D9A48C">Breathe · Move · Restore</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="signup-form">
+        <h1 class="signup-heading">Join Yoga Studio</h1>
+        <p class="signup-subhead">
+          Create your <strong>Yoga Studio</strong> account and start your practice — small classes, certified teachers, and your first class is free.
+        </p>
+
+        <div class="signup-feedback" id="signupFeedback" role="status" aria-live="polite"></div>
+
+        <a href="404.html" class="signup-google-row" id="googleSignupBtn">
+          <span class="signup-google-icon">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+              <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+              <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+              <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
+            </svg>
+          </span>
+          <span>Sign up with Google</span>
+        </a>
+
+        <div class="signup-divider"><hr /><span>Or</span><hr /></div>
+
+        <div class="signup-input-group">
+          <i class="fas fa-user-tag"></i>
+          <select id="signupRole" required>
+            <option value="">Select your account type</option>
+            <option value="practitioner">Practitioner · Regular Classes</option>
+            <option value="member">Studio Member · Unlimited Membership</option>
+          </select>
+        </div>
+        <div class="signup-error-msg" id="roleError">Please select your account type.</div>
+
+        <div class="signup-input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="fullName" placeholder="Enter your full name" required />
+        </div>
+        <div class="signup-error-msg" id="nameError">Please enter your full name (letters and spaces only).</div>
+
+        <div class="signup-input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" placeholder="Enter your email address" required />
+        </div>
+        <div class="signup-error-msg" id="emailError">Please enter a valid email address.</div>
+
+        <div class="signup-input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" placeholder="Create a password" required />
+        </div>
+        <div class="signup-error-msg" id="passwordError">Password: min 8 chars, 1 uppercase, 1 number, 1 special.</div>
+
+        <div class="signup-terms-row">
+          <input type="checkbox" id="termsCheck" />
+          <label for="termsCheck">I agree to the <a href="404.html">Terms &amp; Conditions</a></label>
+        </div>
+        <div class="signup-error-msg" id="termsError">You must agree to the Terms &amp; Conditions.</div>
+
+        <div class="signup-btn-wrapper">
+          <button class="signup-submit-btn" id="signupBtn">Begin Your Practice</button>
+        </div>
+
+        <div class="signin-text">
+          Already have an account? <a href="404.html" id="signinLink">Sign In</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script>
+/* ============================
+   LOAD HEADER + FOOTER
+   ============================ */
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('header.html')
+    .then(r => r.ok ? r.text() : Promise.reject('Header not found'))
+    .then(d => {
+      document.getElementById('header-placeholder').innerHTML = d;
+      initHeader();
+    })
+    .catch(err => console.warn('Header not loaded:', err));
+
+  fetch('footer.html')
+    .then(r => r.ok ? r.text() : Promise.reject('Footer not found'))
+    .then(d => {
+      document.getElementById('footer-placeholder').innerHTML = d;
+      initFooter();
+    })
+    .catch(err => console.warn('Footer not loaded:', err));
+});
+
+function initHeader() {
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    function toggleMenu() {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      hamburger.setAttribute('aria-expanded', mobileMenu.classList.contains('active'));
+    }
+    function closeMenu() {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+    hamburger.addEventListener('click', toggleMenu);
+    document.addEventListener('click', function (e) {
+      if (mobileMenu.classList.contains('active')) {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMenu();
+      }
+    });
+    window.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMenu(); });
+    document.querySelectorAll('.mobile-nav-link, .mobile-action-link').forEach(l =>
+      l.addEventListener('click', closeMenu));
+  }
+}
+
+function initFooter() {
+  function validateEmail(email) {
+    return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
+  }
+
+  (function initDesktopNewsletter() {
+    var subscribeBtn = document.getElementById('footerSubscribeBtn');
+    var emailInput = document.getElementById('footerEmail');
+    var emailError = document.getElementById('footerEmailError');
+
+    if (subscribeBtn && emailInput && emailError) {
+      subscribeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var email = emailInput.value.trim();
+        if (!email) {
+          emailError.classList.add('show');
+          emailError.textContent = 'Please enter your email address';
+          emailInput.classList.add('error');
+        } else if (!validateEmail(email)) {
+          emailError.classList.add('show');
+          emailError.textContent = 'Please enter a valid email address';
+          emailInput.classList.add('error');
+        } else {
+          emailError.classList.remove('show');
+          emailInput.classList.remove('error');
+          window.location.href = '404.html';
+        }
+      });
+      emailInput.addEventListener('input', function() {
+        if (this.value.trim()) {
+          emailError.classList.remove('show');
+          this.classList.remove('error');
+        }
+      });
+      emailInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') subscribeBtn.click();
+      });
+    }
+  })();
+
+  (function initMobileNewsletter() {
+    var subscribeBtn = document.getElementById('mobileFooterSubscribeBtn');
+    var emailInput = document.getElementById('mobileFooterEmail');
+    var emailError = document.getElementById('mobileFooterEmailError');
+
+    if (subscribeBtn && emailInput && emailError) {
+      subscribeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var email = emailInput.value.trim();
+        if (!email) {
+          emailError.classList.add('show');
+          emailError.textContent = 'Please enter your email address';
+          emailInput.classList.add('error');
+        } else if (!validateEmail(email)) {
+          emailError.classList.add('show');
+          emailError.textContent = 'Please enter a valid email address';
+          emailInput.classList.add('error');
+        } else {
+          emailError.classList.remove('show');
+          emailInput.classList.remove('error');
+          window.location.href = '404.html';
+        }
+      });
+      emailInput.addEventListener('input', function() {
+        if (this.value.trim()) {
+          emailError.classList.remove('show');
+          this.classList.remove('error');
+        }
+      });
+      emailInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') subscribeBtn.click();
+      });
+    }
+  })();
+}
+
+/* ============================
+   SIGNUP LOGIC
+   ============================ */
+(function signup() {
+  const roleSelect = document.getElementById('signupRole');
+  const fullNameInput = document.getElementById('fullName');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const termsCheck = document.getElementById('termsCheck');
+
+  const roleError = document.getElementById('roleError');
+  const nameError = document.getElementById('nameError');
+  const emailError = document.getElementById('emailError');
+  const passwordError = document.getElementById('passwordError');
+  const termsError = document.getElementById('termsError');
+  const feedback = document.getElementById('signupFeedback');
+
+  const signupBtn = document.getElementById('signupBtn');
+  const USERS_KEY = 'yoga_users';
+
+  function setError(errEl, group, show) {
+    if (show) { errEl.classList.add('show'); if (group) group.classList.add('has-error'); }
+    else { errEl.classList.remove('show'); if (group) group.classList.remove('has-error'); }
+  }
+  function clearGlobal() { feedback.className = 'signup-feedback'; feedback.innerHTML = ''; }
+  function showGlobal(msg, type) {
+    feedback.className = 'signup-feedback show ' + type;
+    feedback.innerHTML = (type === 'success'
+      ? '<i class="fas fa-check-circle"></i>'
+      : '<i class="fas fa-exclamation-circle"></i>') + msg;
+  }
+  function getUsers() {
+    try { return JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); }
+    catch (e) { return []; }
+  }
+  function saveUsers(list) {
+    try { localStorage.setItem(USERS_KEY, JSON.stringify(list)); return true; }
+    catch (e) { return false; }
+  }
+  function emailExists(email) {
+    return getUsers().some(u => u.email === email.toLowerCase());
+  }
+  function newUserId(count, role) {
+    const prefix = role === 'member' ? 'YS-M' : 'YS-P';
+    return prefix + String(1000 + count + 1).padStart(4, '0');
+  }
+
+  roleSelect.addEventListener('change', function () {
+    if (roleSelect.value) setError(roleError, roleSelect.closest('.signup-input-group'), false);
+    clearGlobal();
+  });
+  fullNameInput.addEventListener('input', function () {
+    this.value = this.value.replace(/[^A-Za-z\s]/g, '');
+    if (this.value.trim()) setError(nameError, fullNameInput.closest('.signup-input-group'), false);
+    clearGlobal();
+  });
+  emailInput.addEventListener('input', function () {
+    if (this.value.trim()) setError(emailError, emailInput.closest('.signup-input-group'), false);
+    clearGlobal();
+  });
+  passwordInput.addEventListener('input', function () {
+    if (this.value.trim()) setError(passwordError, passwordInput.closest('.signup-input-group'), false);
+    clearGlobal();
+  });
+  termsCheck.addEventListener('change', function () {
+    if (this.checked) setError(termsError, termsCheck.closest('.signup-terms-row'), false);
+    clearGlobal();
+  });
+
+  const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  const pwdOk = v => v.length >= 8 && /[A-Z]/.test(v) && /[0-9]/.test(v) &&
+                      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(v);
+
+  signupBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearGlobal();
+    let valid = true;
+
+    if (!roleSelect.value) {
+      roleError.textContent = 'Please select your account type (Practitioner or Studio Member).';
+      setError(roleError, roleSelect.closest('.signup-input-group'), true);
+      valid = false;
+    } else setError(roleError, roleSelect.closest('.signup-input-group'), false);
+
+    const name = fullNameInput.value.trim();
+    if (!name || name.length < 2) {
+      nameError.textContent = 'Please enter your full name (min 2 characters).';
+      setError(nameError, fullNameInput.closest('.signup-input-group'), true);
+      valid = false;
+    } else setError(nameError, fullNameInput.closest('.signup-input-group'), false);
+
+    const email = emailInput.value.trim().toLowerCase();
+    if (!email || !emailOk(email)) {
+      emailError.textContent = 'Please enter a valid email address.';
+      setError(emailError, emailInput.closest('.signup-input-group'), true);
+      valid = false;
+    } else setError(emailError, emailInput.closest('.signup-input-group'), false);
+
+    const pwd = passwordInput.value;
+    if (!pwd || !pwdOk(pwd)) {
+      passwordError.textContent = 'Password: min 8 chars, 1 uppercase, 1 number & 1 special character.';
+      setError(passwordError, passwordInput.closest('.signup-input-group'), true);
+      valid = false;
+    } else setError(passwordError, passwordInput.closest('.signup-input-group'), false);
+
+    if (!termsCheck.checked) {
+      termsError.textContent = 'You must agree to the Terms & Conditions.';
+      setError(termsError, termsCheck.closest('.signup-terms-row'), true);
+      valid = false;
+    } else setError(termsError, termsCheck.closest('.signup-terms-row'), false);
+
+    if (!valid) return;
+
+    if (emailExists(email)) {
+      showGlobal('An account with <strong>' + email + '</strong> already exists. Please sign in instead.', 'error');
+      emailError.textContent = 'This email is already registered.';
+      setError(emailError, emailInput.closest('.signup-input-group'), true);
+      return;
+    }
+
+    const users = getUsers();
+    const newUser = {
+      userId: newUserId(users.length, roleSelect.value),
+      name: name,
+      email: email,
+      password: pwd,
+      role: roleSelect.value,
+      createdAt: Date.now()
+    };
+    users.push(newUser);
+
+    if (!saveUsers(users)) {
+      showGlobal('Could not save your account. Please enable storage and try again.', 'error');
+      return;
+    }
+
+    const roleNames = {
+      practitioner: 'Practitioner · Regular Classes',
+      member: 'Studio Member · Unlimited Membership'
+    };
+    const roleName = roleNames[newUser.role] || 'Student';
+
+    try {
+      sessionStorage.setItem('yoga_signup_success',
+        'Welcome, <strong>' + name.split(' ')[0] + '</strong>! ' +
+        'Your <strong>' + roleName + '</strong> account (' +
+        '<strong>' + newUser.userId + '</strong>) is ready. Please sign in to continue.');
+    } catch (e) {}
+
+    signupBtn.disabled = true;
+    signupBtn.innerHTML = '<i class="fas fa-check"></i> Account Created!';
+    signupBtn.style.background = 'var(--sage-d)';
+
+    showGlobal('Welcome to Yoga Studio, <strong>' + name.split(' ')[0] + '</strong>! ' +
+               'Registered as <strong>' + roleName + '</strong>. ' +
+               'Redirecting to login…', 'success');
+
+    /* 🔽 Redirect to login.html after account is created */
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 1800);
+  });
+
+  document.querySelectorAll('.signup-input-group input, .signup-input-group select').forEach(el => {
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') signupBtn.click(); });
+  });
+
+  /* Sign-in link → 404.html */
+  document.getElementById('signinLink').addEventListener('click', e => {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  console.log('🧘 Sign Up ready! (Practitioner / Studio Member)');
+})();
+</script>
+
+</body>
+</html>

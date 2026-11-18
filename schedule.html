@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Yoga Studio - Schedule</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+<style>
+/* ================================================================
+   YOGA STUDIO — SCHEDULE PAGE
+   ================================================================ */
+:root{
+  --sage:#7A8B7E;
+  --sage-d:#5F6E5A;
+  --sage-l:#9BAA9E;
+  --sage-soft:#B8C4B9;
+  --clay:#C17B5A;
+  --clay-d:#A55A3F;
+  --clay-l:#D9A48C;
+  --sand:#E8DFD3;
+  --gold:#D4A574;
+
+  --stone:#F5F3EF;
+  --stone-2:#F2EFE9;
+  --cream:#FBF8F3;
+  --bg:#F5F3EF;
+
+  --text:#3A4A3F;
+  --text-soft:#5A5E56;
+  --text-mute:#8A8E86;
+  --white:#ffffff;
+  --line:#E2DFD8;
+  --line-soft:#EFEAE2;
+
+  --sh1:0 2px 10px rgba(94,89,80,.05);
+  --sh2:0 14px 34px rgba(94,89,80,.09);
+  --sh3:0 28px 62px rgba(94,89,80,.15);
+
+  --r-s:14px;
+  --r-m:22px;
+  --r-l:30px;
+  --r-xl:42px;
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-bounce:cubic-bezier(.34,1.56,.64,1);
+
+  --wrap:1240px;
+}
+
+/* ================================================================
+   BASE
+   ================================================================ */
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  width:100%;max-width:100%;overflow-x:hidden;
+}
+
+body{
+  font-family:'Inter','Segoe UI',Roboto,system-ui,sans-serif;
+  font-size:15px;line-height:1.65;color:var(--text);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+  position:relative;width:100%;max-width:100%;min-width:0;
+}
+
+@supports (overflow-x: clip){ body{overflow-x:clip;} }
+
+h1,h2,h3,h4,h5{
+  font-family:'Outfit','Inter',sans-serif;
+  font-weight:800;line-height:1.08;letter-spacing:-.025em;color:var(--text);
+}
+
+img{display:block;max-width:100%;}
+a{text-decoration:none;color:inherit;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+#header-placeholder,#footer-placeholder{
+  flex-shrink:0;width:100%;max-width:100%;min-width:0;overflow-x:clip;
+}
+
+main{flex:1;width:100%;max-width:100%;min-width:0;overflow-x:clip;}
+
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 22px;}
+
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-track{background:var(--stone-2);}
+::-webkit-scrollbar-thumb{background:var(--sage);border-radius:20px;border:2px solid var(--stone-2);}
+::-webkit-scrollbar-thumb:hover{background:var(--clay);}
+::selection{background:var(--clay);color:#fff;}
+
+/* ================================================================
+   UTILS
+   ================================================================ */
+.sec{padding:80px 0;position:relative;overflow-x:clip;}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--clay-d);background:rgba(193,123,90,.11);
+  border:1px solid rgba(193,123,90,.16);
+  padding:7px 15px;border-radius:100px;margin-bottom:16px;
+}
+.eyebrow.sage{color:var(--sage-d);background:rgba(122,139,126,.09);border-color:rgba(122,139,126,.15);}
+
+.section-label{
+  display:flex;align-items:center;gap:14px;
+  font-size:.72rem;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;
+  color:var(--text-mute);margin-bottom:26px;
+}
+.section-label::before{content:'';width:32px;height:2px;background:var(--clay);border-radius:2px;}
+.section-label.center{justify-content:center;}
+.section-label.center::after{content:'';width:32px;height:2px;background:var(--clay);border-radius:2px;}
+
+.head{max-width:660px;margin-bottom:44px;}
+.head.center{margin-left:auto;margin-right:auto;text-align:center;}
+.head h2{font-size:clamp(1.75rem,3.6vw,2.6rem);margin-bottom:14px;}
+.head h2 em{font-style:normal;color:var(--sage);position:relative;}
+.head h2 em::after{
+  content:'';position:absolute;left:0;right:0;bottom:2px;height:9px;
+  background:rgba(193,123,90,.22);border-radius:6px;z-index:-1;
+}
+.head p{font-size:.96rem;color:var(--text-soft);line-height:1.75;}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:13px 26px;border-radius:100px;
+  font-size:.85rem;font-weight:700;letter-spacing:.1px;line-height:1;
+  border:1.6px solid transparent;cursor:pointer;
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .3s ease,color .3s ease,border-color .3s ease;
+  white-space:nowrap;
+}
+.btn i{font-size:.85em;}
+.btn-clay{background:var(--clay);color:#fff;box-shadow:0 10px 24px rgba(193,123,90,.34);}
+.btn-clay:hover{background:var(--clay-d);transform:translateY(-3px);box-shadow:0 16px 34px rgba(193,123,90,.44);}
+.btn-sage{background:var(--sage);color:#fff;box-shadow:0 10px 24px rgba(122,139,126,.28);}
+.btn-sage:hover{background:var(--sage-d);transform:translateY(-3px);box-shadow:0 16px 34px rgba(122,139,126,.38);}
+.btn-ghost{border-color:var(--line);background:#fff;color:var(--text);box-shadow:var(--sh1);}
+.btn-ghost:hover{border-color:var(--sage);color:var(--sage);transform:translateY(-3px);box-shadow:var(--sh2);}
+.btn-sm{padding:10px 18px;font-size:.76rem;}
+.btn-lg{padding:16px 32px;font-size:.92rem;}
+
+/* ================================================================
+   SCROLL PROGRESS
+   ================================================================ */
+#scrollProgress{
+  position:fixed;top:0;left:0;height:3px;width:0%;
+  background:linear-gradient(90deg,var(--sage),var(--sage-l),var(--clay));
+  z-index:9999;transition:width .1s linear;
+  box-shadow:0 0 12px rgba(193,123,90,.45);
+}
+
+/* ================================================================
+   SECTION 1 — HERO
+   ================================================================ */
+.sched-hero{
+  position:relative;
+  padding:72px 0 100px;
+  overflow:hidden;
+  background:var(--cream);
+  text-align:center;
+}
+.sched-hero::before{
+  content:'';position:absolute;top:-180px;left:50%;transform:translateX(-50%);
+  width:900px;height:500px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(193,123,90,.18),transparent 70%);
+  filter:blur(80px);pointer-events:none;
+}
+.sched-hero .wrap{position:relative;z-index:2;}
+
+.crumb-line{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.68rem;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--text-mute);
+  margin-bottom:28px;
+}
+.crumb-line a{color:var(--sage-d);transition:color .3s ease;}
+.crumb-line a:hover{color:var(--clay-d);}
+.crumb-line i{font-size:.55rem;}
+
+.sched-hero h1{
+  font-size:clamp(2.6rem,6vw,4.6rem);
+  font-weight:900;letter-spacing:-.035em;line-height:.98;
+  margin-bottom:24px;
+}
+.sched-hero h1 em{
+  font-style:normal;color:var(--sage-d);position:relative;display:inline-block;
+}
+.sched-hero h1 em::after{
+  content:'';position:absolute;left:-3px;right:-3px;bottom:-4px;height:3px;
+  background:var(--clay);border-radius:2px;
+}
+
+.sched-hero p{
+  font-size:1.04rem;color:var(--text-soft);line-height:1.8;
+  max-width:620px;margin:0 auto 36px;
+}
+
+.sched-hero .hero-cta{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:22px;
+}
+.sched-hero .hero-extra{
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:56px;
+  font-size:.72rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--text-mute);
+}
+.sched-hero .hero-extra span{
+  display:inline-flex;align-items:center;gap:6px;
+}
+.sched-hero .hero-extra i{color:var(--sage);font-size:.8em;}
+
+/* Today card */
+.today-card{
+  position:relative;
+  max-width:520px;
+  margin:0 auto;
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-radius:var(--r-l);
+  padding:32px 36px;
+  box-shadow:var(--sh3);
+  text-align:left;
+  overflow:hidden;
+}
+.today-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:6px;
+  background:linear-gradient(90deg,var(--sage),var(--clay));
+}
+.today-card .tc-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  padding-bottom:16px;
+  border-bottom:1px dashed var(--line);
+  margin-bottom:20px;
+}
+.today-card .tc-head h3{
+  font-size:1.4rem;font-weight:800;letter-spacing:-.02em;
+}
+.today-card .tc-head small{
+  font-size:.66rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--clay-d);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.today-card .tc-head small .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--clay);
+  animation:blink 1.6s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+.today-card .tc-row{
+  display:grid;
+  grid-template-columns:70px 1fr auto;
+  gap:16px;align-items:center;
+  padding:12px 0;
+  border-bottom:1px dashed var(--line);
+}
+.today-card .tc-row:last-of-type{border-bottom:none;padding-bottom:0;}
+.today-card .tc-time{
+  font-family:'Outfit',sans-serif;
+  font-size:.9rem;font-weight:800;color:var(--clay-d);
+  letter-spacing:-.01em;
+}
+.today-card .tc-name b{
+  display:block;font-size:.9rem;font-weight:700;color:var(--text);
+}
+.today-card .tc-name small{
+  font-size:.7rem;color:var(--text-mute);font-weight:600;
+}
+.today-card .tc-go{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:50%;
+  background:var(--stone-2);color:var(--sage-d);
+  transition:all .35s var(--ease);
+}
+.today-card .tc-go:hover{
+  background:var(--clay);color:#fff;
+  transform:rotate(-45deg);
+}
+.today-card .tc-foot{
+  margin-top:22px;padding-top:20px;
+  border-top:1px solid var(--line);
+  display:flex;gap:10px;
+  flex-wrap:wrap;
+}
+.today-card .tc-foot .btn{flex:1;justify-content:center;}
+
+@media (max-width:640px){
+  .sched-hero{padding:50px 0 70px;}
+  .sched-hero .hero-cta{flex-direction:column;align-items:stretch;}
+  .sched-hero .hero-cta .btn{justify-content:center;}
+  .today-card{padding:24px 22px;}
+  .today-card .tc-row{grid-template-columns:60px 1fr auto;gap:12px;}
+  .today-card .tc-foot{flex-direction:column;}
+}
+
+/* ================================================================
+   SECTION 2 — WEEK NAVIGATOR
+   ================================================================ */
+.week-nav{
+  background:#fff;
+  border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+  padding:48px 0;
+}
+
+.week-tabs{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:14px;
+}
+
+.day-tab{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:20px 8px;
+  border-radius:var(--r-m);
+  border:1.5px solid var(--line);
+  background:#fff;
+  text-align:center;
+  transition:all .35s var(--ease);
+  position:relative;
+  overflow:hidden;
+}
+.day-tab::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:var(--sage);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .35s var(--ease);
+}
+.day-tab:hover::before{transform:scaleX(1);}
+.day-tab:hover{
+  border-color:var(--sage);
+  transform:translateY(-3px);
+  box-shadow:var(--sh2);
+}
+.day-tab.active{
+  background:var(--text);
+  border-color:var(--text);
+  color:#fff;
+}
+.day-tab.active::before{background:var(--clay);transform:scaleX(1);}
+
+.day-tab .dt-day{
+  font-family:'Outfit',sans-serif;
+  font-size:1.3rem;font-weight:900;line-height:1;
+  letter-spacing:-.02em;
+  color:var(--text);
+  margin-bottom:6px;
+  transition:color .35s ease;
+}
+.day-tab .dt-date{
+  font-size:.68rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--text-mute);
+  margin-bottom:4px;
+  transition:color .35s ease;
+}
+.day-tab .dt-count{
+  font-size:.64rem;font-weight:700;letter-spacing:.6px;
+  color:var(--clay-d);
+  transition:color .35s ease;
+}
+
+.day-tab.active .dt-day,
+.day-tab.active .dt-date{color:#fff;}
+.day-tab.active .dt-count{color:var(--clay-l);}
+
+.week-nav-actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  margin-top:36px;
+}
+
+@media (max-width:900px){
+  .week-tabs{grid-template-columns:repeat(4,1fr);}
+}
+@media (max-width:520px){
+  .week-tabs{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .day-tab{padding:16px 6px;}
+  .day-tab .dt-day{font-size:1.1rem;}
+  .week-nav-actions{flex-direction:column;align-items:stretch;}
+  .week-nav-actions .btn{justify-content:center;}
+}
+
+/* ================================================================
+   SECTION 3 — TIMETABLE GRID
+   ================================================================ */
+.timetable{
+  background:var(--stone-2);
+  border-bottom:1px solid var(--line-soft);
+}
+
+.tt-head-actions{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+  margin-bottom:32px;flex-wrap:wrap;
+}
+
+.tt-wrap{
+  overflow-x:auto;
+  padding-bottom:12px;
+  scrollbar-width:thin;
+  -webkit-overflow-scrolling:touch;
+}
+.tt-wrap::-webkit-scrollbar{height:8px;}
+.tt-wrap::-webkit-scrollbar-thumb{background:var(--sage-l);border-radius:20px;}
+
+.tt-grid{
+  display:grid;
+  grid-template-columns:110px repeat(6, minmax(170px, 1fr));
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:var(--r-m);
+  overflow:hidden;
+  min-width:1140px;
+}
+
+.tt-cell{
+  background:#fff;
+  padding:18px 16px;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  min-height:120px;
+  transition:background .3s var(--ease);
+}
+.tt-cell.tt-head{
+  background:var(--cream);
+  padding:20px 16px;
+  min-height:auto;
+}
+.tt-cell.tt-time-head{
+  background:var(--cream);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.66rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--text-mute);
+}
+
+.tt-head-day{
+  font-family:'Outfit',sans-serif;
+  font-size:.9rem;font-weight:800;
+  letter-spacing:-.01em;
+  color:var(--clay-d);
+  margin-bottom:2px;
+}
+.tt-head-date{
+  font-size:.66rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--text-mute);
+}
+
+.tt-time{
+  background:var(--cream);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:18px 10px;
+  text-align:center;
+}
+.tt-time .tt-h{
+  font-family:'Outfit',sans-serif;
+  font-size:1.1rem;font-weight:900;
+  color:var(--text);line-height:1;
+  letter-spacing:-.02em;
+  margin-bottom:4px;
+}
+.tt-time .tt-ap{
+  font-size:.62rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--text-mute);
+}
+
+.tt-slot{
+  transition:all .3s var(--ease);
+  cursor:pointer;
+}
+.tt-slot:hover{
+  background:var(--cream);
+  box-shadow:inset 0 0 0 1.5px var(--clay);
+  transform:scale(1.01);
+  z-index:2;
+  position:relative;
+}
+
+.tt-slot .slot-name{
+  font-family:'Outfit',sans-serif;
+  font-size:.88rem;font-weight:800;letter-spacing:-.015em;
+  color:var(--text);line-height:1.2;
+  margin-bottom:4px;
+}
+.tt-slot .slot-teach{
+  font-size:.72rem;font-weight:600;color:var(--text-soft);
+  margin-bottom:8px;
+}
+.tt-slot .slot-tag{
+  display:inline-block;
+  font-size:.56rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+  padding:3px 8px;border-radius:100px;
+  color:var(--sage-d);
+  background:rgba(122,139,126,.12);
+  border:1px solid rgba(122,139,126,.22);
+  margin-right:4px;
+}
+.tt-slot .slot-tag.clay{
+  color:var(--clay-d);
+  background:rgba(193,123,90,.12);
+  border-color:rgba(193,123,90,.22);
+}
+.tt-slot .slot-tag.gold{
+  color:#8B6F3F;
+  background:rgba(212,165,116,.18);
+  border-color:rgba(212,165,116,.35);
+}
+
+.tt-cell.tt-empty{
+  background:#fafaf7;
+  position:relative;
+}
+.tt-cell.tt-empty::before{
+  content:'';position:absolute;top:50%;left:50%;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--line);
+  transform:translate(-50%,-50%);
+}
+
+.tt-foot-actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  margin-top:44px;
+}
+
+@media (max-width:1100px){
+  .tt-grid{grid-template-columns:100px repeat(5, minmax(170px, 1fr));min-width:980px;}
+}
+@media (max-width:640px){
+  .tt-head-actions{flex-direction:column;align-items:stretch;}
+  .tt-foot-actions{flex-direction:column;align-items:stretch;}
+  .tt-foot-actions .btn{justify-content:center;}
+}
+
+/* ================================================================
+   SECTION 4 — LEGEND
+   ================================================================ */
+.legend{
+  background:#fff;
+  border-bottom:1px solid var(--line-soft);
+}
+
+.legend-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+
+.legend-card{
+  padding:28px 26px;
+  background:var(--cream);
+  border:1.5px solid var(--line);
+  border-radius:var(--r-m);
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+  transition:all .4s var(--ease);
+}
+.legend-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--sh2);
+  border-color:rgba(193,123,90,.32);
+}
+
+.legend-card .lc-img{
+  width:80px;height:80px;border-radius:14px;
+  overflow:hidden;flex-shrink:0;
+  background:var(--stone);
+}
+.legend-card .lc-img img{
+  width:100%;height:100%;object-fit:cover;
+}
+
+.legend-card .lc-body h3{
+  font-family:'Outfit',sans-serif;
+  font-size:1.05rem;font-weight:800;letter-spacing:-.015em;
+  margin-bottom:4px;
+}
+.legend-card .lc-body p{
+  font-size:.82rem;color:var(--text-soft);line-height:1.55;
+  margin-bottom:10px;
+}
+.legend-card .lc-meta{
+  display:flex;gap:6px;flex-wrap:wrap;
+  margin-bottom:12px;
+}
+.legend-card .lc-meta span{
+  font-size:.56rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+  padding:3px 8px;border-radius:100px;
+  color:var(--sage-d);
+  background:rgba(122,139,126,.12);
+  border:1px solid rgba(122,139,126,.22);
+}
+.legend-card .lc-cta{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.66rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--clay-d);
+  transition:color .3s ease;
+}
+.legend-card .lc-cta:hover{color:var(--clay);}
+.legend-card .lc-cta i{font-size:.6em;transition:transform .3s ease;}
+.legend-card .lc-cta:hover i{transform:translateX(4px);}
+
+.legend-actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  margin-top:44px;
+}
+
+@media (max-width:1024px){ .legend-grid{grid-template-columns:1fr 1fr;} }
+@media (max-width:600px){
+  .legend-grid{grid-template-columns:1fr;}
+  .legend-card{flex-direction:column;}
+  .legend-actions{flex-direction:column;align-items:stretch;}
+  .legend-actions .btn{justify-content:center;}
+}
+
+/* ================================================================
+   SECTION 5 — BOOKING STEPS
+   ================================================================ */
+.steps{
+  background:var(--cream);
+  border-bottom:1px solid var(--line-soft);
+}
+
+.steps-wrap{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:70px;
+  align-items:center;
+}
+
+.steps-img{
+  position:relative;
+  aspect-ratio:4/5;
+  border-radius:var(--r-l);
+  overflow:hidden;
+  box-shadow:var(--sh2);
+}
+.steps-img img{width:100%;height:100%;object-fit:cover;}
+.steps-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 55%,rgba(58,74,63,.45) 100%);
+  pointer-events:none;
+}
+.steps-img .si-caption{
+  position:absolute;bottom:26px;left:26px;right:26px;
+  color:#fff;z-index:2;
+  font-size:.7rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+}
+.steps-img .si-caption::before{
+  content:'';display:block;width:24px;height:1px;
+  background:var(--clay-l);margin-bottom:10px;
+}
+
+.steps-copy h2{
+  font-size:clamp(1.75rem,3.6vw,2.6rem);
+  letter-spacing:-.025em;line-height:1.05;margin-bottom:16px;
+}
+.steps-copy h2 em{color:var(--sage);font-style:normal;}
+.steps-copy > p{
+  font-size:.96rem;color:var(--text-soft);line-height:1.8;
+  margin-bottom:36px;
+}
+
+.step-list{
+  list-style:none;
+  display:flex;flex-direction:column;
+}
+
+.step-item{
+  display:grid;
+  grid-template-columns:56px 1fr;
+  gap:24px;
+  padding:22px 0;
+  border-top:1px solid var(--line);
+  align-items:flex-start;
+  position:relative;
+  transition:padding-left .4s var(--ease);
+}
+.step-item:last-child{border-bottom:1px solid var(--line);}
+.step-item:hover{padding-left:10px;}
+.step-item::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:0;background:var(--clay);
+  transition:width .3s var(--ease);
+}
+.step-item:hover::before{width:2px;}
+
+.step-item .si-num{
+  font-family:'Outfit',sans-serif;
+  font-size:1.5rem;font-weight:900;line-height:1;
+  color:var(--sage-l);
+  letter-spacing:-.04em;
+  transition:color .3s ease;
+}
+.step-item:hover .si-num{color:var(--clay);}
+
+.step-item .si-body h3{
+  font-family:'Outfit',sans-serif;
+  font-size:1.1rem;font-weight:800;letter-spacing:-.015em;
+  margin-bottom:4px;
+}
+.step-item .si-body p{
+  font-size:.86rem;color:var(--text-soft);line-height:1.65;
+}
+
+.steps-actions{
+  display:flex;gap:12px;flex-wrap:wrap;
+  margin-top:34px;
+}
+
+@media (max-width:1024px){
+  .steps-wrap{grid-template-columns:1fr;gap:44px;}
+  .steps-img{max-width:480px;margin:0 auto;aspect-ratio:4/3;}
+}
+@media (max-width:520px){
+  .steps-actions{flex-direction:column;align-items:stretch;}
+  .steps-actions .btn{justify-content:center;}
+}
+
+/* ================================================================
+   SECTION 6 — FINAL CTA
+   ================================================================ */
+.final-cta{
+  padding:80px 0 100px;
+  background:var(--stone-2);
+}
+.final-cta .wrap{position:relative;z-index:2;}
+
+.cta-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:var(--r-xl);
+  background:linear-gradient(135deg,#5F6E5A 0%,#7A8B7E 55%,#8FA292 100%);
+  padding:80px 60px;
+  text-align:center;
+  box-shadow:var(--sh3);
+}
+.cta-card::before{
+  content:'';position:absolute;top:-100px;left:-100px;
+  width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle,rgba(193,123,90,.32),transparent 70%);
+  pointer-events:none;
+}
+.cta-card::after{
+  content:'';position:absolute;bottom:-120px;right:-100px;
+  width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%);
+  pointer-events:none;
+}
+
+.cta-card .chip{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:#fff;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+  padding:7px 15px;border-radius:100px;
+  margin-bottom:20px;
+  position:relative;z-index:2;
+}
+.cta-card h2{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(1.8rem,4vw,2.9rem);
+  font-weight:900;color:#fff;letter-spacing:-.03em;line-height:1.05;
+  margin-bottom:18px;
+  position:relative;z-index:2;
+}
+.cta-card p{
+  color:rgba(255,255,255,.82);
+  font-size:.98rem;line-height:1.75;
+  max-width:520px;margin:0 auto 34px;
+  position:relative;z-index:2;
+}
+.cta-card .actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  position:relative;z-index:2;
+}
+.cta-card .cta-mini{
+  display:flex;gap:24px;justify-content:center;flex-wrap:wrap;
+  margin-top:34px;padding-top:28px;
+  border-top:1px solid rgba(255,255,255,.16);
+  position:relative;z-index:2;
+  font-size:.68rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:rgba(255,255,255,.7);
+}
+.cta-card .cta-mini span{
+  display:inline-flex;align-items:center;gap:8px;
+}
+.cta-card .cta-mini i{color:var(--clay-l);font-size:.8em;}
+
+.btn-white{
+  background:#fff;color:var(--text);
+  box-shadow:0 10px 26px rgba(0,0,0,.18);
+}
+.btn-white:hover{background:var(--clay);color:#fff;}
+.btn-outline-white{
+  background:transparent;color:#fff;
+  border:1.5px solid rgba(255,255,255,.5);
+}
+.btn-outline-white:hover{background:#fff;color:var(--text);border-color:#fff;}
+
+@media (max-width:640px){
+  .final-cta{padding:60px 0 70px;}
+  .cta-card{padding:44px 26px;border-radius:var(--r-l);}
+  .cta-card .actions{flex-direction:column;align-items:stretch;}
+  .cta-card .actions .btn{justify-content:center;}
+  .cta-card .cta-mini{flex-direction:column;align-items:center;gap:12px;}
+}
+
+/* ================================================================
+   AOS safety
+   ================================================================ */
+@media (max-width:900px){
+  [data-aos="fade-left"],[data-aos="fade-right"]{
+    transform:translate3d(0,34px,0) !important;
+    opacity:0;
+  }
+  [data-aos="fade-left"].aos-animate,
+  [data-aos="fade-right"].aos-animate{
+    transform:translate3d(0,0,0) !important;
+    opacity:1;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width:640px){
+  .sec{padding:60px 0;}
+  .wrap{padding:0 16px;}
+  .head h2{font-size:1.55rem;}
+  .head p{font-size:.9rem;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="scrollProgress"></div>
+<div id="header-placeholder"></div>
+
+<main>
+
+  <!-- ================= SECTION 1 — HERO ================= -->
+  <section class="sched-hero" id="schedule-hero">
+    <div class="wrap">
+
+      <div class="crumb-line" data-aos="fade-down">
+        <a href="index.html">Home</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Schedule</span>
+      </div>
+
+      <h1 data-aos="fade-up" data-aos-delay="100">
+        The week,<br>
+        laid out <em>calmly</em>.
+      </h1>
+
+      <p data-aos="fade-up" data-aos-delay="200">
+        Fifteen classes across seven days — no rush, no pressure. Find a slot that
+        fits your life, and reserve a mat in a couple of taps.
+      </p>
+
+      <div class="hero-cta" data-aos="fade-up" data-aos-delay="300">
+        <a href="404.html" class="btn btn-lg btn-clay">
+          <i class="fas fa-calendar-check"></i> Book a Class
+        </a>
+        <a href="404.html" class="btn btn-lg btn-ghost">
+          <i class="fas fa-table-cells"></i> See the Timetable
+        </a>
+      </div>
+
+      <div class="hero-extra" data-aos="fade-up" data-aos-delay="350">
+        <span><i class="fas fa-spa"></i> First class free</span>
+        <span><i class="fas fa-leaf"></i> Max 12 mats</span>
+        <span><i class="fas fa-clock"></i> Open 6 am – 9 pm</span>
+      </div>
+
+      <div class="today-card" data-aos="zoom-in" data-aos-delay="400">
+        <div class="tc-head">
+          <h3>Today · Mon</h3>
+          <small><span class="dot"></span> Live now</small>
+        </div>
+
+        <div class="tc-row">
+          <span class="tc-time">7:00 am</span>
+          <div class="tc-name">
+            <b>Hatha · All levels</b>
+            <small>Maya Thompson</small>
+          </div>
+          <a href="404.html" class="tc-go" aria-label="Book 7am Hatha">
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="tc-row">
+          <span class="tc-time">12:30 pm</span>
+          <div class="tc-name">
+            <b>Vinyasa · Intermediate</b>
+            <small>Arjun Mehta</small>
+          </div>
+          <a href="404.html" class="tc-go" aria-label="Book 12:30pm Vinyasa">
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="tc-row">
+          <span class="tc-time">7:30 pm</span>
+          <div class="tc-name">
+            <b>Yin · All levels</b>
+            <small>Elena Rossi</small>
+          </div>
+          <a href="404.html" class="tc-go" aria-label="Book 7:30pm Yin">
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="tc-foot">
+          <a href="404.html" class="btn btn-sm btn-clay">
+            <i class="fas fa-calendar-check"></i> Book Today
+          </a>
+          <a href="404.html" class="btn btn-sm btn-ghost">
+            <i class="fas fa-calendar-days"></i> Full Week
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 2 — WEEK NAVIGATOR ================= -->
+  <section class="week-nav" id="week-nav" aria-labelledby="week-heading">
+    <div class="wrap">
+
+      <h2 class="section-label center" id="week-heading" data-aos="fade-down">Pick a Day</h2>
+
+      <div class="week-tabs" data-aos="fade-up" data-aos-delay="100">
+
+        <a href="404.html" class="day-tab active">
+          <span class="dt-day">Mon</span>
+          <span class="dt-date">Today · Oct 21</span>
+          <span class="dt-count">3 classes</span>
+        </a>
+
+        <a href="404.html" class="day-tab">
+          <span class="dt-day">Tue</span>
+          <span class="dt-date">Oct 22</span>
+          <span class="dt-count">3 classes</span>
+        </a>
+
+        <a href="404.html" class="day-tab">
+          <span class="dt-day">Wed</span>
+          <span class="dt-date">Oct 23</span>
+          <span class="dt-count">3 classes</span>
+        </a>
+
+        <a href="404.html" class="day-tab">
+          <span class="dt-day">Thu</span>
+          <span class="dt-date">Oct 24</span>
+          <span class="dt-count">3 classes</span>
+        </a>
+
+        <a href="404.html" class="day-tab">
+          <span class="dt-day">Fri</span>
+          <span class="dt-date">Oct 25</span>
+          <span class="dt-count">2 classes</span>
+        </a>
+
+        <a href="404.html" class="day-tab">
+          <span class="dt-day">Sat</span>
+          <span class="dt-date">Oct 26</span>
+          <span class="dt-count">2 classes</span>
+        </a>
+
+        <a href="404.html" class="day-tab">
+          <span class="dt-day">Sun</span>
+          <span class="dt-date">Oct 27</span>
+          <span class="dt-count">2 classes</span>
+        </a>
+
+      </div>
+
+      <div class="week-nav-actions" data-aos="fade-up" data-aos-delay="150">
+        <a href="404.html" class="btn btn-sage">
+          <i class="fas fa-calendar-check"></i> Book a Day
+        </a>
+        <a href="404.html" class="btn btn-ghost">
+          <i class="fas fa-download"></i> Download Schedule
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 3 — TIMETABLE GRID ================= -->
+  <section class="sec timetable" id="timetable" aria-labelledby="tt-heading">
+    <div class="wrap">
+
+      <h2 class="section-label" data-aos="fade-down">Full Timetable</h2>
+
+      <div class="tt-head-actions">
+        <div class="head" style="margin-bottom:0;" data-aos="fade-up">
+          <span class="eyebrow"><i class="fas fa-table-cells"></i> The week at a glance</span>
+          <h2 id="tt-heading">Every class, <em>every time</em>.</h2>
+          <p>Scroll sideways on smaller screens. Tap any class to reserve your mat.</p>
+        </div>
+        <div class="tt-head-btns" data-aos="fade-up" data-aos-delay="120" style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="404.html" class="btn btn-sm btn-sage">
+            <i class="fas fa-filter"></i> Filter
+          </a>
+          <a href="404.html" class="btn btn-sm btn-ghost">
+            <i class="fas fa-calendar-week"></i> Today Only
+          </a>
+        </div>
+      </div>
+
+      <div class="tt-wrap" data-aos="fade-up" data-aos-delay="200">
+        <div class="tt-grid">
+
+          <div class="tt-cell tt-time-head">Time</div>
+          <div class="tt-cell tt-head">
+            <div class="tt-head-day">Mon · 21</div>
+            <div class="tt-head-date">Today</div>
+          </div>
+          <div class="tt-cell tt-head">
+            <div class="tt-head-day">Tue · 22</div>
+            <div class="tt-head-date">Tomorrow</div>
+          </div>
+          <div class="tt-cell tt-head">
+            <div class="tt-head-day">Wed · 23</div>
+            <div class="tt-head-date">Wednesday</div>
+          </div>
+          <div class="tt-cell tt-head">
+            <div class="tt-head-day">Thu · 24</div>
+            <div class="tt-head-date">Thursday</div>
+          </div>
+          <div class="tt-cell tt-head">
+            <div class="tt-head-day">Fri · 25</div>
+            <div class="tt-head-date">Friday</div>
+          </div>
+          <div class="tt-cell tt-head">
+            <div class="tt-head-day">Sat · 26</div>
+            <div class="tt-head-date">Saturday</div>
+          </div>
+
+          <div class="tt-cell tt-time">
+            <span class="tt-h">7:00</span>
+            <span class="tt-ap">am</span>
+          </div>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Hatha · All levels</div>
+            <div class="slot-teach">Maya Thompson</div>
+            <div><span class="slot-tag">60 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <div class="tt-cell tt-empty"></div>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Hatha · All levels</div>
+            <div class="slot-teach">Maya Thompson</div>
+            <div><span class="slot-tag">60 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <div class="tt-cell tt-empty"></div>
+          <div class="tt-cell tt-empty"></div>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Vinyasa · All levels</div>
+            <div class="slot-teach">Arjun Mehta</div>
+            <div><span class="slot-tag">60 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+
+          <div class="tt-cell tt-time">
+            <span class="tt-h">9:00</span>
+            <span class="tt-ap">am</span>
+          </div>
+          <div class="tt-cell tt-empty"></div>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Meditation · Beginner</div>
+            <div class="slot-teach">David Chen</div>
+            <div><span class="slot-tag">45 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Prenatal · All trimesters</div>
+            <div class="slot-teach">Priya Nair</div>
+            <div><span class="slot-tag gold">Prenatal</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Meditation · Beginner</div>
+            <div class="slot-teach">David Chen</div>
+            <div><span class="slot-tag">45 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <div class="tt-cell tt-empty"></div>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Vinyasa · All levels</div>
+            <div class="slot-teach">Arjun Mehta</div>
+            <div><span class="slot-tag">60 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+
+          <div class="tt-cell tt-time">
+            <span class="tt-h">12:30</span>
+            <span class="tt-ap">pm</span>
+          </div>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Vinyasa · Intermediate</div>
+            <div class="slot-teach">Arjun Mehta</div>
+            <div><span class="slot-tag">60 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <div class="tt-cell tt-empty"></div>
+          <div class="tt-cell tt-empty"></div>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Vinyasa · Power</div>
+            <div class="slot-teach">Arjun Mehta</div>
+            <div><span class="slot-tag">60 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <div class="tt-cell tt-empty"></div>
+          <div class="tt-cell tt-empty"></div>
+
+          <div class="tt-cell tt-time">
+            <span class="tt-h">6:00</span>
+            <span class="tt-ap">pm</span>
+          </div>
+          <div class="tt-cell tt-empty"></div>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Vinyasa · Intermediate</div>
+            <div class="slot-teach">Arjun Mehta</div>
+            <div><span class="slot-tag">60 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <div class="tt-cell tt-empty"></div>
+          <div class="tt-cell tt-empty"></div>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Restorative · All levels</div>
+            <div class="slot-teach">Sarah Lin</div>
+            <div><span class="slot-tag">60 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Yin · All levels</div>
+            <div class="slot-teach">Elena Rossi</div>
+            <div><span class="slot-tag">75 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+
+          <div class="tt-cell tt-time">
+            <span class="tt-h">7:30</span>
+            <span class="tt-ap">pm</span>
+          </div>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Yin · All levels</div>
+            <div class="slot-teach">Elena Rossi</div>
+            <div><span class="slot-tag">75 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Restorative · All levels</div>
+            <div class="slot-teach">Sarah Lin</div>
+            <div><span class="slot-tag">60 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Yin · All levels</div>
+            <div class="slot-teach">Sarah Lin</div>
+            <div><span class="slot-tag">75 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Hatha · All levels</div>
+            <div class="slot-teach">Maya Thompson</div>
+            <div><span class="slot-tag">60 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+          <div class="tt-cell tt-empty"></div>
+          <a href="404.html" class="tt-cell tt-slot">
+            <div class="slot-name">Yin &amp; Meditation</div>
+            <div class="slot-teach">Elena Rossi · David Chen</div>
+            <div><span class="slot-tag">90 min</span><span class="slot-tag clay">Book</span></div>
+          </a>
+
+        </div>
+      </div>
+
+      <div class="tt-foot-actions" data-aos="fade-up" data-aos-delay="100">
+        <a href="404.html" class="btn btn-clay">
+          <i class="fas fa-calendar-check"></i> Reserve a Class
+        </a>
+        <a href="404.html" class="btn btn-sage">
+          <i class="fas fa-calendar-week"></i> See Next Week
+        </a>
+        <a href="404.html" class="btn btn-ghost">
+          <i class="fas fa-print"></i> Print
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 4 — LEGEND ================= -->
+  <section class="sec legend" id="legend" aria-labelledby="legend-heading">
+    <div class="wrap">
+
+      <h2 class="section-label" data-aos="fade-down">Class Legend</h2>
+
+      <div class="head" data-aos="fade-up">
+        <span class="eyebrow"><i class="fas fa-circle-info"></i> What to expect</span>
+        <h2 id="legend-heading">Six styles, <em>at a glance</em>.</h2>
+        <p>A quick reminder of what each class is — and who it's for.</p>
+      </div>
+
+      <div class="legend-grid">
+
+        <div class="legend-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="lc-img">
+            <img src="ys10.webp"
+                 alt="Hatha"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#E6ECE3,#B7C3B4)';this.remove();">
+          </div>
+          <div class="lc-body">
+            <h3>Hatha</h3>
+            <p>Slow, steady postures held with breath. Great for beginners.</p>
+            <div class="lc-meta"><span>All levels</span><span>60 min</span></div>
+            <a href="404.html" class="lc-cta">Book Hatha <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="legend-card" data-aos="fade-up" data-aos-delay="60">
+          <div class="lc-img">
+            <img src="ys9.webp"
+                 alt="Vinyasa"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#E8C9B6,#C28163)';this.remove();">
+          </div>
+          <div class="lc-body">
+            <h3>Vinyasa</h3>
+            <p>Breath-led flow that builds heat and strength.</p>
+            <div class="lc-meta"><span>Intermediate</span><span>60 min</span></div>
+            <a href="404.html" class="lc-cta">Book Vinyasa <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="legend-card" data-aos="fade-up" data-aos-delay="120">
+          <div class="lc-img">
+            <img src="ys8.webp"
+                 alt="Yin"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#EFE7DA,#B7C3B4)';this.remove();">
+          </div>
+          <div class="lc-body">
+            <h3>Yin</h3>
+            <p>Deep, long-held stretches. Quiet, grounded, restorative.</p>
+            <div class="lc-meta"><span>All levels</span><span>75 min</span></div>
+            <a href="404.html" class="lc-cta">Book Yin <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="legend-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="lc-img">
+            <img src="ys7.webp"
+                 alt="Restorative"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#EFE7DA,#E8C9B6)';this.remove();">
+          </div>
+          <div class="lc-body">
+            <h3>Restorative</h3>
+            <p>Fully supported shapes for deep rest and recovery.</p>
+            <div class="lc-meta"><span>All levels</span><span>60 min</span></div>
+            <a href="404.html" class="lc-cta">Book Restorative <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="legend-card" data-aos="fade-up" data-aos-delay="60">
+          <div class="lc-img">
+            <img src="ys6.webp"
+                 alt="Meditation"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#E6ECE3,#E8C9B6)';this.remove();">
+          </div>
+          <div class="lc-body">
+            <h3>Meditation</h3>
+            <p>Guided breathwork and quiet sitting.</p>
+            <div class="lc-meta"><span>Beginner</span><span>45 min</span></div>
+            <a href="404.html" class="lc-cta">Book Meditation <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="legend-card" data-aos="fade-up" data-aos-delay="120">
+          <div class="lc-img">
+            <img src="ys5.webp"
+                 alt="Prenatal"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#E8C9B6,#EFE7DA)';this.remove();">
+          </div>
+          <div class="lc-body">
+            <h3>Prenatal</h3>
+            <p>Trimester-aware poses in a supportive circle.</p>
+            <div class="lc-meta"><span>All trimesters</span><span>60 min</span></div>
+            <a href="404.html" class="lc-cta">Book Prenatal <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="legend-actions" data-aos="fade-up" data-aos-delay="100">
+        <a href="404.html" class="btn btn-clay">
+          <i class="fas fa-calendar-check"></i> Pick a Style
+        </a>
+        <a href="404.html" class="btn btn-ghost">
+          <i class="fas fa-circle-question"></i> Not sure? Ask us
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 5 — BOOKING STEPS ================= -->
+  <section class="sec steps" id="how" aria-labelledby="how-heading">
+    <div class="wrap">
+
+      <h2 class="section-label" data-aos="fade-down">How to Book</h2>
+
+      <div class="steps-wrap">
+
+        <div class="steps-img" data-aos="fade-right">
+          <img src="ys4.webp"
+               alt="Booking a class"
+               onerror="this.parentElement.style.background='linear-gradient(135deg,#E6ECE3,#E8C9B6)';this.remove();">
+          <span class="si-caption">Reserve · arrive · practice</span>
+        </div>
+
+        <div class="steps-copy" data-aos="fade-left">
+          <span class="eyebrow"><i class="fas fa-route"></i> Four steps</span>
+          <h2 id="how-heading">From tap to mat in <em>under a minute</em>.</h2>
+          <p>
+            No apps, no complicated logins. Choose a class, choose your spot, and
+            we'll send a simple confirmation.
+          </p>
+
+          <ul class="step-list">
+
+            <li class="step-item" data-aos="fade-up" data-aos-delay="100">
+              <span class="si-num">01</span>
+              <div class="si-body">
+                <h3>Find a class</h3>
+                <p>Browse the timetable above, or pick a day and see what's on.</p>
+              </div>
+            </li>
+
+            <li class="step-item" data-aos="fade-up" data-aos-delay="180">
+              <span class="si-num">02</span>
+              <div class="si-body">
+                <h3>Pick your mat</h3>
+                <p>Every class holds twelve mats. Reserve a spot in a couple of taps.</p>
+              </div>
+            </li>
+
+            <li class="step-item" data-aos="fade-up" data-aos-delay="260">
+              <span class="si-num">03</span>
+              <div class="si-body">
+                <h3>Get a confirmation</h3>
+                <p>We'll send a simple email — no app to download, no password to remember.</p>
+              </div>
+            </li>
+
+            <li class="step-item" data-aos="fade-up" data-aos-delay="340">
+              <span class="si-num">04</span>
+              <div class="si-body">
+                <h3>Show up and breathe</h3>
+                <p>Come 10 minutes early. Everything you need will be waiting for you.</p>
+              </div>
+            </li>
+
+          </ul>
+
+          <div class="steps-actions" data-aos="fade-up" data-aos-delay="400">
+            <a href="404.html" class="btn btn-clay">
+              <i class="fas fa-calendar-check"></i> Start Booking
+            </a>
+            <a href="404.html" class="btn btn-ghost">
+              <i class="fas fa-map-location-dot"></i> Visit Us
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 6 — FINAL CTA ================= -->
+  <section class="final-cta" id="book" aria-labelledby="book-heading">
+    <div class="wrap">
+      <div class="cta-card" data-aos="zoom-in" data-aos-duration="1000">
+
+        <span class="chip" data-aos="fade-down" data-aos-delay="150">
+          <i class="fas fa-spa"></i> Your mat is waiting
+        </span>
+
+        <h2 id="book-heading" data-aos="fade-up" data-aos-delay="250">
+          Pick a time.<br>We'll see you there.
+        </h2>
+
+        <p data-aos="fade-up" data-aos-delay="350">
+          Your first class is free — no card needed, no commitment.
+          Just a calm hour that belongs to you.
+        </p>
+
+        <div class="actions">
+          <a href="404.html" class="btn btn-lg btn-white" data-aos="zoom-in" data-aos-delay="450">
+            <i class="fas fa-calendar-check"></i> Book Free Class
+          </a>
+          <a href="404.html" class="btn btn-lg btn-outline-white" data-aos="zoom-in" data-aos-delay="500">
+            <i class="fas fa-location-dot"></i> Visit the Studio
+          </a>
+        </div>
+
+        <div class="cta-mini">
+          <span><i class="fas fa-spa"></i> First class free</span>
+          <span><i class="fas fa-leaf"></i> Max 12 mats</span>
+          <span><i class="fas fa-clock"></i> Open 6 am – 9 pm</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+AOS.init({
+  duration: 850,
+  easing: 'ease-out-cubic',
+  once: true,
+  offset: 60,
+  mirror: false,
+  disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+});
+
+(function(){
+  const bar = document.getElementById('scrollProgress');
+  function onScroll(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop || document.body.scrollTop;
+    const height = h.scrollHeight - h.clientHeight;
+    bar.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+
+document.addEventListener('DOMContentLoaded', function(){
+  fetch('header.html')
+    .then(r => r.ok ? r.text() : Promise.reject('Header not found'))
+    .then(html => { document.getElementById('header-placeholder').innerHTML = html; initHeader(); })
+    .catch(err => console.warn('Header not loaded:', err));
+
+  fetch('footer.html')
+    .then(r => r.ok ? r.text() : Promise.reject('Footer not found'))
+    .then(html => { document.getElementById('footer-placeholder').innerHTML = html; initFooter(); })
+    .catch(err => console.warn('Footer not loaded:', err));
+});
+
+function initHeader(){
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (!hamburger || !mobileMenu) return;
+  const toggle = () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+  };
+  const close = () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+  hamburger.addEventListener('click', toggle);
+  document.addEventListener('click', e => {
+    if (mobileMenu.classList.contains('active') &&
+        !hamburger.contains(e.target) &&
+        !mobileMenu.contains(e.target)) close();
+  });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  window.addEventListener('resize', () => { if (window.innerWidth > 768) close(); });
+  document.querySelectorAll('.mobile-nav-link, .mobile-action-link')
+    .forEach(l => l.addEventListener('click', close));
+}
+
+function initFooter(){
+  const isValid = e => /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(e);
+  function bind(btnId, inputId, errId){
+    const btn = document.getElementById(btnId);
+    const input = document.getElementById(inputId);
+    const err = document.getElementById(errId);
+    if (!btn || !input || !err) return;
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const v = input.value.trim();
+      if (!v){ err.textContent = 'Please enter your email address'; err.classList.add('show'); input.classList.add('error'); }
+      else if (!isValid(v)){ err.textContent = 'Please enter a valid email address'; err.classList.add('show'); input.classList.add('error'); }
+      else window.location.href = '404.html';
+    });
+    input.addEventListener('input', () => {
+      if (input.value.trim()){ err.classList.remove('show'); input.classList.remove('error'); }
+    });
+    input.addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); btn.click(); } });
+  }
+  bind('footerSubscribeBtn', 'footerEmail', 'footerEmailError');
+  bind('mobileFooterSubscribeBtn', 'mobileFooterEmail', 'mobileFooterEmailError');
+}
+
+console.log('%c🧘 Yoga Studio — schedule page ready', 'color:#7A8B7E;font-size:15px;font-weight:bold;');
+</script>
+
+</body>
+</html>

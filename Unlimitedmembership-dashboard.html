@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Yoga Studio - Member Dashboard</title>
+
+<!-- ============================================================
+     AUTH GUARD — runs synchronously BEFORE body renders.
+     ✅ authenticated = true · expiresAt > now · role = member
+     ❌ invalid → redirect to login.html
+     ============================================================ -->
+<script>
+(function guardMemberDashboard() {
+  console.log('%c[AUTH] Member Guard running...', 'color:#C17B5A;font-weight:bold');
+
+  let raw = null;
+  try {
+    raw = sessionStorage.getItem('yoga_session') || localStorage.getItem('yoga_session');
+    console.log('[AUTH] Raw session data:', raw);
+  } catch (e) {
+    console.warn('[AUTH] Storage blocked:', e);
+  }
+
+  let session = null;
+  try {
+    session = raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    console.warn('[AUTH] JSON parse failed:', e);
+  }
+
+  console.log('[AUTH] Parsed session:', session);
+
+  const isValid = session &&
+                  session.authenticated === true &&
+                  typeof session.expiresAt === 'number' &&
+                  session.expiresAt > Date.now() &&
+                  session.role === 'member';
+
+  console.log('[AUTH] Is valid?', isValid);
+  if (session) {
+    console.log('[AUTH] Check breakdown:', {
+      authenticated: session.authenticated === true,
+      expiresAt_is_number: typeof session.expiresAt === 'number',
+      not_expired: session.expiresAt > Date.now(),
+      role_is_member: session.role === 'member'
+    });
+  }
+
+  if (!isValid) {
+    console.log('%c[AUTH] ❌ Invalid — redirecting to login.html', 'color:#dc2626;font-weight:bold');
+    try {
+      sessionStorage.removeItem('yoga_session');
+      localStorage.removeItem('yoga_session');
+    } catch (_) {}
+    window.location.replace('login.html');
+    return;
+  }
+
+  console.log('%c[AUTH] ✅ Valid — showing member dashboard', 'color:#5F6E5A;font-weight:bold');
+  window.__YOGA_USER__ = session;
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+  /* ================================================================
+     STACKLY — STUDIO MEMBER DASHBOARD
+     Theme: Sage / Clay / Sand
+     ================================================================ */
+  :root{
+    --sage:#7A8B7E;
+    --sage-d:#5F6E5A;
+    --sage-l:#9BAA9E;
+    --sage-soft:#B8C4B9;
+    --clay:#C17B5A;
+    --clay-d:#A55A3F;
+    --clay-l:#D9A48C;
+    --sand:#E8DFD3;
+    --gold:#D4A574;
+
+    --stone:#F5F3EF;
+    --stone-2:#F2EFE9;
+    --cream:#FBF8F3;
+    --bg:#F5F3EF;
+
+    --text:#3A4A3F;
+    --text-soft:#5A5E56;
+    --text-mute:#8A8E86;
+    --white:#ffffff;
+    --line:#E2DFD8;
+    --line-soft:#EFEAE2;
+
+    --sh1:0 2px 10px rgba(94,89,80,.05);
+    --sh2:0 14px 34px rgba(94,89,80,.09);
+    --sh3:0 28px 62px rgba(94,89,80,.15);
+
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  /* ===== RESET ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { max-width: 100vw; overflow-x: hidden !important; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    height: 100vh;
+    overflow: hidden;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--stone-2); }
+  ::-webkit-scrollbar-thumb { background: var(--sage); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--clay); }
+
+  /* ===== APP SHELL ===== */
+  .app {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, var(--sage-d) 0%, #4a5b48 100%);
+    display: flex;
+    flex-direction: column;
+    border-right: 3px solid var(--clay);
+    box-shadow: 4px 0 24px rgba(94,89,80,.18);
+    overflow: hidden;
+    z-index: 20;
+  }
+  .sidebar-logo {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    padding: 0 22px;
+    border-bottom: 1px solid rgba(255,255,255,.15);
+    flex-shrink: 0;
+  }
+  .sidebar-logo a {
+    display: block;
+    line-height: 0;
+  }
+  .sidebar-logo img {
+    height: 40px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0) invert(1);
+    opacity: .95;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 14px 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sidebar-nav::-webkit-scrollbar { width: 3px; }
+  .sidebar-nav::-webkit-scrollbar-thumb { background: var(--clay); border-radius: 10px; }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: var(--stone);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border-left: 3px solid transparent;
+    white-space: nowrap;
+  }
+  .nav-link i { width: 18px; font-size: 0.85rem; color: var(--sage-l); text-align: center; transition: 0.25s; }
+  .nav-link:hover { background: rgba(193,123,90,.18); color: #ffffff; border-left-color: var(--clay); }
+  .nav-link:hover i { color: var(--clay-l); }
+  .nav-link.active {
+    background: linear-gradient(135deg, var(--clay), var(--clay-d));
+    color: #ffffff;
+    border-left-color: var(--clay-l);
+    box-shadow: 0 4px 14px rgba(193,123,90,.45);
+  }
+  .nav-link.active i { color: #ffffff; }
+
+  .nav-divider { height: 1px; background: rgba(255,255,255,.15); margin: 10px 4px; }
+
+  .nav-link.logout { color: #f5c6b6; }
+  .nav-link.logout i { color: #f5c6b6; }
+  .nav-link.logout:hover { background: rgba(193,123,90,.22); color: #fde8e0; }
+
+  .sidebar-footer {
+    padding: 16px;
+    flex-shrink: 0;
+  }
+  .user-badge {
+    background: rgba(0,0,0,.14);
+    border: 1px solid rgba(212,165,116,.3);
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .user-badge .icon-circle {
+    width: 32px; height: 32px;
+    background: rgba(193,123,90,.28);
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--clay-l);
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+  .user-badge .role { font-size: 0.68rem; font-weight: 700; color: #ffffff; }
+  .user-badge .name { font-size: 0.62rem; color: var(--sage-l); margin: 2px 0 8px; word-break: break-word; }
+  .user-badge .status {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(122,139,126,.3);
+    border: 1px solid rgba(212,165,116,.35);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: #b8d4b8;
+  }
+  .user-badge .status::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: #8fbf8f;
+    border-radius: 50%;
+  }
+  .sidebar-copy {
+    text-align: center;
+    font-size: 0.55rem;
+    color: rgba(184,196,185,.6);
+    margin-top: 10px;
+  }
+
+  /* ===== MAIN WRAPPER ===== */
+  .main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  .main-header {
+    background: #ffffff;
+    border-bottom: 1px solid var(--line);
+    padding: 0 24px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-shrink: 0;
+    z-index: 10;
+    position: relative;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+  .mobile-logo { display: none; }
+  .mobile-logo a { display: block; line-height: 0; }
+  .mobile-logo img {
+    height: 34px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .header-title h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .header-title p {
+    font-size: 0.72rem;
+    color: var(--text-soft);
+    margin-top: 2px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+  .date-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--stone);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 7px 12px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .date-pill:hover { background: var(--stone-2); border-color: var(--sage-soft); }
+  .date-pill i { color: var(--clay); }
+
+  .bell-btn {
+    position: relative;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 1.1rem;
+    transition: 0.2s;
+    background: transparent;
+    border: none;
+    padding: 4px;
+  }
+  .bell-btn:hover { color: var(--clay); }
+  .bell-badge {
+    position: absolute;
+    top: -2px; right: -4px;
+    background: var(--clay);
+    color: #ffffff;
+    font-size: 0.55rem;
+    font-weight: 800;
+    width: 16px; height: 16px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+
+  .user-block {
+    display: flex; align-items: center; gap: 12px;
+    padding-left: 16px;
+    border-left: 1px solid var(--line);
+  }
+  .user-text { text-align: right; }
+  .user-text .name { font-size: 0.75rem; font-weight: 800; color: var(--text); }
+  .user-text .role { font-size: 0.58rem; color: var(--text-mute); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
+  .user-avatar {
+    position: relative;
+    width: 36px; height: 36px;
+    background: var(--clay);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+  .user-avatar:hover { background: var(--clay-d); }
+
+  .profile-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--sh3);
+    width: 180px;
+    padding: 6px 0;
+    z-index: 9999;
+  }
+  .profile-menu.show { display: block; }
+  .profile-menu a {
+    display: block;
+    padding: 9px 16px;
+    font-size: 0.78rem;
+    color: var(--text-soft);
+    text-decoration: none;
+    transition: 0.2s;
+    font-weight: 500;
+  }
+  .profile-menu a i { color: var(--sage-d); margin-right: 8px; width: 14px; }
+  .profile-menu a:hover { background: var(--stone); color: var(--text); }
+  .profile-menu hr { border: none; border-top: 1px solid var(--line-soft); margin: 4px 0; }
+  .profile-menu a.danger { color: #b4563f; }
+  .profile-menu a.danger i { color: #b4563f; }
+  .profile-menu a.danger:hover { background: #fdf0ec; }
+
+  .notif-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--clay);
+    box-shadow: var(--sh3);
+    width: 340px;
+    max-width: calc(100vw - 32px);
+    padding: 6px 0;
+    max-height: 420px;
+    overflow-y: auto;
+    z-index: 9999;
+  }
+  .notif-dropdown.show { display: block; }
+  .notif-head {
+    padding: 12px 18px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line-soft);
+    position: sticky; top: 0; background: #fff;
+    font-weight: 800; font-size: 0.85rem; color: var(--text);
+    z-index: 2;
+  }
+  .notif-head .badge {
+    background: var(--clay); color: #fff;
+    font-size: 0.6rem; font-weight: 800;
+    padding: 2px 8px; border-radius: 20px;
+  }
+  .notif-item {
+    padding: 12px 18px;
+    display: flex; gap: 12px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .notif-item:last-of-type { border-bottom: none; }
+  .notif-item .ni-icon {
+    width: 38px; height: 38px; flex-shrink: 0;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+  }
+  .notif-item .ni-body { flex: 1; min-width: 0; }
+  .notif-item .ni-title { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+  .notif-item .ni-desc { font-size: 0.7rem; color: var(--text-soft); margin-top: 2px; word-wrap: break-word; }
+  .notif-item .ni-time { font-size: 0.6rem; color: var(--text-mute); margin-top: 3px; }
+  .notif-footer {
+    display: block;
+    padding: 11px;
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--clay);
+    font-weight: 700;
+    text-decoration: none;
+    border-top: 1px solid var(--line-soft);
+    position: sticky; bottom: 0;
+    background: #fff;
+  }
+  .notif-footer:hover { background: var(--stone); color: var(--clay-d); }
+
+  .mobile-nav {
+    display: none;
+    background: linear-gradient(180deg, var(--sage-d) 0%, #4a5b48 100%);
+    border-bottom: 3px solid var(--clay);
+    padding: 10px 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    gap: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-shrink: 0;
+  }
+  .mobile-nav::-webkit-scrollbar { display: none; }
+  .mobile-nav .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--stone);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.25s;
+    font-family: inherit;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .mobile-nav .nav-btn i { color: var(--sage-l); font-size: 0.8rem; }
+  .mobile-nav .nav-btn:hover { background: rgba(193,123,90,.18); color: #fff; }
+  .mobile-nav .nav-btn.active {
+    background: linear-gradient(135deg, var(--clay), var(--clay-d));
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(193,123,90,.45);
+  }
+  .mobile-nav .nav-btn.active i { color: #ffffff; }
+  .mobile-nav .nav-btn.logout { color: #f5c6b6; }
+  .mobile-nav .nav-btn.logout i { color: #f5c6b6; }
+
+  .dash-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+    background: var(--bg);
+  }
+  .page-title-block { display: none; }
+  .page-title-block h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .page-title-block p { font-size: 0.72rem; color: var(--text-soft); margin-top: 2px; }
+
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--sh1);
+    padding: 16px;
+    transition: 0.3s ease;
+    min-width: 0;
+  }
+  .card:hover {
+    box-shadow: var(--sh2);
+    border-color: var(--sage-soft);
+  }
+  .card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .card-title i { color: var(--sage-d); }
+  .card-title .head-right {
+    margin-left: auto;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--clay);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .card-title .head-right:hover { text-decoration: underline; color: var(--clay-d); }
+  .card-title .head-pill {
+    margin-left: auto;
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    background: var(--stone);
+    padding: 3px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border: 1px solid var(--line-soft);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .two-col-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 14px;
+    margin-bottom: 20px;
+    align-items: start;
+  }
+  .right-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .stat-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+  .stat-top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .stat-top .trend {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #3a7a4a;
+  }
+  .stat-top .trend.soft { color: var(--text-mute); }
+  .stat-label {
+    font-size: 0.62rem;
+    color: var(--text-mute);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .stat-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-value small {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-soft);
+    margin-left: 2px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .chart-wrap { height: 130px; width: 100%; }
+
+  .pickup-item {
+    background: var(--stone);
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    transition: .2s;
+  }
+  .pickup-item:hover { border-color: var(--sage-soft); background: var(--stone-2); }
+  .pickup-item:last-child { margin-bottom: 0; }
+  .pickup-item .pi-body { min-width: 0; flex: 1; }
+  .pickup-item .pi-title {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .pickup-item .pi-meta {
+    font-size: 0.68rem;
+    color: var(--text-soft);
+    margin-bottom: 2px;
+  }
+  .pickup-item .pi-date {
+    font-size: 0.65rem;
+    color: var(--text-mute);
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.58rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .pill.delivered  { background: rgba(122,139,126,.16);  color: #3a6b4a; }
+  .pill.out        { background: rgba(193,123,90,.16);  color: var(--clay-d); }
+  .pill.preparing  { background: rgba(212,165,116,.22);  color: #8a6b2e; }
+  .pill.confirmed  { background: rgba(122,139,126,.12);  color: var(--sage-d); }
+  .pill.cancelled  { background: rgba(180,86,63,.14);  color: #b4563f; }
+
+  .prog-bg {
+    background: var(--stone-2);
+    height: 7px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .prog-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--sage-d), var(--sage));
+    transition: width 0.6s ease;
+  }
+  .prog-fill.clay { background: linear-gradient(90deg, var(--clay-d), var(--clay)); }
+  .prog-fill.gold { background: linear-gradient(90deg, #b8894a, var(--gold)); }
+
+  .goal-text {
+    font-size: 0.7rem;
+    color: var(--text-soft);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .goal-text strong { color: var(--text); }
+  .goal-hint {
+    font-size: 0.68rem;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+  .goal-hint strong { color: var(--clay-d); }
+
+  .quick-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .quick-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 11px 10px;
+    border-radius: 10px;
+    background: var(--stone);
+    border: 1px solid var(--line-soft);
+    color: var(--text);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.25s ease;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .quick-btn i {
+    color: var(--clay);
+    font-size: 0.78rem;
+    flex-shrink: 0;
+    transition: 0.25s;
+  }
+  .quick-btn span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .quick-btn:hover {
+    background: var(--sage-d);
+    color: #ffffff;
+    border-color: var(--sage-d);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(95,110,90,.25);
+  }
+  .quick-btn:hover i { color: var(--clay-l); }
+
+  .table-wrap { overflow-x: auto; }
+  table.activity {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+  }
+  table.activity th {
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  table.activity td {
+    padding: 10px;
+    border-bottom: 1px solid var(--line-soft);
+    color: var(--text-soft);
+  }
+  table.activity tr:hover td { background: var(--stone); }
+  table.activity tr:last-child td { border-bottom: none; }
+  table.activity td.strong { font-weight: 700; color: var(--text); }
+  table.activity td.pts { font-weight: 700; color: #3a7a4a; }
+
+  .mat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+  .mat-sage   { background: rgba(122,139,126,.16);  color: var(--sage-d); }
+  .mat-clay   { background: rgba(193,123,90,.16);  color: var(--clay-d); }
+  .mat-gold   { background: rgba(212,165,116,.22);  color: #8a6b2e; }
+  .mat-sand   { background: rgba(232,223,211,.6);   color: #6b5d4a; }
+
+  .rewards-balance {
+    background: linear-gradient(135deg, var(--sage-d) 0%, #4a5b48 100%);
+    border-radius: 14px;
+    padding: 20px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+  .rewards-balance::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 140px; height: 140px;
+    background: rgba(193,123,90,.3);
+    border-radius: 50%;
+  }
+  .rewards-balance .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; opacity: 0.9; }
+  .rewards-balance .amount { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800; margin: 6px 0 4px; }
+  .rewards-balance .amount small { font-size: 0.85rem; font-weight: 700; opacity: 0.8; }
+  .rewards-balance .sub { font-size: 0.7rem; opacity: 0.9; }
+
+  .rewards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .reward-card {
+    background: var(--stone);
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    padding: 18px 12px;
+    text-align: center;
+  }
+  .reward-card .r-icon {
+    width: 46px; height: 46px;
+    background: rgba(193,123,90,.16);
+    color: var(--clay-d);
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+  .reward-card .r-title { font-size: 0.8rem; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+  .reward-card .r-pts { font-size: 0.7rem; color: var(--text-soft); margin-bottom: 10px; }
+  .reward-card .r-btn {
+    display: inline-block;
+    background: var(--clay);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: 0.25s;
+  }
+  .reward-card .r-btn:hover { background: var(--clay-d); }
+
+  .wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .wish-card {
+    background: var(--stone);
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: 0.25s;
+  }
+  .wish-card:hover { border-color: var(--clay-l); transform: translateY(-3px); box-shadow: var(--sh2); }
+  .wish-card .w-icon {
+    width: 52px; height: 52px;
+    background: #fff;
+    color: var(--sage-d);
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(94,89,80,.1);
+  }
+  .wish-card .w-title { font-size: 0.8rem; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+  .wish-card .w-price { font-size: 0.75rem; color: var(--clay-d); font-weight: 800; margin-bottom: 10px; }
+  .wish-card .w-btn {
+    display: inline-block;
+    background: var(--sage-d);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: 0.25s;
+  }
+  .wish-card .w-btn:hover { background: #4a5b48; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1023px) {
+    .sidebar { display: none; }
+    .mobile-nav { display: flex; }
+    .mobile-logo { display: block; }
+    .header-title { display: none; }
+    .page-title-block { display: block; margin-bottom: 16px; }
+    .main-header { height: 66px; padding: 0 16px; }
+    .date-pill { display: none; }
+    .user-text { display: none; }
+    .user-block { padding-left: 12px; }
+  }
+
+  @media (max-width: 900px) {
+    .two-col-grid { grid-template-columns: 1fr; }
+    .charts-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .charts-grid { grid-template-columns: 1fr; gap: 10px; }
+    .two-col-grid { gap: 10px; }
+    .right-stack { gap: 10px; }
+    .chart-wrap { height: 150px; }
+    .dash-body { padding: 14px; }
+    .card { padding: 14px; }
+    .stat-value { font-size: 1.15rem; }
+    .main-header { padding: 0 12px; height: 62px; }
+    .mobile-nav { padding: 8px 12px; }
+    .mobile-nav .nav-btn { padding: 7px 14px; font-size: 0.7rem; }
+
+    table.activity thead { display: none; }
+    table.activity, table.activity tbody, table.activity tr, table.activity td {
+      display: block;
+      width: 100%;
+    }
+    table.activity tr {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    table.activity tr:last-child { border-bottom: none; }
+    table.activity td {
+      padding: 3px 0;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+    }
+    table.activity td::before {
+      content: attr(data-label);
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-right: 10px;
+    }
+
+    .notif-dropdown { width: calc(100vw - 24px); right: -60px; }
+    .profile-menu { right: 0; }
+  }
+
+  @media (max-width: 380px) {
+    .quick-btn { font-size: 0.66rem; padding: 10px 6px; }
+    .quick-btn i { font-size: 0.72rem; }
+    .quick-grid { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="index.html" aria-label="Stackly Home">
+        <img src="stacklylogo1.webp" alt="Stackly"
+             onerror="this.outerHTML='<span style=&quot;color:#D9A48C;font-family:Outfit,sans-serif;font-weight:900;font-size:1.1rem;letter-spacing:-.02em;&quot;>Stackly</span>';" />
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-link active" data-page="dashboard"><i class="fa-solid fa-border-all"></i><span>Dashboard</span></a>
+      <a class="nav-link" data-page="classes"><i class="fa-solid fa-calendar-days"></i><span>My Classes</span></a>
+      <a class="nav-link" data-page="history"><i class="fa-solid fa-clock-rotate-left"></i><span>Class History</span></a>
+      <a class="nav-link" data-page="benefits"><i class="fa-solid fa-crown"></i><span>Member Benefits</span></a>
+      <a class="nav-link" data-page="bookings"><i class="fa-solid fa-spa"></i><span>Book a Class</span></a>
+
+      <div class="nav-divider"></div>
+
+      <a class="nav-link logout" href="login.html" onclick="handleLogout(event)"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-badge">
+        <div class="icon-circle"><i class="fa-solid fa-crown"></i></div>
+        <div class="role">Studio Member</div>
+        <div class="name" id="sidebarUserName">Yoga Member</div>
+        <div class="status">Unlimited Membership</div>
+      </div>
+      <div class="sidebar-copy">© 2026 Stackly</div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main-wrapper">
+
+    <!-- HEADER -->
+    <header class="main-header">
+      <div class="header-left">
+        <div class="mobile-logo">
+          <a href="index.html" aria-label="Stackly Home">
+            <img src="stacklylogo1.webp" alt="Stackly"
+                 onerror="this.outerHTML='<span style=&quot;color:#5F6E5A;font-family:Outfit,sans-serif;font-weight:900;font-size:1rem;letter-spacing:-.02em;&quot;>Stackly</span>';" />
+          </a>
+        </div>
+        <div class="header-title">
+          <h1 id="pageTitle">Member Dashboard</h1>
+          <p id="pageSubtitle">Your unlimited practice, all in one place.</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="date-pill" id="datePill">
+          <i class="fa-regular fa-calendar"></i>
+          <span id="dateText">Today, Oct 14 2026</span>
+          <i class="fa-solid fa-chevron-down" style="font-size:0.6rem;"></i>
+        </div>
+
+        <div style="position: relative;">
+          <button class="bell-btn" id="bellBtn" aria-label="Notifications">
+            <i class="fa-regular fa-bell"></i>
+            <span class="bell-badge">5</span>
+          </button>
+
+          <div class="notif-dropdown" id="notifDropdown">
+            <div class="notif-head">
+              <span>Notifications</span>
+              <span class="badge">5 new</span>
+            </div>
+            <div class="notif-item">
+              <div class="ni-icon" style="background:rgba(193,123,90,.16);color:var(--clay-d);"><i class="fa-solid fa-crown"></i></div>
+              <div class="ni-body">
+                <div class="ni-title">Membership Renewed</div>
+                <div class="ni-desc">Your unlimited plan is active until Nov 14, 2026</div>
+                <div class="ni-time">10 min ago</div>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="ni-icon" style="background:rgba(122,139,126,.16);color:var(--sage-d);"><i class="fa-solid fa-medal"></i></div>
+              <div class="ni-body">
+                <div class="ni-title">New Badge Unlocked</div>
+                <div class="ni-desc">18 classes this month — Personal best! 🎉</div>
+                <div class="ni-time">1 hour ago</div>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="ni-icon" style="background:rgba(212,165,116,.22);color:#8a6b2e;"><i class="fa-solid fa-gift"></i></div>
+              <div class="ni-body">
+                <div class="ni-title">Guest Pass Available</div>
+                <div class="ni-desc">You have 1 free guest pass remaining</div>
+                <div class="ni-time">3 hours ago</div>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="ni-icon" style="background:rgba(122,139,126,.16);color:var(--sage-d);"><i class="fa-solid fa-spa"></i></div>
+              <div class="ni-body">
+                <div class="ni-title">Power Yoga Confirmed</div>
+                <div class="ni-desc">Today · 7:00 PM · Studio C</div>
+                <div class="ni-time">Yesterday</div>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="ni-icon" style="background:rgba(193,123,90,.16);color:var(--clay-d);"><i class="fa-solid fa-tag"></i></div>
+              <div class="ni-body">
+                <div class="ni-title">Member Discount</div>
+                <div class="ni-desc">10% off studio merchandise this week</div>
+                <div class="ni-time">2 days ago</div>
+              </div>
+            </div>
+            <a href="404.html" class="notif-footer">View all notifications →</a>
+          </div>
+        </div>
+
+        <div class="user-block">
+          <div class="user-text">
+            <div class="name" id="headerUserName">Member</div>
+            <div class="role">Unlimited</div>
+          </div>
+          <div class="user-avatar" id="profileBtn">
+            <span id="avatarInitials">M</span>
+            <div class="profile-menu" id="profileMenu">
+              <a href="404.html"><i class="fa-regular fa-user"></i>My Profile</a>
+              <a href="404.html"><i class="fa-solid fa-gear"></i>Settings</a>
+              <a href="404.html"><i class="fa-solid fa-crown"></i>Membership</a>
+              <hr>
+              <a href="login.html" class="danger" onclick="handleLogout(event)"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav">
+      <a class="nav-btn active" data-page="dashboard"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+      <a class="nav-btn" data-page="classes"><i class="fa-solid fa-calendar-days"></i> Classes</a>
+      <a class="nav-btn" data-page="history"><i class="fa-solid fa-clock-rotate-left"></i> History</a>
+      <a class="nav-btn" data-page="benefits"><i class="fa-solid fa-crown"></i> Benefits</a>
+      <a class="nav-btn" data-page="bookings"><i class="fa-solid fa-spa"></i> Book</a>
+      <a class="nav-btn logout" href="login.html" onclick="handleLogout(event)"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+
+    <!-- DASHBOARD BODY -->
+    <div class="dash-body">
+
+      <div class="page-title-block">
+        <h1 id="pageTitleMobile">Member Dashboard</h1>
+        <p id="pageSubtitleMobile">Your unlimited practice, all in one place.</p>
+      </div>
+
+      <!-- ============ DASHBOARD ============ -->
+      <div id="section-dashboard" class="content-section active">
+
+        <div class="stats-grid">
+          <div class="card">
+            <div class="stat-top">
+              <div class="stat-icon" style="background:rgba(193,123,90,.14);color:var(--clay-d);"><i class="fa-solid fa-crown"></i></div>
+              <span class="trend"><i class="fa-solid fa-check"></i> Active</span>
+            </div>
+            <div class="stat-label">Membership</div>
+            <div class="stat-value" style="font-size:1.1rem;">Unlimited</div>
+          </div>
+          <div class="card">
+            <div class="stat-top">
+              <div class="stat-icon" style="background:rgba(122,139,126,.14);color:var(--sage-d);"><i class="fa-solid fa-person-walking"></i></div>
+              <span class="trend"><i class="fa-solid fa-arrow-up"></i> +3</span>
+            </div>
+            <div class="stat-label">Classes This Month</div>
+            <div class="stat-value">18<small>sessions</small></div>
+          </div>
+          <div class="card">
+            <div class="stat-top">
+              <div class="stat-icon" style="background:rgba(95,110,90,.12);color:var(--sage-d);"><i class="fa-solid fa-clock"></i></div>
+              <span class="trend soft">upcoming</span>
+            </div>
+            <div class="stat-label">Next Class</div>
+            <div class="stat-value">7:00<small>PM</small></div>
+          </div>
+          <div class="card">
+            <div class="stat-top">
+              <div class="stat-icon" style="background:rgba(212,165,116,.22);color:#8a6b2e;"><i class="fa-solid fa-gift"></i></div>
+              <span class="trend soft">available</span>
+            </div>
+            <div class="stat-label">Guest Passes</div>
+            <div class="stat-value">1<small>remaining</small></div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="card">
+            <div class="card-title">
+              📈 Monthly Attendance
+              <span class="head-pill">6 months</span>
+            </div>
+            <div class="chart-wrap"><canvas id="monthlyChart"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              🥧 Class Preferences
+              <span class="head-pill">By type</span>
+            </div>
+            <div class="chart-wrap"><canvas id="styleChart"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              🧘 Weekly Sessions
+              <span class="head-pill">Last 6 weeks</span>
+            </div>
+            <div class="chart-wrap"><canvas id="weeklyChart"></canvas></div>
+          </div>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="card">
+            <div class="card-title">
+              🗓️ Upcoming Classes
+              <a href="404.html" class="head-right">View All</a>
+            </div>
+
+            <div class="pickup-item">
+              <div class="pi-body">
+                <div class="pi-title">🔥 Power Yoga</div>
+                <div class="pi-meta">Today · 7:00 PM · Studio C · 60 min · Meera</div>
+                <div class="pi-date">Unlimited access</div>
+              </div>
+              <span class="pill confirmed">Confirmed</span>
+            </div>
+
+            <div class="pickup-item">
+              <div class="pi-body">
+                <div class="pi-title">🌿 Restorative Yoga</div>
+                <div class="pi-meta">Tomorrow · 9:30 AM · Studio B · 50 min · Priya</div>
+                <div class="pi-date">Unlimited access</div>
+              </div>
+              <span class="pill confirmed">Confirmed</span>
+            </div>
+
+            <div class="pickup-item">
+              <div class="pi-body">
+                <div class="pi-title">🧘 Meditation Circle</div>
+                <div class="pi-meta">Sat · 10:00 AM · Studio A · 30 min · Ravi</div>
+                <div class="pi-date">Unlimited access · Member exclusive</div>
+              </div>
+              <span class="pill confirmed">Confirmed</span>
+            </div>
+          </div>
+
+          <div class="right-stack">
+            <div class="card">
+              <div class="card-title">🎯 Monthly Attendance Goal</div>
+              <div class="goal-text"><strong>18</strong> / 20 classes attended</div>
+              <div class="prog-bg"><div class="prog-fill clay" style="width:90%;"></div></div>
+              <div class="goal-hint">2 more classes to reach your <strong>personal best</strong> 🏆</div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">⚡ Quick Actions</div>
+              <div class="quick-grid">
+                <a href="404.html" class="quick-btn">
+                  <i class="fa-solid fa-spa"></i><span>Book a Class</span>
+                </a>
+                <a href="404.html" class="quick-btn">
+                  <i class="fa-solid fa-gift"></i><span>Guest Pass</span>
+                </a>
+                <a href="404.html" class="quick-btn">
+                  <i class="fa-solid fa-crown"></i><span>My Benefits</span>
+                </a>
+                <a href="404.html" class="quick-btn">
+                  <i class="fa-solid fa-headset"></i><span>Support</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            📋 Recent Class History
+            <a href="404.html" class="head-right">View All</a>
+          </div>
+          <div class="table-wrap">
+            <table class="activity">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Class</th>
+                  <th>Instructor</th>
+                  <th>Style</th>
+                  <th>Duration</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Date">12 Oct 2026</td>
+                  <td data-label="Class" class="strong">Power Yoga</td>
+                  <td data-label="Instructor" class="strong">Meera</td>
+                  <td data-label="Style"><span class="mat-chip mat-clay">Power</span></td>
+                  <td data-label="Duration" class="strong">60 min</td>
+                  <td data-label="Status"><span class="pill delivered">Attended</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Date">10 Oct 2026</td>
+                  <td data-label="Class" class="strong">Vinyasa Flow</td>
+                  <td data-label="Instructor" class="strong">Meera</td>
+                  <td data-label="Style"><span class="mat-chip mat-clay">Vinyasa</span></td>
+                  <td data-label="Duration" class="strong">60 min</td>
+                  <td data-label="Status"><span class="pill delivered">Attended</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Date">08 Oct 2026</td>
+                  <td data-label="Class" class="strong">Restorative Yoga</td>
+                  <td data-label="Instructor" class="strong">Priya</td>
+                  <td data-label="Style"><span class="mat-chip mat-gold">Restorative</span></td>
+                  <td data-label="Duration" class="strong">50 min</td>
+                  <td data-label="Status"><span class="pill delivered">Attended</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Date">05 Oct 2026</td>
+                  <td data-label="Class" class="strong">Hatha Flow</td>
+                  <td data-label="Instructor" class="strong">Ananya</td>
+                  <td data-label="Style"><span class="mat-chip mat-sage">Hatha</span></td>
+                  <td data-label="Duration" class="strong">60 min</td>
+                  <td data-label="Status"><span class="pill delivered">Attended</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ MY CLASSES ============ -->
+      <div id="section-classes" class="content-section">
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-calendar-days"></i> My Classes</div>
+
+          <div class="pickup-item">
+            <div class="pi-body">
+              <div class="pi-title">🔥 Power Yoga</div>
+              <div class="pi-meta">Today · 7:00 PM · Studio C · 60 min · Meera</div>
+              <div class="pi-date">Unlimited access</div>
+            </div>
+            <span class="pill confirmed">Confirmed</span>
+          </div>
+
+          <div class="pickup-item">
+            <div class="pi-body">
+              <div class="pi-title">🌿 Restorative Yoga</div>
+              <div class="pi-meta">Tomorrow · 9:30 AM · Studio B · 50 min · Priya</div>
+              <div class="pi-date">Unlimited access</div>
+            </div>
+            <span class="pill confirmed">Confirmed</span>
+          </div>
+
+          <div class="pickup-item">
+            <div class="pi-body">
+              <div class="pi-title">🧘 Meditation Circle</div>
+              <div class="pi-meta">Sat · 10:00 AM · Studio A · 30 min · Ravi</div>
+              <div class="pi-date">Unlimited access · Member exclusive</div>
+            </div>
+            <span class="pill confirmed">Confirmed</span>
+          </div>
+
+          <a href="404.html" style="display:inline-block;margin-top:14px;background:var(--clay);color:#fff;font-weight:700;font-size:0.75rem;padding:9px 20px;border-radius:8px;text-decoration:none;">
+            <i class="fa-solid fa-plus" style="margin-right:5px;"></i> Book a New Class
+          </a>
+        </div>
+      </div>
+
+      <!-- ============ CLASS HISTORY ============ -->
+      <div id="section-history" class="content-section">
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Class History</div>
+          <div class="table-wrap">
+            <table class="activity">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Class</th>
+                  <th>Instructor</th>
+                  <th>Style</th>
+                  <th>Duration</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td data-label="Date">12 Oct 2026</td><td data-label="Class" class="strong">Power Yoga</td><td data-label="Instructor" class="strong">Meera</td><td data-label="Style"><span class="mat-chip mat-clay">Power</span></td><td data-label="Duration" class="strong">60 min</td><td data-label="Status"><span class="pill delivered">Attended</span></td></tr>
+                <tr><td data-label="Date">10 Oct 2026</td><td data-label="Class" class="strong">Vinyasa Flow</td><td data-label="Instructor" class="strong">Meera</td><td data-label="Style"><span class="mat-chip mat-clay">Vinyasa</span></td><td data-label="Duration" class="strong">60 min</td><td data-label="Status"><span class="pill delivered">Attended</span></td></tr>
+                <tr><td data-label="Date">08 Oct 2026</td><td data-label="Class" class="strong">Restorative Yoga</td><td data-label="Instructor" class="strong">Priya</td><td data-label="Style"><span class="mat-chip mat-gold">Restorative</span></td><td data-label="Duration" class="strong">50 min</td><td data-label="Status"><span class="pill delivered">Attended</span></td></tr>
+                <tr><td data-label="Date">05 Oct 2026</td><td data-label="Class" class="strong">Hatha Flow</td><td data-label="Instructor" class="strong">Ananya</td><td data-label="Style"><span class="mat-chip mat-sage">Hatha</span></td><td data-label="Duration" class="strong">60 min</td><td data-label="Status"><span class="pill delivered">Attended</span></td></tr>
+                <tr><td data-label="Date">03 Oct 2026</td><td data-label="Class" class="strong">Yin Yoga</td><td data-label="Instructor" class="strong">Ravi</td><td data-label="Style"><span class="mat-chip mat-sand">Yin</span></td><td data-label="Duration" class="strong">45 min</td><td data-label="Status"><span class="pill delivered">Attended</span></td></tr>
+                <tr><td data-label="Date">28 Sep 2026</td><td data-label="Class" class="strong">Meditation Circle</td><td data-label="Instructor" class="strong">Ravi</td><td data-label="Style"><span class="mat-chip mat-gold">Meditation</span></td><td data-label="Duration" class="strong">30 min</td><td data-label="Status"><span class="pill delivered">Attended</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ MEMBER BENEFITS ============ -->
+      <div id="section-benefits" class="content-section">
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-crown"></i> Member Benefits</div>
+
+          <div class="rewards-balance">
+            <div class="label">Unlimited Membership</div>
+            <div class="amount">Active <small>· Nov 14, 2026</small></div>
+            <div class="sub">Plan renews monthly · All classes included</div>
+          </div>
+
+          <div class="rewards-grid">
+            <div class="reward-card">
+              <div class="r-icon"><i class="fa-solid fa-spa"></i></div>
+              <div class="r-title">Unlimited Classes</div>
+              <div class="r-pts">All styles · All levels</div>
+              <a href="404.html" class="r-btn">Book Now</a>
+            </div>
+            <div class="reward-card">
+              <div class="r-icon"><i class="fa-solid fa-gift"></i></div>
+              <div class="r-title">Guest Passes</div>
+              <div class="r-pts">1 of 2 remaining</div>
+              <a href="404.html" class="r-btn">Invite a Friend</a>
+            </div>
+            <div class="reward-card">
+              <div class="r-icon"><i class="fa-solid fa-tag"></i></div>
+              <div class="r-title">10% Off Merchandise</div>
+              <div class="r-pts">Valid this month</div>
+              <a href="404.html" class="r-btn">Shop Now</a>
+            </div>
+            <div class="reward-card">
+              <div class="r-icon"><i class="fa-solid fa-medal"></i></div>
+              <div class="r-title">Priority Booking</div>
+              <div class="r-pts">Member-exclusive</div>
+              <a href="404.html" class="r-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ BOOK A CLASS ============ -->
+      <div id="section-bookings" class="content-section">
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-spa"></i> Book a Class</div>
+          <div class="wishlist-grid">
+            <div class="wish-card">
+              <div class="w-icon"><i class="fa-solid fa-fire"></i></div>
+              <div class="w-title">Power Yoga</div>
+              <div class="w-price">Today · 7:00 PM</div>
+              <a href="404.html" class="w-btn">Book Now</a>
+            </div>
+            <div class="wish-card">
+              <div class="w-icon"><i class="fa-solid fa-moon"></i></div>
+              <div class="w-title">Restorative Yoga</div>
+              <div class="w-price">Tomorrow · 9:30 AM</div>
+              <a href="404.html" class="w-btn">Book Now</a>
+            </div>
+            <div class="wish-card">
+              <div class="w-icon"><i class="fa-solid fa-leaf"></i></div>
+              <div class="w-title">Hatha Flow</div>
+              <div class="w-price">Fri · 6:00 PM</div>
+              <a href="404.html" class="w-btn">Book Now</a>
+            </div>
+            <div class="wish-card">
+              <div class="w-icon"><i class="fa-solid fa-spa"></i></div>
+              <div class="w-title">Meditation Circle</div>
+              <div class="w-price">Sat · 10:00 AM</div>
+              <a href="404.html" class="w-btn">Book Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  const session = window.__YOGA_USER__;
+  if (session && session.name) {
+    const name = session.name;
+    const initial = name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    set('headerUserName', name);
+    set('avatarInitials', initial);
+    set('sidebarUserName', name);
+    set('pageSubtitle', 'Welcome back, ' + name.split(' ')[0] + '. Your unlimited practice awaits.');
+    set('pageSubtitleMobile', 'Welcome back, ' + name.split(' ')[0] + '. Your unlimited practice awaits.');
+  }
+
+  const titles = {
+    dashboard: ['Member Dashboard', 'Your unlimited practice, all in one place.'],
+    classes:   ['My Classes', 'Your upcoming and confirmed classes.'],
+    history:   ['Class History', 'Every class you have attended, in one place.'],
+    benefits:  ['Member Benefits', 'Everything included with your unlimited membership.'],
+    bookings:  ['Book a Class', 'Browse and book any class — unlimited access.']
+  };
+
+  function navigateTo(page) {
+    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('section-' + page);
+    if (target) target.classList.add('active');
+
+    if (titles[page]) {
+      document.getElementById('pageTitle').textContent = titles[page][0];
+      document.getElementById('pageSubtitle').textContent = titles[page][1];
+      document.getElementById('pageTitleMobile').textContent = titles[page][0];
+      document.getElementById('pageSubtitleMobile').textContent = titles[page][1];
+    }
+
+    document.querySelectorAll('.sidebar .nav-link[data-page]').forEach(l => {
+      l.classList.toggle('active', l.dataset.page === page);
+    });
+    document.querySelectorAll('.mobile-nav .nav-btn[data-page]').forEach(b => {
+      b.classList.toggle('active', b.dataset.page === page);
+    });
+
+    document.querySelector('.dash-body').scrollTop = 0;
+  }
+
+  document.querySelectorAll('.sidebar .nav-link[data-page]').forEach(l => {
+    l.addEventListener('click', e => { e.preventDefault(); navigateTo(l.dataset.page); });
+  });
+  document.querySelectorAll('.mobile-nav .nav-btn[data-page]').forEach(b => {
+    b.addEventListener('click', e => { e.preventDefault(); navigateTo(b.dataset.page); });
+  });
+
+  const datePill = document.getElementById('datePill');
+  if (datePill) {
+    datePill.addEventListener('click', () => {
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const t = new Date();
+      document.getElementById('dateText').textContent = 'Today, ' + t.getDate() + ' ' + months[t.getMonth()] + ' ' + t.getFullYear();
+    });
+  }
+
+  const bell = document.getElementById('bellBtn');
+  const notifDrop = document.getElementById('notifDropdown');
+  if (bell && notifDrop) {
+    bell.addEventListener('click', e => {
+      e.stopPropagation();
+      notifDrop.classList.toggle('show');
+      document.getElementById('profileMenu').classList.remove('show');
+    });
+    document.addEventListener('click', e => {
+      if (!notifDrop.contains(e.target) && !bell.contains(e.target)) notifDrop.classList.remove('show');
+    });
+  }
+
+  const profBtn = document.getElementById('profileBtn');
+  const profMenu = document.getElementById('profileMenu');
+  if (profBtn && profMenu) {
+    profBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      profMenu.classList.toggle('show');
+      notifDrop.classList.remove('show');
+    });
+    document.addEventListener('click', e => {
+      if (!profMenu.contains(e.target) && !profBtn.contains(e.target)) profMenu.classList.remove('show');
+    });
+  }
+})();
+
+function handleLogout(e) {
+  if (e) e.preventDefault();
+  try {
+    sessionStorage.removeItem('yoga_session');
+    localStorage.removeItem('yoga_session');
+  } catch (_) {}
+  window.location.replace('login.html');
+}
+
+window.addEventListener('load', function () {
+  const c = { sage: '#5F6E5A', sageL: '#7A8B7E', clay: '#C17B5A', gold: '#D4A574' };
+
+  const mEl = document.getElementById('monthlyChart');
+  if (mEl) new Chart(mEl, {
+    type: 'line',
+    data: {
+      labels: ['May','Jun','Jul','Aug','Sep','Oct'],
+      datasets: [{
+        data: [10, 14, 12, 16, 15, 18],
+        borderColor: c.clay,
+        backgroundColor: 'rgba(193,123,90,0.15)',
+        tension: 0.4, borderWidth: 2.5, pointRadius: 3,
+        pointBackgroundColor: c.clay, fill: true
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#EFEAE2' }, ticks: { font: { size: 9 } } },
+        x: { grid: { display: false }, ticks: { font: { size: 9 } } }
+      }
+    }
+  });
+
+  const sEl = document.getElementById('styleChart');
+  if (sEl) new Chart(sEl, {
+    type: 'doughnut',
+    data: {
+      labels: ['Power','Vinyasa','Restorative','Hatha','Meditation'],
+      datasets: [{
+        data: [14, 18, 10, 8, 6],
+        backgroundColor: ['#C17B5A','#7A8B7E','#D4A574','#9BAA9E','#E8DFD3'],
+        borderWidth: 2, borderColor: '#fff', hoverOffset: 5
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, padding: 8, font: { size: 9 } } } },
+      cutout: '62%'
+    }
+  });
+
+  const wEl = document.getElementById('weeklyChart');
+  if (wEl) new Chart(wEl, {
+    type: 'bar',
+    data: {
+      labels: ['W1','W2','W3','W4','W5','W6'],
+      datasets: [{
+        data: [4, 5, 4, 6, 5, 5],
+        backgroundColor: c.sageL,
+        borderRadius: 6,
+        barThickness: 16
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#EFEAE2' }, ticks: { font: { size: 9 } } },
+        x: { grid: { display: false }, ticks: { font: { size: 9 } } }
+      }
+    }
+  });
+});
+
+window.addEventListener('pageshow', function (e) {
+  if (!e.persisted) return;
+  console.log('[BFCACHE] Member page restored — re-validating...');
+  const raw = sessionStorage.getItem('yoga_session') || localStorage.getItem('yoga_session');
+  const s = raw ? JSON.parse(raw) : null;
+  const valid = s && s.authenticated === true && s.expiresAt > Date.now() && s.role === 'member';
+  if (!valid) {
+    console.log('%c[BFCACHE] ❌ Invalid — redirecting', 'color:#dc2626;font-weight:bold');
+    window.location.replace('login.html');
+  } else {
+    console.log('%c[BFCACHE] ✅ Valid', 'color:#16a34a;font-weight:bold');
+  }
+});
+</script>
+
+</body>
+</html>
